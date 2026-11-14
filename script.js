@@ -29,6 +29,12 @@ const choiceEffects = {
     right: decisionHints.right.querySelector(".choice-effects")
 };
 const meterNames = { power: "Power", food: "Food", shield: "Shield", life: "Life" };
+// Every game opens with this card. The cards it unlocks whose ids start with OPENING_PREFIX play
+// straight after it, one after another with no random events in between, until that chain ends.
+// After that, cards unlock and play with the usual 1 to 3 random events between them.
+const START_CARD = "design_001";
+const OPENING_PREFIX = "design_";
+
 let cards = {};               // every card from decks.json, keyed by its id
 let questQueue = [];          // ids of unlocked quest cards waiting their turn, in order
 let mainCardsUntilQuest = 0;  // main cards still to play before the next quest card
@@ -64,8 +70,9 @@ function randomGap() {
 // once 1 to 3 main cards have gone by. No card is shown twice in one game.
 // Leaves currentId as null when there is nothing left to play.
 function drawCard() {
+    questQueue = questQueue.filter((id) => !played.has(id));   // drop anything already shown
     const mainPool = Object.keys(cards).filter((id) =>
-        cards[id].deck === "main" && !played.has(id) && conditionsMet(cards[id]));
+        cards[id].deck === "main" && !played.has(id) && !questQueue.includes(id) && conditionsMet(cards[id]));
     const questWaiting = questQueue.length > 0;
 
     if (questWaiting && (mainCardsUntilQuest <= 0 || mainPool.length === 0)) {
@@ -90,6 +97,12 @@ function unlockFrom(choice) {
         return;
     }
     if (played.has(id) || questQueue.includes(id)) return;  // quest cards never repeat
+    // Still in the opening chain: play the next opening card straight away.
+    if (currentId && currentId.startsWith(OPENING_PREFIX) && id.startsWith(OPENING_PREFIX)) {
+        questQueue.unshift(id);
+        mainCardsUntilQuest = 0;
+        return;
+    }
     if (questQueue.length === 0) mainCardsUntilQuest = randomGap();
     questQueue.push(id);
 }
@@ -157,7 +170,14 @@ function startGame() {
     played = new Set();
     currentId = null;
     resetMeters();
-    showNextCard();
+    if (cards[START_CARD]) {
+        currentId = START_CARD;
+        played.add(START_CARD);
+        renderCard();
+    } else {
+        console.warn(`decks.json: no card has the start id "${START_CARD}", so the game starts with a random card`);
+        showNextCard();
+    }
 }
 
 // Colour the meters a choice would change: green if it goes up, red if it goes down.
