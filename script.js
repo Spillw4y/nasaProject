@@ -16,7 +16,8 @@ const directionLabels = {
 };
 
 // ---- Card data ----
-const cardDesc = card.querySelector(".card-desc");
+// The situation text sits above the card, not inside it.
+const cardDesc = document.querySelector(".card-desc");
 // The decision text lives in the labels beside the arrows.
 const choiceText = {
     left: decisionHints.left.querySelector(".choice-desc"),
@@ -27,9 +28,12 @@ const choiceEffects = {
     right: decisionHints.right.querySelector(".choice-effects")
 };
 const meterNames = { power: "Power", food: "Food", shield: "Shield", life: "Life" };
-let cards = {};        // every card from decks.json, keyed by its id
-let unlocked = [];     // ids of quest cards waiting to be played
-let currentId = null;  // id of the card on screen
+let cards = {};               // every card from decks.json, keyed by its id
+let questQueue = [];          // ids of unlocked quest cards waiting their turn, in order
+let mainCardsUntilQuest = 0;  // main cards still to play before the next quest card
+let played = new Set();       // ids already shown this game, so no card repeats
+let currentId = null;         // id of the card on screen, or null when none is left
+let ready = false;            // true once decks.json has loaded
 let gameOver = false;
 
 function currentCard() {
@@ -50,20 +54,33 @@ function conditionsMet(data) {
     });
 }
 
-// Pick the next card: an unlocked quest card if one is waiting, otherwise a random main card.
-function drawCard() {
-    if (unlocked.length > 0) {
-        currentId = unlocked.shift();
-        return;
-    }
-    const mainIds = Object.keys(cards).filter((id) => cards[id].deck === "main");
-    let pool = mainIds.filter((id) => conditionsMet(cards[id]));
-    if (pool.length === 0) pool = mainIds;                              // nothing qualifies: ignore conditions
-    if (pool.length > 1) pool = pool.filter((id) => id !== currentId);  // avoid the same card twice in a row
-    currentId = pool[Math.floor(Math.random() * pool.length)];
+// 1, 2 or 3: how many main cards to play before the next quest card.
+function randomGap() {
+    return 1 + Math.floor(Math.random() * 3);
 }
 
-// A choice can unlock another card by id. It will be played next.
+// Pick the next card. Main cards come up at random. A waiting quest card plays
+// once 1 to 3 main cards have gone by. No card is shown twice in one game.
+// Leaves currentId as null when there is nothing left to play.
+function drawCard() {
+    const mainPool = Object.keys(cards).filter((id) =>
+        cards[id].deck === "main" && !played.has(id) && conditionsMet(cards[id]));
+    const questWaiting = questQueue.length > 0;
+
+    if (questWaiting && (mainCardsUntilQuest <= 0 || mainPool.length === 0)) {
+        currentId = questQueue.shift();
+        if (questQueue.length > 0) mainCardsUntilQuest = randomGap();
+    } else if (mainPool.length > 0) {
+        currentId = mainPool[Math.floor(Math.random() * mainPool.length)];
+        if (questWaiting) mainCardsUntilQuest -= 1;
+    } else {
+        currentId = null;
+    }
+
+    if (currentId !== null) played.add(currentId);
+}
+
+// A choice can unlock a quest card by id. It joins the queue and plays after 1 to 3 main cards.
 function unlockFrom(choice) {
     const id = choice.unlockCard;
     if (!id) return;
@@ -71,7 +88,9 @@ function unlockFrom(choice) {
         console.warn(`decks.json: "${currentId}" unlocks "${id}", but no card has that id yet`);
         return;
     }
-    if (!unlocked.includes(id)) unlocked.push(id);
+    if (played.has(id) || questQueue.includes(id)) return;  // quest cards never repeat
+    if (questQueue.length === 0) mainCardsUntilQuest = randomGap();
+    questQueue.push(id);
 }
 
 // Turns { power: -5, food: 20, shield: 0 } into "Power \u22125 \u00b7 Food +20". Zero changes are left out.
@@ -92,28 +111,62 @@ function renderCard() {
     }
 }
 
-function renderGameOver() {
-    const empty = Object.keys(meters).filter((name) => meters[name] <= 0);
-    cardDesc.textContent = `The outpost ran out of ${empty.join(" and ")}.`;
+// Show an ending on the card. The next swipe starts a new game.
+function renderEnding(message) {
+    cardDesc.textContent = message;
     for (const side of ["left", "right"]) {
         choiceText[side].textContent = "Start again";
         choiceEffects[side].textContent = "";
     }
 }
 
+function renderGameOver() {
+    const empty = Object.keys(meters).filter((name) => meters[name] <= 0);
+    renderEnding(`The outpost ran out of ${empty.join(" and ")}.`);
+}
+
+// Draw and show the next card, or end the game if no card is left to play.
+function showNextCard() {
+    drawCard();
+    if (currentId === null) {
+        gameOver = true;
+        renderEnding("The outpost made it through every event. You survived!");
+    } else {
+        renderCard();
+    }
+}
+
 function startGame() {
     gameOver = false;
-    unlocked = [];
+    questQueue = [];
+    mainCardsUntilQuest = 0;
+    played = new Set();
     currentId = null;
     resetMeters();
-    drawCard();
-    renderCard();
+    showNextCard();
+}
+
+// Colour the meters a choice would change: green if it goes up, red if it goes down.
+// Pass null to put every meter back to its normal colour.
+function previewMeters(direction) {
+    const showing = direction && !gameOver && currentId !== null;
+    const effects = showing ? (currentCard()[direction].effects || {}) : {};
+    for (const name in meterIds) {
+        const fill = document.getElementById(meterIds[name]);
+        const item = fill && fill.closest(".meter-item");
+        if (!item) continue;
+        const change = effects[name] || 0;
+        if (change > 0) item.dataset.preview = "up";
+        else if (change < 0) item.dataset.preview = "down";
+        else item.removeAttribute("data-preview");
+    }
 }
 
 function setDecisionHint(direction) {
     Object.entries(decisionHints).forEach(([key, arrow]) => {
         arrow.classList.toggle("is-active", key === direction);
     });
+    previewMeters(direction);
 }
 
 function showSwipe(direction) {
@@ -148,8 +201,7 @@ function showSwipe(direction) {
             gameOver = true;
             renderGameOver();
         } else {
-            drawCard();
-            renderCard();
+            showNextCard();
         }
 
         card.style.transition = "none";
@@ -169,7 +221,7 @@ function directionFromDelta(deltaX) {
 }
 
 card.addEventListener("pointerdown", (event) => {
-    if (currentId === null || activePointerId !== null || card.classList.contains("is-exiting")) return;
+    if (!ready || activePointerId !== null || card.classList.contains("is-exiting")) return;
     activePointerId = event.pointerId;
     startX = event.clientX;
     card.setPointerCapture(event.pointerId);
@@ -220,7 +272,7 @@ card.addEventListener("keydown", (event) => {
         ArrowRight: "right"
     };
     const direction = directions[event.key];
-    if (!direction || currentId === null || card.classList.contains("is-exiting")) return;
+    if (!direction || !ready || card.classList.contains("is-exiting")) return;
     event.preventDefault();
     showSwipe(direction);
 });
@@ -233,6 +285,7 @@ function useDecks(decks) {
         throw new Error('no cards with "deck": "main" were found');
     }
     cards = loaded;
+    ready = true;
     startGame();
 }
 

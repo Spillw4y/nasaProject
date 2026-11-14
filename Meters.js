@@ -16,11 +16,12 @@ async function loadDecks() {
   return response.json();
 }
 
-// Draw the current values on the page by setting each bar's width.
+// Draw the current values on the page. Each icon's fill reads its level (0 to 100)
+// from the --level CSS variable, and styles.css turns that into how far up the symbol is filled.
 function updateMeters() {
   for (const name in meters) {
-    const bar = document.getElementById(meterIds[name]);
-    if (bar) bar.style.width = meters[name] + "%";
+    const fill = document.getElementById(meterIds[name]);
+    if (fill) fill.style.setProperty("--level", meters[name]);
   }
 }
 
