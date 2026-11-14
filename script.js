@@ -18,6 +18,7 @@ const directionLabels = {
 // ---- Card data ----
 // The situation text sits above the card, not inside it.
 const cardDesc = document.querySelector(".card-desc");
+const cardImg = card.querySelector(".card-img");
 // The decision text lives in the labels beside the arrows.
 const choiceText = {
     left: decisionHints.left.querySelector(".choice-desc"),
@@ -101,10 +102,22 @@ function describeEffects(effects = {}) {
     return parts.length > 0 ? parts.join(" \u00b7 ") : "No change";
 }
 
-// Put the current card's text on the page.
+// Show a card's picture, or an empty card when it has none. path comes from "img" in decks.json.
+function showCardImage(path) {
+    if (path) {
+        cardImg.src = path;
+        cardImg.hidden = false;
+    } else {
+        cardImg.hidden = true;
+        cardImg.removeAttribute("src");
+    }
+}
+
+// Put the current card's text and picture on the page.
 function renderCard() {
     const data = currentCard();
     cardDesc.textContent = data.desc;
+    showCardImage(data.img);
     for (const side of ["left", "right"]) {
         choiceText[side].textContent = data[side].desc;
         choiceEffects[side].textContent = describeEffects(data[side].effects);
@@ -114,6 +127,7 @@ function renderCard() {
 // Show an ending on the card. The next swipe starts a new game.
 function renderEnding(message) {
     cardDesc.textContent = message;
+    showCardImage(null);
     for (const side of ["left", "right"]) {
         choiceText[side].textContent = "Start again";
         choiceEffects[side].textContent = "";
@@ -285,6 +299,10 @@ function useDecks(decks) {
         throw new Error('no cards with "deck": "main" were found');
     }
     cards = loaded;
+    // Load every card picture now, so each one is ready the moment its card comes up.
+    for (const path of new Set(Object.values(cards).map((data) => data.img).filter(Boolean))) {
+        new Image().src = path;
+    }
     ready = true;
     startGame();
 }
