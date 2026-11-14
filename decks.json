@@ -2,7 +2,7 @@
   "cards": {
     "design_001": {
       "deck": "quest",
-      "img": "images/spacestation.png",
+      "img": "images/flightSurgeon(life).jpg",
       "desc": "MISSION DESIGN [1/5] — Launch Vehicle: Our mass budget is tight! Do we book NASA's Space Launch System (SLS) for crew comfort, or a heavy cargo rocket for extra armor?",
       "right": {
         "desc": "Launch on SLS Block 1B with full crew quarters.",
@@ -32,7 +32,7 @@
     },
     "design_003": {
       "deck": "quest",
-      "img": "images/spacestation.png",
+      "img": "images/safetyOfficer(shielding).jpg",
       "desc": "MISSION DESIGN [3/5] — Landing Site: Touch down on Shackleton Crater's sunny South Pole rim for constant solar power, or inside a basalt lava tube for natural shielding?",
       "right": {
         "desc": "Land on Shackleton's sunny South Pole ridge.",
@@ -47,7 +47,7 @@
     },
     "design_004": {
       "deck": "quest",
-      "img": "images/spacestation.png",
+      "img": "images/chiefEngineer(power).jpg",
       "desc": "MISSION DESIGN [4/5] — Base Systems: Our lander only has room for one heavy module! Pack a Kilopower nuclear reactor, or an expanded Veggie hydroponic farm?",
       "right": {
         "desc": "Pack the Kilopower nuclear fission core.",
@@ -62,7 +62,7 @@
     },
     "design_005": {
       "deck": "quest",
-      "img": "images/spacestation.png",
+      "img": "images/rover.jpg",
       "desc": "MISSION DESIGN [5/5] — Science Payload: Touchdown confirmed! For our final payload bay, do we activate the NASA Rover homing beacon, or the deep-space SETI dish?",
       "right": {
         "desc": "Ping NASA's lost VIPER rover nearby!",
@@ -394,7 +394,7 @@
     },
     "main_022": {
       "deck": "main",
-      "img": "images/chiefEngineer(power).jpg",
+      "img": "images/bioLead(food).jpg",
       "desc": "We dug up a pocket of 'Orange Soil'—tiny volcanic glass beads from 3.6 billion years ago, just like Apollo 17 found!",
       "right": {
         "desc": "Bake the beads at 900°C to extract water.",
@@ -424,7 +424,7 @@
     },
     "alien_001_dip": {
       "deck": "quest",
-      "img": "images/spacestation.png",
+      "img": "images/safetyOfficer(shielding).jpg",
       "desc": "An alien delegation approaches the perimeter, broadcasting a peaceful mathematical sequence.",
       "right": {
         "desc": "Welcome them with open arms.",
@@ -439,7 +439,7 @@
     },
     "alien_001_com": {
       "deck": "quest",
-      "img": "images/spacestation.png",
+      "img": "images/safetyOfficer(shielding).jpg",
       "desc": "Alien vessels lock weapons onto our primary dome! Our refusal to share resources has provoked an attack.",
       "right": {
         "desc": "Return fire with everything we have!",
