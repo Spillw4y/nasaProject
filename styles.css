@@ -7,7 +7,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: stretch;
-    background: #d9e1eb;
+    background: #000;
     }
             body > .app-shell {
                 width: min(45vw, 900px);
@@ -15,11 +15,11 @@ body {
                 display: flex;
                 flex-direction: column;
                 overflow: hidden;
-                background: #f3f5f8;
+                background: #000;
                 border-radius: 12px;
                 box-shadow: 0 12px 40px rgb(34 52 72 / 18%);
             }
-            header { height: 72px; flex: 0 0 72px; display: flex; align-items: center; justify-content: space-evenly; gap: 0; padding: 0 24px; background: #fff; border-bottom: 1px solid #e3e7ed; }
+            header { height: 124px; flex: 0 0 124px; display: flex; align-items: center; justify-content: space-evenly; gap: 0; padding: 0 24px; background: #000; border-bottom: 1px solid #1f242b; }
             .icon-button { width: 52px; height: 52px; display: grid; place-items: center; padding: 0; color: #263648; }
             .icon-button svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
             main { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(42px, 1fr) minmax(120px, 480px) minmax(42px, 1fr); align-items: center; justify-items: center; gap: 24px; padding: 24px; }
@@ -30,19 +30,34 @@ body {
             .panel[data-swipe-direction="right"] { border-color: #326e5a; }
             .swipe-toast { position: fixed; left: 50%; bottom: 28px; z-index: 1; max-width: calc(100vw - 32px); padding: 16px 22px; border-top: 3px solid #c5a45e; color: #fff; background: #1c2a3a; border-radius: 4px; box-shadow: 0 12px 32px rgb(19 34 52 / 28%); font-size: 0.95rem; font-weight: 600; letter-spacing: 0.03em; text-align: center; opacity: 0; transform: translate(-50%, 12px); transition: opacity 220ms ease, transform 220ms ease; pointer-events: none; }
             .swipe-toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
-            .arrow { position: relative; display: flex; flex-direction: column; align-items: center; color: #526579; }
+            .arrow { position: relative; display: flex; flex-direction: column; align-items: center; color: #c9d2dc; }
             .arrow-label { position: absolute; bottom: calc(100% + 24px); left: 50%; z-index: 1; color: #263648; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; visibility: hidden; opacity: 0; transform: translateX(-50%); transition: opacity 160ms ease; }
             .arrow.is-active { z-index: 2; }
             .arrow.is-active .arrow-label { visibility: visible; opacity: 1; }
             .arrow svg { width: 42px; height: 42px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
             @media (max-width: 480px) { body > .app-shell { width: 90vw; } header { padding: 0 12px; gap: 4px; } main { gap: 8px; padding: 20px 10px; } }
 
-            /* Meters in the header: icon, bar, label. Meters.js sets the width of the inner div. */
-            .meter-item { display: flex; flex-direction: column; align-items: center; gap: 3px; width: 64px; }
-            .meter-item .icon-button { height: 36px; }
-            .meter-bar { width: 100%; height: 6px; border-radius: 3px; background: #e3e7ed; overflow: hidden; }
-            .meter-bar > div { width: 50%; height: 100%; border-radius: 3px; background: #326e5a; transition: width 400ms ease; }
-            .meter-label { font: 600 0.65rem/1 system-ui, sans-serif; letter-spacing: 0.06em; text-transform: uppercase; color: #526579; }
+            /* Meters in the header. Each icon is two layers that share one colour, --tone:
+               .meter-outline is the symbol's outline, and .meter-fill is the level inside it.
+               Both are plain coloured boxes cut to shape by a mask image (images/<name>-outline.png and -fill.png).
+               Meters.js sets --level (0 to 100) on .meter-fill, which is clipped from the top so it rises from the
+               bottom. Every symbol sits between 4% and 96% of its tile, so 0 is empty and 100 is full for all four.
+               --tone is white at rest. While a choice is previewed, script.js marks each meter it would change,
+               and the outline and fill both turn green (going up) or red (going down). */
+            .meter-item { --tone: #fff; display: flex; align-items: center; justify-content: center; }
+            .meter-item[data-preview="up"] { --tone: #3ecf8e; }
+            .meter-item[data-preview="down"] { --tone: #e5484d; }
+            .meter-icon { position: relative; width: min(100px, 21vw); aspect-ratio: 1; }
+            .meter-outline, .meter-fill { position: absolute; inset: 0; background: var(--tone); -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-size: 100% 100%; mask-size: 100% 100%; transition: background-color 160ms ease; }
+            .meter-fill { --level: 50; opacity: 0.55; clip-path: inset(calc(4% + (100 - var(--level)) * 0.92%) 0 0 0); transition: clip-path 400ms ease, background-color 160ms ease; }
+            .meter-icon[data-meter="power"] .meter-outline { -webkit-mask-image: url("images/energy-outline.png"); mask-image: url("images/energy-outline.png"); }
+            .meter-icon[data-meter="power"] .meter-fill { -webkit-mask-image: url("images/energy-fill.png"); mask-image: url("images/energy-fill.png"); }
+            .meter-icon[data-meter="food"] .meter-outline { -webkit-mask-image: url("images/food-outline.png"); mask-image: url("images/food-outline.png"); }
+            .meter-icon[data-meter="food"] .meter-fill { -webkit-mask-image: url("images/food-fill.png"); mask-image: url("images/food-fill.png"); }
+            .meter-icon[data-meter="shield"] .meter-outline { -webkit-mask-image: url("images/shielding-outline.png"); mask-image: url("images/shielding-outline.png"); }
+            .meter-icon[data-meter="shield"] .meter-fill { -webkit-mask-image: url("images/shielding-fill.png"); mask-image: url("images/shielding-fill.png"); }
+            .meter-icon[data-meter="life"] .meter-outline { -webkit-mask-image: url("images/morale-outline.png"); mask-image: url("images/morale-outline.png"); }
+            .meter-icon[data-meter="life"] .meter-fill { -webkit-mask-image: url("images/morale-fill.png"); mask-image: url("images/morale-fill.png"); }
 
             /* Card content: the situation text. */
             .panel { display: flex; flex-direction: column; padding: 28px 24px; font-family: system-ui, sans-serif; color: #263648; }

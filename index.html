@@ -10,32 +10,28 @@
     <div class="app-shell">
     <header>
         <div class="meter-item">
-            <span class="icon-button">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7"></path><path d="M5 9v12h14V9M9 21v-7h6v7"></path></svg>
-            </span>
-            <div class="meter-bar"><div id="powerMeter"></div></div>
-            <span class="meter-label">Power</span>
+            <div class="meter-icon" data-meter="power" role="img" aria-label="Power">
+                <div class="meter-fill" id="powerMeter"></div>
+                <div class="meter-outline"></div>
+            </div>
         </div>
         <div class="meter-item">
-            <span class="icon-button">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>
-            </span>
-            <div class="meter-bar"><div id="foodMeter"></div></div>
-            <span class="meter-label">Food</span>
+            <div class="meter-icon" data-meter="food" role="img" aria-label="Food">
+                <div class="meter-fill" id="foodMeter"></div>
+                <div class="meter-outline"></div>
+            </div>
         </div>
         <div class="meter-item">
-            <span class="icon-button">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg>
-            </span>
-            <div class="meter-bar"><div id="shieldMeter"></div></div>
-            <span class="meter-label">Shield</span>
+            <div class="meter-icon" data-meter="shield" role="img" aria-label="Shield">
+                <div class="meter-fill" id="shieldMeter"></div>
+                <div class="meter-outline"></div>
+            </div>
         </div>
         <div class="meter-item">
-            <span class="icon-button">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>
-            </span>
-            <div class="meter-bar"><div id="lifeMeter"></div></div>
-            <span class="meter-label">Life</span>
+            <div class="meter-icon" data-meter="life" role="img" aria-label="Life">
+                <div class="meter-fill" id="lifeMeter"></div>
+                <div class="meter-outline"></div>
+            </div>
         </div>
     </header>
     <main aria-label="Main content">

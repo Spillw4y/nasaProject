@@ -145,10 +145,27 @@ function startGame() {
     showNextCard();
 }
 
+// Colour the meters a choice would change: green if it goes up, red if it goes down.
+// Pass null to put every meter back to its normal colour.
+function previewMeters(direction) {
+    const showing = direction && !gameOver && currentId !== null;
+    const effects = showing ? (currentCard()[direction].effects || {}) : {};
+    for (const name in meterIds) {
+        const fill = document.getElementById(meterIds[name]);
+        const item = fill && fill.closest(".meter-item");
+        if (!item) continue;
+        const change = effects[name] || 0;
+        if (change > 0) item.dataset.preview = "up";
+        else if (change < 0) item.dataset.preview = "down";
+        else item.removeAttribute("data-preview");
+    }
+}
+
 function setDecisionHint(direction) {
     Object.entries(decisionHints).forEach(([key, arrow]) => {
         arrow.classList.toggle("is-active", key === direction);
     });
+    previewMeters(direction);
 }
 
 function showSwipe(direction) {
