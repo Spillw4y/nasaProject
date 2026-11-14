@@ -32,7 +32,7 @@
     },
     "design_003": {
       "deck": "quest",
-      "img": "images/safetyOfficer(shielding).jpg",
+      "img": "images/safetyOfficer(shielding).png",
       "desc": "MISSION DESIGN [3/5] — Landing Site: Touch down on Shackleton Crater's sunny South Pole rim for constant solar power, or inside a basalt lava tube for natural shielding?",
       "right": {
         "desc": "Land on Shackleton's sunny South Pole ridge.",
@@ -124,7 +124,7 @@
     },
     "main_004": {
       "deck": "main",
-      "img": "images/safetyOfficer(shielding).jpg",
+      "img": "images/safetyOfficer(shielding).png",
       "desc": "A shallow magnitude 4.5 moonquake is shaking the ground! The habitat domes are groaning as the fault line shifts underneath us.",
       "right": {
         "desc": "Max out the magnetic shock absorbers.",
@@ -184,7 +184,7 @@
     },
     "main_008": {
       "deck": "main",
-      "img": "images/safetyOfficer(shielding).jpg",
+      "img": "images/safetyOfficer(shielding).png",
       "desc": "A lunar satellite spotted a collapsed lava tube cave two kilometers away! Its thick stone roof offers natural radiation shielding.",
       "right": {
         "desc": "Winch a rover down to mine volcanic rock.",
@@ -214,7 +214,7 @@
     },
     "main_010": {
       "deck": "main",
-      "img": "images/safetyOfficer(shielding).jpg",
+      "img": "images/safetyOfficer(shielding).png",
       "desc": "Wait—is that Surveyor 3?! A scout found a 1960s NASA probe sitting in a crater, still wrapped in shiny foil and titanium struts.",
       "right": {
         "desc": "Strip its camera and titanium like Apollo 12.",
@@ -229,7 +229,7 @@
     },
     "main_011": {
       "deck": "main",
-      "img": "images/safetyOfficer(shielding).jpg",
+      "img": "images/safetyOfficer(shielding).png",
       "desc": "The Geminid meteor shower is pelting the Moon! With no atmosphere to burn them up, tiny space pebbles are hitting faster than bullets.",
       "right": {
         "desc": "Drop blast shutters and power the shields.",
@@ -364,7 +364,7 @@
     },
     "main_020": {
       "deck": "main",
-      "img": "images/safetyOfficer(shielding).jpg",
+      "img": "images/safetyOfficer(shielding).png",
       "desc": "We found an old Apollo laser mirror out on the plains! Scientists on Earth still bounce green laser beams off it to measure the Moon's orbit.",
       "right": {
         "desc": "Use canned air to blow dust off the mirror.",
@@ -409,7 +409,7 @@
     },
     "main_023": {
       "deck": "main",
-      "img": "images/safetyOfficer(shielding).jpg",
+      "img": "images/safetyOfficer(shielding).png",
       "desc": "The two-week lunar night is at its coldest! It's -248°C outside, and the habitat's outer cooling pipes are about to freeze solid and burst.",
       "right": {
         "desc": "Kill the greenhouse heat to thaw the pipes.",
@@ -424,7 +424,7 @@
     },
     "alien_001_dip": {
       "deck": "quest",
-      "img": "images/safetyOfficer(shielding).jpg",
+      "img": "images/safetyOfficer(shielding).png",
       "desc": "An alien delegation approaches the perimeter, broadcasting a peaceful mathematical sequence.",
       "right": {
         "desc": "Welcome them with open arms.",
@@ -439,7 +439,7 @@
     },
     "alien_001_com": {
       "deck": "quest",
-      "img": "images/safetyOfficer(shielding).jpg",
+      "img": "images/safetyOfficer(shielding).png",
       "desc": "Alien vessels lock weapons onto our primary dome! Our refusal to share resources has provoked an attack.",
       "right": {
         "desc": "Return fire with everything we have!",
