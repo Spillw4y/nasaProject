@@ -19,7 +19,6 @@
       "deck": "main",
       "img": null,
       "desc": "We are low on food!",
-      "conditions": { "maxFood": 25 },
       "right": {
         "desc": "Divert resources to make more food.",
         "effects": { "power": -5, "food": 20, "shield": 0, "life": -5 },
@@ -31,6 +30,36 @@
         "unlockCard": null
       }
     },
+    "main_002": {
+      "deck": "main",
+      "img": null,
+      "desc": "We are low on power!",
+      "right": {
+        "desc": "Cut down on power usage to other systems.",
+        "effects": { "power": 20, "food": 0, "shield": -5, "life": -5 },
+        "unlockCard": null
+      },
+      "left": {
+        "desc": "We can't risk lowering our defences.",
+        "effects": { "power": 0, "food": 0, "shield": 5, "life": 5 },
+        "unlockCard": null
+      }
+    },
+    "main_003": {
+      "deck": "main",
+      "img": null,
+      "desc": "A dusty NASA rover rolls up to our airlock, flashes its headlights, and beeps happily! Its old Houston uplink is dead, and it wants to join the colony.",
+      "right": {
+        "desc": "Plug it into our grid and assign it to ice-mining duty!",
+        "effects": { "power": -15, "food": 0, "shield": 0, "life": 5 },
+        "unlockCard": "rover_001_ice"
+      },
+      "left": {
+        "desc": "Keep it on the sunlit ridge as a mobile scout and solar bank.",
+        "effects": { "power": 15, "food": -5, "shield": 5, "life": 0 },
+        "unlockCard": "rover_001_scout"
+      }
+    },
     "alien_001_dip": {
       "deck": "quest",
       "img": null,
@@ -38,7 +67,7 @@
       "right": {
         "desc": "Welcome them with open arms.",
         "effects": { "power": -5, "food": -5, "shield": 0, "life": -5 },
-        "unlockCard": "alien_002_dip"
+        "unlockCard": null
       },
       "left": {
         "desc": "Resources are low...",
@@ -53,12 +82,102 @@
       "right": {
         "desc": "Defend ourselves!",
         "effects": { "power": -5, "food": 0, "shield": -30, "life": -5 },
-        "unlockCard": "alien_002_com"
+        "unlockCard": null
       },
       "left": {
         "desc": "Sue for peace.",
         "effects": { "power": -25, "food": -25, "shield": 0, "life": -25 },
         "unlockCard": "alien_001_dip"
+      }
+    },
+    "rover_001_ice": {
+      "deck": "quest",
+      "img": null,
+      "desc": "Our little buddy is stuck in fluffy 'fairy-castle' dust inside a dark crater! It's spinning its wheels and looking at our cameras for help.",
+      "right": {
+        "desc": "Use NASA's 'Inchworm' protocol: lift and wiggle one wheel at a time.",
+        "effects": { "power": -20, "food": 0, "shield": 0, "life": 5 },
+        "unlockCard": "rover_002_ice"
+      },
+      "left": {
+        "desc": "Floor the throttle and winch it back up to the sunny rim!",
+        "effects": { "power": -10, "food": 0, "shield": -15, "life": 0 },
+        "unlockCard": "rover_002_scout"
+      }
+    },
+    "rover_001_scout": {
+      "deck": "quest",
+      "img": null,
+      "desc": "The rover knocked off its rear fender while showing off! Now static-charged moon dust is rooster-tailing everywhere and overheating its radiator.",
+      "right": {
+        "desc": "Pull an Apollo 17: duct-tape laminated colony maps to make a new fender!",
+        "effects": { "power": 5, "food": -5, "shield": 15, "life": 5 },
+        "unlockCard": "rover_002_scout"
+      },
+      "left": {
+        "desc": "Send it into the freezing crater shadow to cool down naturally.",
+        "effects": { "power": -10, "food": 0, "shield": -5, "life": 0 },
+        "unlockCard": "rover_002_ice"
+      }
+    },
+    "rover_002_ice": {
+      "deck": "quest",
+      "img": null,
+      "desc": "Brrr! At 38 Kelvin (-235°C), the rover's drill is chattering. It transmits a puppy-dog warning icon: its batteries will freeze solid in an hour!",
+      "right": {
+        "desc": "Follow NASA flight rules: pause drilling and divert power to internal heaters.",
+        "effects": { "power": -25, "food": 0, "shield": 10, "life": 0 },
+        "unlockCard": "rover_003_ice"
+      },
+      "left": {
+        "desc": "Abandon the trench and sprint for the sunlit ridge before it freezes!",
+        "effects": { "power": -15, "food": -10, "shield": -5, "life": 0 },
+        "unlockCard": "rover_003_scout"
+      }
+    },
+    "rover_002_scout": {
+      "deck": "quest",
+      "img": null,
+      "desc": "Siren alert! NASA's DONKI satellite spots a massive Solar Flare heading our way. Our rover is exposed on the ridge and could get its brain fried!",
+      "right": {
+        "desc": "Command 'Safe Mode': park behind a boulder and angle shields toward the Sun.",
+        "effects": { "power": -10, "food": -5, "shield": 20, "life": 0 },
+        "unlockCard": "rover_003_scout"
+      },
+      "left": {
+        "desc": "Tumble down the crater chute into the dark ice basin for natural cover!",
+        "effects": { "power": 0, "food": 0, "shield": -15, "life": -10 },
+        "unlockCard": "rover_003_ice"
+      }
+    },
+    "rover_003_ice": {
+      "deck": "quest",
+      "img": null,
+      "desc": "The rover rolls back to the airlock doing celebratory donuts! Its storage bay is overflowing with pure ancient water-ice from 1 meter underground.",
+      "right": {
+        "desc": "Melt it for hydroponic farms and throw our robot pal a parade!",
+        "effects": { "power": -10, "food": 35, "shield": 0, "life": 25 },
+        "unlockCard": null
+      },
+      "left": {
+        "desc": "Split the water into rocket fuel and oxygen to supercharge the base.",
+        "effects": { "power": 35, "food": 10, "shield": 15, "life": 5 },
+        "unlockCard": null
+      }
+    },
+    "rover_003_scout": {
+      "deck": "quest",
+      "img": null,
+      "desc": "Our rover discovered a 'Peak of Eternal Light' bathed in 94% year-round sunshine! It's beaming surplus solar power and Earth memes straight to our colony.",
+      "right": {
+        "desc": "Promote it to Chief Energy Officer and link its solar array to our grid!",
+        "effects": { "power": 40, "food": 0, "shield": 20, "life": 10 },
+        "unlockCard": null
+      },
+      "left": {
+        "desc": "Have it haul back rare lunar rocks to reinforce our colony domes.",
+        "effects": { "power": 15, "food": 15, "shield": 25, "life": 15 },
+        "unlockCard": null
       }
     }
   }
