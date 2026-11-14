@@ -16,7 +16,8 @@ const directionLabels = {
 };
 
 // ---- Card data ----
-const cardDesc = card.querySelector(".card-desc");
+// The situation text sits above the card, not inside it.
+const cardDesc = document.querySelector(".card-desc");
 // The decision text lives in the labels beside the arrows.
 const choiceText = {
     left: decisionHints.left.querySelector(".choice-desc"),

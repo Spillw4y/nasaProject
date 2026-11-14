@@ -59,9 +59,14 @@ body {
             .meter-icon[data-meter="life"] .meter-outline { -webkit-mask-image: url("images/morale-outline.png"); mask-image: url("images/morale-outline.png"); }
             .meter-icon[data-meter="life"] .meter-fill { -webkit-mask-image: url("images/morale-fill.png"); mask-image: url("images/morale-fill.png"); }
 
-            /* Card content: the situation text. */
-            .panel { display: flex; flex-direction: column; padding: 28px 24px; font-family: system-ui, sans-serif; color: #263648; }
-            .card-desc { flex: 1; display: flex; align-items: center; justify-content: center; margin: 0; font-size: 1.5rem; font-weight: 700; line-height: 1.3; text-align: center; }
+            /* The situation text sits above the card. .card-stack holds the two in the middle column:
+               the text keeps room for about three lines so the card does not jump between cards,
+               and the card takes the height that is left. */
+            body > .app-shell { height: 100vh; height: 100dvh; }
+            main { grid-template-rows: minmax(0, 1fr); }
+            .card-stack { align-self: stretch; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 18px; width: 100%; min-height: 0; }
+            .card-desc { flex: 0 0 auto; display: flex; align-items: flex-end; justify-content: center; min-height: 3.9em; margin: 0; font-family: system-ui, sans-serif; font-size: 1.35rem; font-weight: 700; line-height: 1.3; text-align: center; color: #f4f6f9; }
+            .panel { flex: 0 1 min(76vh, 700px); height: auto; font-family: system-ui, sans-serif; color: #263648; }
 
             /* Decision labels beside the arrows: the choice, then what it changes. Shown while dragging that way. */
             .arrow-label { display: flex; flex-direction: column; gap: 6px; width: max-content; max-width: min(240px, 62vw); padding: 10px 12px; border-radius: 8px; background: #fff; box-shadow: 0 6px 20px rgb(34 52 72 / 20%); font-family: system-ui, sans-serif; font-size: 0.95rem; line-height: 1.3; letter-spacing: 0.01em; text-transform: none; white-space: normal; }
