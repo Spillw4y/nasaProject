@@ -77,7 +77,7 @@
     },
     "main_001": {
       "deck": "main",
-      "img": "images/bioLead(food).png",
+      "img": "images/bioLead(food).jpg",
       "desc": "We are low on food!",
       "conditions": { "maxFood": 25 },
       "right": {
@@ -93,7 +93,7 @@
     },
     "main_002": {
       "deck": "main",
-      "img": "images/chiefEngineer(power).png",
+      "img": "images/chiefEngineer(power).jpg",
       "desc": "We are low on power!",
       "conditions": { "maxPower": 25 },
       "right": {
@@ -109,7 +109,7 @@
     },
     "main_003": {
       "deck": "main",
-      "img": "images/rover.png",
+      "img": "images/rover.jpg",
       "desc": "NASA's lost VIPER rover rolls up to our airlock, flashing its headlights! Its link to Earth is dead, and its ice-scanner is pinging nearby.",
       "right": {
         "desc": "Drain our grid to send it ice mining.",
@@ -124,7 +124,7 @@
     },
     "main_004": {
       "deck": "main",
-      "img": "images/safetyOfficer(shield).png",
+      "img": "images/safetyOfficer(shielding).jpg",
       "desc": "A shallow magnitude 4.5 moonquake is shaking the ground! The habitat domes are groaning as the fault line shifts underneath us.",
       "right": {
         "desc": "Max out the magnetic shock absorbers.",
@@ -139,7 +139,7 @@
     },
     "main_005": {
       "deck": "main",
-      "img": "images/bioLead(food).png",
+      "img": "images/bioLead(food).jpg",
       "desc": "Our NASA 'Veggie' garden pods are drowning! In low gravity, water forms bubbles around the lettuce roots and suffocates them.",
       "right": {
         "desc": "Blast the roots with high-power air fans.",
@@ -154,7 +154,7 @@
     },
     "main_006": {
       "deck": "main",
-      "img": "images/flightSurgeon(life).png",
+      "img": "images/flightSurgeon(life).jpg",
       "desc": "Glass-sharp moon dust is sticking to our spacesuits! It's chewing up the airlock seals and giving the crew 'Apollo hay fever.'",
       "right": {
         "desc": "Zap the suits with electric dust shields.",
@@ -169,7 +169,7 @@
     },
     "main_007": {
       "deck": "main",
-      "img": "images/chiefEngineer(power).png",
+      "img": "images/chiefEngineer(power).jpg",
       "desc": "Our Kilopower nuclear reactor is running hot! We can push the uranium core harder for energy, or cool it down to protect the base.",
       "right": {
         "desc": "Yank the control rod and disable alarms!",
@@ -184,7 +184,7 @@
     },
     "main_008": {
       "deck": "main",
-      "img": "images/safetyOfficer(shield).png",
+      "img": "images/safetyOfficer(shielding).jpg",
       "desc": "A lunar satellite spotted a collapsed lava tube cave two kilometers away! Its thick stone roof offers natural radiation shielding.",
       "right": {
         "desc": "Winch a rover down to mine volcanic rock.",
@@ -199,7 +199,7 @@
     },
     "main_009": {
       "deck": "main",
-      "img": null,
+      "img": "images/flightSurgeon(life).jpg",
       "desc": "The life-support water recycler is clogged! Low gravity makes the crew lose bone calcium, and that mineral sludge is jamming our urine filters.",
       "right": {
         "desc": "Boil the filters clean with spare power.",
@@ -214,7 +214,7 @@
     },
     "main_010": {
       "deck": "main",
-      "img": null,
+      "img": "images/safetyOfficer(shielding).jpg",
       "desc": "Wait—is that Surveyor 3?! A scout found a 1960s NASA probe sitting in a crater, still wrapped in shiny foil and titanium struts.",
       "right": {
         "desc": "Strip its camera and titanium like Apollo 12.",
@@ -229,7 +229,7 @@
     },
     "main_011": {
       "deck": "main",
-      "img": null,
+      "img": "images/safetyOfficer(shielding).jpg",
       "desc": "The Geminid meteor shower is pelting the Moon! With no atmosphere to burn them up, tiny space pebbles are hitting faster than bullets.",
       "right": {
         "desc": "Drop blast shutters and power the shields.",
@@ -244,7 +244,7 @@
     },
     "main_012": {
       "deck": "main",
-      "img": null,
+      "img": "images/chiefEngineer(power).jpg",
       "desc": "One of our cube-shaped NASA Astrobee robots went haywire in the cafeteria! Its fans are blowing floating crumbs everywhere while it sings 'Daisy Bell.'",
       "right": {
         "desc": "Wipe its memory and force it on leak patrol.",
@@ -259,7 +259,7 @@
     },
     "main_013": {
       "deck": "main",
-      "img": null,
+      "img": "images/spacestation.png",
       "desc": "NASA's Lunar Gateway space station is passing right overhead! They can drop us a supply pod if we guide it down to the landing pad.",
       "right": {
         "desc": "Burn laser power to guide it down safely.",
@@ -274,7 +274,7 @@
     },
     "main_014": {
       "deck": "main",
-      "img": null,
+      "img": "images/flightSurgeon(life).jpg",
       "desc": "Living in one-sixth gravity is weakening the crew's bones and making their vision blurry! Doctors warn that health is slipping fast.",
       "right": {
         "desc": "Force 2-hour daily vacuum workouts.",
@@ -289,7 +289,7 @@
     },
     "main_015": {
       "deck": "main",
-      "img": null,
+      "img": "images/chiefEngineer(power).jpg",
       "desc": "Our moon-dirt smelter is glowing at 1,600°C! Baking lunar soil separates out pure oxygen gas and leaves behind molten iron.",
       "right": {
         "desc": "Bottle the oxygen for the crew.",
@@ -304,7 +304,7 @@
     },
     "main_016": {
       "deck": "main",
-      "img": null,
+      "img": "images/chiefEngineer(power).jpg",
       "desc": "NASA's deep-space laser dish just locked onto our receiver! We have ultra-fast internet from Earth for the next 20 minutes.",
       "right": {
         "desc": "Download solar-storm shield patches.",
@@ -319,7 +319,7 @@
     },
     "main_017": {
       "deck": "main",
-      "img": null,
+      "img": "images/bioLead(food).jpg",
       "desc": "Weird pink space-slime is growing inside our cooling pipes! Tough bacteria survived radiation and are blocking water flow to the computers.",
       "right": {
         "desc": "Boil the pipes and compost the dead slime.",
@@ -334,7 +334,7 @@
     },
     "main_018": {
       "deck": "main",
-      "img": null,
+      "img": "images/chiefEngineer(power).jpg",
       "desc": "Our Valkyrie humanoid robot froze up while fixing the outer antenna! It's stuck hanging onto the tower as deadly shadow creeps in.",
       "right": {
         "desc": "Send a rover team into the cold to rescue it.",
@@ -349,7 +349,7 @@
     },
     "main_019": {
       "deck": "main",
-      "img": null,
+      "img": "images/chiefEngineer(power).jpg",
       "desc": "Our miners scooped up moon dirt packed with Helium-3 from solar wind! The engineers want to test it in our unshielded fusion prototype.",
       "right": {
         "desc": "Dump raw Helium-3 into the unshielded core!",
@@ -364,7 +364,7 @@
     },
     "main_020": {
       "deck": "main",
-      "img": null,
+      "img": "images/safetyOfficer(shielding).jpg",
       "desc": "We found an old Apollo laser mirror out on the plains! Scientists on Earth still bounce green laser beams off it to measure the Moon's orbit.",
       "right": {
         "desc": "Use canned air to blow dust off the mirror.",
@@ -379,7 +379,7 @@
     },
     "main_021": {
       "deck": "main",
-      "img": null,
+      "img": "images/flightSurgeon(life).jpg",
       "desc": "The crew in Habitat B has 'space cabin fever,' and the sewage tank is full! NASA research shows human waste is great at blocking cosmic rays.",
       "right": {
         "desc": "Line the bedroom walls with bagged sewage.",
@@ -394,7 +394,7 @@
     },
     "main_022": {
       "deck": "main",
-      "img": null,
+      "img": "images/chiefEngineer(power).jpg",
       "desc": "We dug up a pocket of 'Orange Soil'—tiny volcanic glass beads from 3.6 billion years ago, just like Apollo 17 found!",
       "right": {
         "desc": "Bake the beads at 900°C to extract water.",
@@ -409,7 +409,7 @@
     },
     "main_023": {
       "deck": "main",
-      "img": null,
+      "img": "images/safetyOfficer(shielding).jpg",
       "desc": "The two-week lunar night is at its coldest! It's -248°C outside, and the habitat's outer cooling pipes are about to freeze solid and burst.",
       "right": {
         "desc": "Kill the greenhouse heat to thaw the pipes.",
@@ -424,7 +424,7 @@
     },
     "alien_001_dip": {
       "deck": "quest",
-      "img": null,
+      "img": "images/spacestation.png",
       "desc": "An alien delegation approaches the perimeter, broadcasting a peaceful mathematical sequence.",
       "right": {
         "desc": "Welcome them with open arms.",
@@ -439,7 +439,7 @@
     },
     "alien_001_com": {
       "deck": "quest",
-      "img": null,
+      "img": "images/spacestation.png",
       "desc": "Alien vessels lock weapons onto our primary dome! Our refusal to share resources has provoked an attack.",
       "right": {
         "desc": "Return fire with everything we have!",
@@ -454,7 +454,7 @@
     },
     "rover_001_ice": {
       "deck": "quest",
-      "img": null,
+      "img": "images/rover.jpg",
       "desc": "VIPER's wheels are sinking into fluffy 'fairy-castle' moon dust inside a dark crater! Spinning the tires will bury its belly pan.",
       "right": {
         "desc": "Use NASA's 'Inchworm' wheel-lifting crawl.",
@@ -469,7 +469,7 @@
     },
     "rover_001_scout": {
       "deck": "quest",
-      "img": null,
+      "img": "images/rover.jpg",
       "desc": "The rover clipped a rock and ripped off its back fender! Static-charged moon dust is coating its heat mirrors and cooking its circuits.",
       "right": {
         "desc": "Tape laminated colony maps over the wheel.",
@@ -484,7 +484,7 @@
     },
     "rover_002_ice": {
       "deck": "quest",
-      "img": null,
+      "img": "images/rover.jpg",
       "desc": "At -235°C in the dark crater, VIPER's drill hits rock-hard ice! The drill is straining, and the battery heaters only have 4 hours left.",
       "right": {
         "desc": "Peck slowly using NASA's 'bite-and-brush' drill rule.",
@@ -499,7 +499,7 @@
     },
     "rover_002_scout": {
       "deck": "quest",
-      "img": null,
+      "img": "images/rover.jpg",
       "desc": "Siren alert! NASA satellites spotted a huge Solar Flare heading our way. Radiation on the exposed ridge will fry the rover's computer!",
       "right": {
         "desc": "Park behind a boulder in NASA 'Safe Mode.'",
@@ -514,7 +514,7 @@
     },
     "rover_003_ice": {
       "deck": "quest",
-      "img": null,
+      "img": "images/rover.jpg",
       "desc": "Jackpot! VIPER dug up 5% pure water-ice and ammonia! It drops off the load at base before heading out on permanent deep-crater patrol.",
       "right": {
         "desc": "Melt the ice and ammonia for our farms!",
@@ -529,7 +529,7 @@
     },
     "rover_003_scout": {
       "deck": "quest",
-      "img": null,
+      "img": "images/rover.jpg",
       "desc": "VIPER found a 'Peak of Eternal Light' with 92% year-round sunshine and titanium ore! It sets up a ridge outpost to run solo patrols.",
       "right": {
         "desc": "Link its new solar tower to our power grid!",
@@ -544,7 +544,7 @@
     },
     "rover_visit_ice": {
       "deck": "quest",
-      "img": null,
+      "img": "images/rover.jpg",
       "desc": "Beep-beep! VIPER is back from its crater patrol, covered in frost and flashing its headlights at the airlock with a fresh load of ice!",
       "right": {
         "desc": "Refill the greenhouses and clean its camera!",
@@ -559,7 +559,7 @@
     },
     "rover_visit_scout": {
       "deck": "quest",
-      "img": null,
+      "img": "images/rover.jpg",
       "desc": "Look who's back! VIPER rolls down from the sunny ridge, beaming spare solar power and towing a sled of titanium rocks!",
       "right": {
         "desc": "Drain its batteries and tune up its wheels!",
