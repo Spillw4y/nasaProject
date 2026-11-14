@@ -8,33 +8,52 @@
 </head>
 <body>
     <div class="app-shell">
-    <header aria-hidden="true">
-        <span class="icon-button">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7"></path><path d="M5 9v12h14V9M9 21v-7h6v7"></path></svg>
-        </span>
-        <span class="icon-button">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>
-        </span>
-        <span class="icon-button">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg>
-        </span>
-        <span class="icon-button">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>
-        </span>
+    <header>
+        <div class="meter-item">
+            <span class="icon-button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7"></path><path d="M5 9v12h14V9M9 21v-7h6v7"></path></svg>
+            </span>
+            <div class="meter-bar"><div id="powerMeter"></div></div>
+            <span class="meter-label">Power</span>
+        </div>
+        <div class="meter-item">
+            <span class="icon-button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>
+            </span>
+            <div class="meter-bar"><div id="foodMeter"></div></div>
+            <span class="meter-label">Food</span>
+        </div>
+        <div class="meter-item">
+            <span class="icon-button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path><path d="M10 21h4"></path></svg>
+            </span>
+            <div class="meter-bar"><div id="shieldMeter"></div></div>
+            <span class="meter-label">Shield</span>
+        </div>
+        <div class="meter-item">
+            <span class="icon-button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>
+            </span>
+            <div class="meter-bar"><div id="lifeMeter"></div></div>
+            <span class="meter-label">Life</span>
+        </div>
     </header>
     <main aria-label="Main content">
         <div class="arrow" data-direction="left" aria-hidden="true">
-            <span class="arrow-label">Decline</span>
+            <span class="arrow-label"><span class="choice-desc"></span><span class="choice-effects"></span></span>
             <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
         </div>
-        <section class="panel" aria-label="Swipeable content card" tabindex="0"></section>
+        <section class="panel" aria-label="Swipeable content card" tabindex="0">
+            <p class="card-desc">Loading cards…</p>
+        </section>
         <div class="arrow" data-direction="right" aria-hidden="true">
-            <span class="arrow-label">Approve</span>
+            <span class="arrow-label"><span class="choice-desc"></span><span class="choice-effects"></span></span>
             <svg viewBox="0 0 24 24"><path d="M5 12h14m-7-7 7 7-7 7"></path></svg>
         </div>
     </main>
     <div class="swipe-toast" role="status" aria-live="polite"></div>
     </div>
+    <script src="Meters.js" defer></script>
     <script src="script.js" defer></script>
 </body>
 </html>

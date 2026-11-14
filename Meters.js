@@ -25,16 +25,13 @@ function updateMeters() {
 }
 
 // Apply one side of a card. side is "left" or "right".
+// Reads the choice's effects, for example: card.right.effects = { power: -5, food: 20, shield: 0, life: -5 }
 function applyChoice(card, side) {
-  const s = side[0]; // "left" -> "l", "right" -> "r"
+  const effects = card[side].effects || {};
 
-  meters.power += card[s + "Power"] || 0;
-  meters.food += card[s + "Food"] || 0;
-  meters.shield += card[s + "Shield"] || 0;
-  meters.life += card[s + "Life"] || 0;
-
-  // Keep every meter between 0 and 100.
   for (const name in meters) {
+    meters[name] += effects[name] || 0;
+    // Keep every meter between 0 and 100.
     meters[name] = Math.max(0, Math.min(100, meters[name]));
   }
 
