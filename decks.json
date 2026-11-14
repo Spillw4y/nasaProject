@@ -1,0 +1,48 @@
+{
+  "mainDeck": [
+    {
+      "cardID": 0,
+      "desc": "We are low on food!",
+      "rDesc": "Divert resources to make more food.",
+      "rPower": -5,
+      "rFood": 20,
+      "rShield": 0,
+      "rLife": -5,
+      "lDesc": "Ration the food and focus our efforts elsewhere.",
+      "lPower": 5,
+      "lFood": -5,
+      "lShield": 5,
+      "lLife": 5
+    },
+    {
+      "cardID": 1,
+      "desc": "We are low on power!",
+      "rDesc": "Cut down on power usage to other systems.",
+      "rPower": 20,
+      "rFood": 0,
+      "rShield": -5,
+      "rLife": -5,
+      "lDesc": "We can't risk lowering our defences.",
+      "lPower": 0,
+      "lFood": 0,
+      "lShield": 5,
+      "lLife": 5
+    }
+
+  ],
+  "mainQuest": [
+    {
+      "desc": "We are low on food!",
+      "rDesc": "Divert resources to make more food.",
+      "rPower": -5,
+      "rFood": 20,
+      "rShield": 0,
+      "rLife": -5,
+      "lDesc": "Ration the food and focus our efforts elsewhere.",
+      "lPower": 5,
+      "lFood": -5,
+      "lShield": 5,
+      "lLife": 5
+    }
+  ]
+}
