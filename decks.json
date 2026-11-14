@@ -440,31 +440,61 @@
     "rover_003_ice": {
       "deck": "quest",
       "img": null,
-      "desc": "Jackpot! VIPER's scanners confirm the soil is 5% pure water-ice, plus trapped ammonia and carbon dioxide! It hauls a full load back to base.",
+      "desc": "Jackpot! VIPER's scanners confirm the soil is 5% pure water-ice, plus trapped ammonia and carbon dioxide! It hauls a full load back to base before heading out on deep-crater patrol.",
       "right": {
         "desc": "Melt the ice for our hydroponic farms and turn the ammonia into rich plant fertilizer!",
         "effects": { "power": -5, "food": 25, "shield": 0, "life": 20 },
-        "unlockCard": null
+        "unlockCard": "rover_visit_ice"
       },
       "left": {
         "desc": "Split the water into breathable oxygen and rocket fuel to supercharge the colony!",
         "effects": { "power": 25, "food": 10, "shield": 15, "life": 5 },
-        "unlockCard": null
+        "unlockCard": "rover_visit_ice"
       }
     },
     "rover_003_scout": {
       "deck": "quest",
       "img": null,
-      "desc": "VIPER mapped a 'Peak of Eternal Light' bathed in 92% year-round sunshine, and found titanium-rich moon rocks along the ridge!",
+      "desc": "VIPER mapped a 'Peak of Eternal Light' bathed in 92% year-round sunshine, and found titanium-rich moon rocks along the ridge! It sets up an outpost to run solo patrols.",
       "right": {
         "desc": "Set up a tall solar tower on the peak and beam power straight to our colony grid!",
         "effects": { "power": 25, "food": 0, "shield": 15, "life": 10 },
-        "unlockCard": null
+        "unlockCard": "rover_visit_scout"
       },
       "left": {
         "desc": "Bake the titanium-rich dirt into heavy radiation-shielding bricks for our domes.",
         "effects": { "power": 10, "food": 10, "shield": 20, "life": 15 },
-        "unlockCard": null
+        "unlockCard": "rover_visit_scout"
+      }
+    },
+    "rover_visit_ice": {
+      "deck": "quest",
+      "img": null,
+      "desc": "Beep-beep! Our VIPER rover is back from its deep-crater route, frost-covered and flashing its headlights at the airlock with a fresh hopper of glacial ice!",
+      "right": {
+        "desc": "Top off the greenhouse water tanks and polish its camera lens before it rolls out again!",
+        "effects": { "power": 0, "food": 15, "shield": 0, "life": 10 },
+        "unlockCard": "rover_visit_ice"
+      },
+      "left": {
+        "desc": "Crack the ice into fuel cells and patch up its battered drill bit for the next trip!",
+        "effects": { "power": 15, "food": 0, "shield": 10, "life": 0 },
+        "unlockCard": "rover_visit_ice"
+      }
+    },
+    "rover_visit_scout": {
+      "deck": "quest",
+      "img": null,
+      "desc": "Look who's back! VIPER rolls down from the sunny ridge, beaming a fresh charge from its solar banks and towing a sled of titanium ore!",
+      "right": {
+        "desc": "Drain its spare battery banks into our grid and give our robot pal a tune-up!",
+        "effects": { "power": 15, "food": 5, "shield": 0, "life": 5 },
+        "unlockCard": "rover_visit_scout"
+      },
+      "left": {
+        "desc": "Unload the titanium ore to reinforce our hull before sending it back up the mountain!",
+        "effects": { "power": 5, "food": 0, "shield": 15, "life": 5 },
+        "unlockCard": "rover_visit_scout"
       }
     }
   }
