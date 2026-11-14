@@ -1,5 +1,80 @@
 {
   "cards": {
+    "design_001": {
+      "deck": "quest",
+      "img": null,
+      "desc": "MISSION DESIGN [1/5] — Launch Vehicle: Our mass budget is tight! Do we book NASA's Space Launch System (SLS) for crew comfort, or a heavy cargo rocket for extra armor?",
+      "right": {
+        "desc": "Launch on SLS Block 1B with full crew quarters.",
+        "effects": { "power": -5, "food": 15, "shield": -10, "life": 15 },
+        "unlockCard": "design_002"
+      },
+      "left": {
+        "desc": "Cram the crew into a heavy cargo lander.",
+        "effects": { "power": 10, "food": -10, "shield": 15, "life": -10 },
+        "unlockCard": "design_002"
+      }
+    },
+    "design_002": {
+      "deck": "quest",
+      "img": null,
+      "desc": "MISSION DESIGN [2/5] — Lunar Orbit: We can dock at the Lunar Gateway station in a wide halo orbit for resupplies, or dive straight into Low Lunar Orbit to save fuel.",
+      "right": {
+        "desc": "Dock at Gateway for extra food and comms.",
+        "effects": { "power": -10, "food": 15, "shield": 5, "life": 5 },
+        "unlockCard": "design_003"
+      },
+      "left": {
+        "desc": "Burn straight for Low Lunar Orbit to save power.",
+        "effects": { "power": 15, "food": -5, "shield": -10, "life": -5 },
+        "unlockCard": "design_003"
+      }
+    },
+    "design_003": {
+      "deck": "quest",
+      "img": null,
+      "desc": "MISSION DESIGN [3/5] — Landing Site: Touch down on Shackleton Crater's sunny South Pole rim for constant solar power, or inside a basalt lava tube for natural shielding?",
+      "right": {
+        "desc": "Land on Shackleton's sunny South Pole ridge.",
+        "effects": { "power": 15, "food": 0, "shield": -15, "life": 5 },
+        "unlockCard": "design_004"
+      },
+      "left": {
+        "desc": "Land inside the armored Mare Lava Tube pit.",
+        "effects": { "power": -15, "food": 0, "shield": 20, "life": -5 },
+        "unlockCard": "design_004"
+      }
+    },
+    "design_004": {
+      "deck": "quest",
+      "img": null,
+      "desc": "MISSION DESIGN [4/5] — Base Systems: Our lander only has room for one heavy module! Pack a Kilopower nuclear reactor, or an expanded Veggie hydroponic farm?",
+      "right": {
+        "desc": "Pack the Kilopower nuclear fission core.",
+        "effects": { "power": 20, "food": -10, "shield": -5, "life": -5 },
+        "unlockCard": "design_005"
+      },
+      "left": {
+        "desc": "Pack the expanded Veggie hydroponic greenhouse.",
+        "effects": { "power": -15, "food": 20, "shield": 0, "life": 10 },
+        "unlockCard": "design_005"
+      }
+    },
+    "design_005": {
+      "deck": "quest",
+      "img": null,
+      "desc": "MISSION DESIGN [5/5] — Science Payload: Touchdown confirmed! For our final payload bay, do we activate the NASA Rover homing beacon, or the deep-space SETI dish?",
+      "right": {
+        "desc": "Ping NASA's lost VIPER rover nearby!",
+        "effects": { "power": -5, "food": 0, "shield": 5, "life": 10 },
+        "unlockCard": "main_003"
+      },
+      "left": {
+        "desc": "Fire up the deep-space SETI radio dish!",
+        "effects": { "power": -10, "food": 0, "shield": 10, "life": 5 },
+        "unlockCard": "alien_001_dip"
+      }
+    },
     "main_001": {
       "deck": "main",
       "img": null,
@@ -97,7 +172,7 @@
       "img": null,
       "desc": "Our Kilopower nuclear reactor is running hot! We can push the uranium core harder for energy, or cool it down to protect the base.",
       "right": {
-        "desc": "Yank the control rod and Disable alarms!",
+        "desc": "Yank the control rod and disable alarms!",
         "effects": { "power": 25, "food": 0, "shield": -25, "life": -30 },
         "unlockCard": null
       },
