@@ -1,32 +1,18 @@
 {
   "cards": {
-    "main_000": {
-      "deck": "main",
-      "img": null,
-      "desc": "An envoy has come from Mars.",
-      "right": {
-        "desc": "Greet them hospitably!",
-        "effects": { "power": -20, "food": -20, "shield": 0, "life": -20 },
-        "unlockCard": "alien_001_dip"
-      },
-      "left": {
-        "desc": "Ready our defenses.",
-        "effects": { "power": 10, "food": 0, "shield": 20, "life": 0 },
-        "unlockCard": "alien_001_com"
-      }
-    },
     "main_001": {
       "deck": "main",
       "img": null,
       "desc": "We are low on food!",
+      "conditions": { "maxFood": 25 },
       "right": {
         "desc": "Divert resources to make more food.",
         "effects": { "power": -5, "food": 20, "shield": 0, "life": -5 },
         "unlockCard": null
       },
       "left": {
-        "desc": "Ration the food and focus our efforts elsewhere.",
-        "effects": { "power": 5, "food": -5, "shield": 5, "life": 5 },
+        "desc": "Ration what we have left.",
+        "effects": { "power": 0, "food": 5, "shield": 0, "life": -10 },
         "unlockCard": null
       }
     },
@@ -34,6 +20,7 @@
       "deck": "main",
       "img": null,
       "desc": "We are low on power!",
+      "conditions": { "maxPower": 25 },
       "right": {
         "desc": "Cut down on power usage to other systems.",
         "effects": { "power": 20, "food": 0, "shield": -5, "life": -5 },
@@ -48,14 +35,14 @@
     "main_003": {
       "deck": "main",
       "img": null,
-      "desc": "A dusty NASA rover rolls up to our airlock, flashes its headlights, and beeps happily! Its old Houston uplink is dead, and it wants to join the colony.",
+      "desc": "NASA's lost VIPER rover rolls up to our Mons Mouton airlock, headlights flashing! Its Earth X-band link is dead, and its Neutron Spectrometer is pinging nearby.",
       "right": {
-        "desc": "Plug it into our grid and assign it to ice-mining duty!",
-        "effects": { "power": -15, "food": 0, "shield": 0, "life": 5 },
+        "desc": "Sync it to our comms and send it into a 50-hour Permanently Shadowed Region (PSR) sortie for water-ice!",
+        "effects": { "power": -10, "food": 0, "shield": 0, "life": 5 },
         "unlockCard": "rover_001_ice"
       },
       "left": {
-        "desc": "Keep it on the sunlit ridge as a mobile scout and solar bank.",
+        "desc": "Deploy it to Shackleton's illuminated rim as a solar bank and Lunar Flashlight relay.",
         "effects": { "power": 15, "food": -5, "shield": 5, "life": 0 },
         "unlockCard": "rover_001_scout"
       }
@@ -63,44 +50,44 @@
     "alien_001_dip": {
       "deck": "quest",
       "img": null,
-      "desc": "The aliens send another envoy.",
+      "desc": "An alien delegation approaches the perimeter, broadcasting a peaceful mathematical sequence.",
       "right": {
         "desc": "Welcome them with open arms.",
         "effects": { "power": -5, "food": -5, "shield": 0, "life": -5 },
-        "unlockCard": null
+        "unlockCard": "alien_002_dip"
       },
       "left": {
         "desc": "Resources are low...",
-        "effects": { "power": 0, "food": 0, "shield": 0, "life": 0 },
+        "effects": { "power": 0, "food": 0, "shield": 10, "life": -5 },
         "unlockCard": "alien_001_com"
       }
     },
     "alien_001_com": {
       "deck": "quest",
       "img": null,
-      "desc": "The aliens are attacking!",
+      "desc": "Alien vessels lock weapons onto our primary dome! Our refusal to share resources has provoked an attack.",
       "right": {
         "desc": "Defend ourselves!",
         "effects": { "power": -5, "food": 0, "shield": -30, "life": -5 },
-        "unlockCard": null
+        "unlockCard": "alien_002_com"
       },
       "left": {
         "desc": "Sue for peace.",
         "effects": { "power": -25, "food": -25, "shield": 0, "life": -25 },
-        "unlockCard": "alien_001_dip"
+        "unlockCard": "alien_002_dip"
       }
     },
     "rover_001_ice": {
       "deck": "quest",
       "img": null,
-      "desc": "Our little buddy is stuck in fluffy 'fairy-castle' dust inside a dark crater! It's spinning its wheels and looking at our cameras for help.",
+      "desc": "VIPER's wheels have sunk into high-porosity 'fairy-castle' regolith inside a dark micro-crater! Conventional spinning will bury its chassis to the belly pan.",
       "right": {
-        "desc": "Use NASA's 'Inchworm' protocol: lift and wiggle one wheel at a time.",
-        "effects": { "power": -20, "food": 0, "shield": 0, "life": 5 },
+        "desc": "Engage VIPER's active suspension: lift and 'swim' each wheel forward using the Inchworm gait.",
+        "effects": { "power": -10, "food": 0, "shield": 0, "life": 5 },
         "unlockCard": "rover_002_ice"
       },
       "left": {
-        "desc": "Floor the throttle and winch it back up to the sunny rim!",
+        "desc": "Fire emergency colony winches and drag it up the crater wall to the sunlit ridge!",
         "effects": { "power": -10, "food": 0, "shield": -15, "life": 0 },
         "unlockCard": "rover_002_scout"
       }
@@ -108,14 +95,14 @@
     "rover_001_scout": {
       "deck": "quest",
       "img": null,
-      "desc": "The rover knocked off its rear fender while showing off! Now static-charged moon dust is rooster-tailing everywhere and overheating its radiator.",
+      "desc": "The rover clipped a boulder and tore off a rear fender! Razor-sharp, electrostatically levitated lunar dust is coating its optical solar reflectors, spiking thermal load.",
       "right": {
-        "desc": "Pull an Apollo 17: duct-tape laminated colony maps to make a new fender!",
-        "effects": { "power": 5, "food": -5, "shield": 15, "life": 5 },
+        "desc": "Execute Apollo 17's Gene Cernan fix: clamp laminated colony EVA maps to the wheel well!",
+        "effects": { "power": -5, "food": -5, "shield": 10, "life": 5 },
         "unlockCard": "rover_002_scout"
       },
       "left": {
-        "desc": "Send it into the freezing crater shadow to cool down naturally.",
+        "desc": "Order it down into a 40K (-233°C) shadow trap to dump excess heat before its avionics melt.",
         "effects": { "power": -10, "food": 0, "shield": -5, "life": 0 },
         "unlockCard": "rover_002_ice"
       }
@@ -123,14 +110,14 @@
     "rover_002_ice": {
       "deck": "quest",
       "img": null,
-      "desc": "Brrr! At 38 Kelvin (-235°C), the rover's drill is chattering. It transmits a puppy-dog warning icon: its batteries will freeze solid in an hour!",
+      "desc": "At 38 Kelvin inside the PSR, the TRIDENT rotary-percussive drill hits cemented ice at 0.8m! Auger torque is spiking, and battery survival heaters have 4 hours left.",
       "right": {
-        "desc": "Follow NASA flight rules: pause drilling and divert power to internal heaters.",
-        "effects": { "power": -25, "food": 0, "shield": 10, "life": 0 },
+        "desc": "Run the TRIDENT 'bite-and-brush' cycle: retract every 10cm to analyze cuttings with MSolo and warm the bit.",
+        "effects": { "power": -15, "food": 0, "shield": 10, "life": 0 },
         "unlockCard": "rover_003_ice"
       },
       "left": {
-        "desc": "Abandon the trench and sprint for the sunlit ridge before it freezes!",
+        "desc": "Jettison the stuck drill string and sprint for a 'Safe Haven' sunlit ridge before battery death!",
         "effects": { "power": -15, "food": -10, "shield": -5, "life": 0 },
         "unlockCard": "rover_003_scout"
       }
@@ -138,14 +125,14 @@
     "rover_002_scout": {
       "deck": "quest",
       "img": null,
-      "desc": "Siren alert! NASA's DONKI satellite spots a massive Solar Flare heading our way. Our rover is exposed on the ridge and could get its brain fried!",
+      "desc": "Red alert! NASA's DONKI network detects an X-class Coronal Mass Ejection. High-energy protons will cause single-event upsets in the rover's RAD750 flight computer!",
       "right": {
-        "desc": "Command 'Safe Mode': park behind a boulder and angle shields toward the Sun.",
-        "effects": { "power": -10, "food": -5, "shield": 20, "life": 0 },
+        "desc": "Command 'Safe Mode': park behind anorthosite megaboulders and power down non-essential buses.",
+        "effects": { "power": -10, "food": -5, "shield": 15, "life": 0 },
         "unlockCard": "rover_003_scout"
       },
       "left": {
-        "desc": "Tumble down the crater chute into the dark ice basin for natural cover!",
+        "desc": "Dive down the steep regolith chute into the crater basin to use the crater rim as a radiation shield!",
         "effects": { "power": 0, "food": 0, "shield": -15, "life": -10 },
         "unlockCard": "rover_003_ice"
       }
@@ -153,30 +140,30 @@
     "rover_003_ice": {
       "deck": "quest",
       "img": null,
-      "desc": "The rover rolls back to the airlock doing celebratory donuts! Its storage bay is overflowing with pure ancient water-ice from 1 meter underground.",
+      "desc": "Success! NIRVSS and MSolo confirm 5% water-ice by weight alongside trapped ammonia and CO2 volatiles! VIPER hauls a full core load back to our ISRU plant.",
       "right": {
-        "desc": "Melt it for hydroponic farms and throw our robot pal a parade!",
-        "effects": { "power": -10, "food": 35, "shield": 0, "life": 25 },
+        "desc": "Sublimate the cores for our hydroponic bays and scrub the ammonia into plant fertilizer!",
+        "effects": { "power": -5, "food": 25, "shield": 0, "life": 20 },
         "unlockCard": null
       },
       "left": {
-        "desc": "Split the water into rocket fuel and oxygen to supercharge the base.",
-        "effects": { "power": 35, "food": 10, "shield": 15, "life": 5 },
+        "desc": "Run Sabatier electrolysis: split the H2O into breathable O2 and methalox fuel for colony reserves.",
+        "effects": { "power": 25, "food": 10, "shield": 15, "life": 5 },
         "unlockCard": null
       }
     },
     "rover_003_scout": {
       "deck": "quest",
       "img": null,
-      "desc": "Our rover discovered a 'Peak of Eternal Light' bathed in 94% year-round sunshine! It's beaming surplus solar power and Earth memes straight to our colony.",
+      "desc": "VIPER mapped Connecting Ridge's 'Peak of Eternal Light' (92% annual illumination) and located high-titanium ilmenite deposits along the rim!",
       "right": {
-        "desc": "Promote it to Chief Energy Officer and link its solar array to our grid!",
-        "effects": { "power": 40, "food": 0, "shield": 20, "life": 10 },
+        "desc": "Anchor a vertical solar array on the peak and beam microwave power straight to our habitat grid!",
+        "effects": { "power": 25, "food": 0, "shield": 15, "life": 10 },
         "unlockCard": null
       },
       "left": {
-        "desc": "Have it haul back rare lunar rocks to reinforce our colony domes.",
-        "effects": { "power": 15, "food": 15, "shield": 25, "life": 15 },
+        "desc": "Microwave-sinter the ilmenite regolith into radiation-shielding bricks for our colony domes.",
+        "effects": { "power": 10, "food": 10, "shield": 20, "life": 15 },
         "unlockCard": null
       }
     }
