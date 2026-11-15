@@ -157,12 +157,12 @@
       "right": {
         "desc": "Scoop up the vaporized meteor iron to reinforce the hull!",
         "effects": { "power": 5, "food": 0, "shield": 15, "life": 5 },
-        "unlockCard": "upgrademsq2_visit_security"
+        "unlockCard": "explosionmsq3_001_start"
       },
       "left": {
         "desc": "Throw a crew viewing party under the invincible dome!",
         "effects": { "power": 5, "food": 10, "shield": 5, "life": 5 },
-        "unlockCard": "upgrademsq2_visit_security"
+        "unlockCard": "explosionmsq3_001_start"
       }
     },
     "upgrademsq2_004_lifesupport": {
@@ -172,12 +172,12 @@
       "right": {
         "desc": "Feast on fresh Bio-Dome produce and pure mountain air!",
         "effects": { "power": 0, "food": 15, "shield": 0, "life": 10 },
-        "unlockCard": "upgrademsq2_visit_lifesupport"
+        "unlockCard": "meteorshowermsq3_001_start"
       },
       "left": {
         "desc": "Store excess liquid oxygen and biofuel for emergencies!",
         "effects": { "power": 15, "food": 5, "shield": 0, "life": 5 },
-        "unlockCard": "upgrademsq2_visit_lifesupport"
+        "unlockCard": "meteorshowermsq3_001_start"
       }
     },
     "upgrademsq2_visit_security": {
@@ -207,6 +207,126 @@
       "left": {
         "desc": "Vent spare oxygen into the fuel cells for clean energy!",
         "effects": { "power": 15, "food": 5, "shield": -5, "life": 0 },
+        "unlockCard": "upgrademsq2_visit_lifesupport"
+      }
+    },
+    "explosionmsq3_001_start": {
+      "deck": "quest",
+      "img": "images/flightSurgeon(life).jpg",
+      "desc": "EXPLOSION CRISIS [START] — BANG! Because we skipped the Life Support upgrade, an aging Apollo-style cryo-oxygen tank just shorted out and blew open Habitat B!",
+      "right": {
+        "desc": "Slam the blast doors and vent the burning bay!",
+        "effects": { "power": -5, "food": -5, "shield": 5, "life": -5 },
+        "unlockCard": "explosionmsq3_002"
+      },
+      "left": {
+        "desc": "Send emergency crews into the flames with foam!",
+        "effects": { "power": -5, "food": 0, "shield": -5, "life": -5 },
+        "unlockCard": "explosionmsq3_002"
+      }
+    },
+    "explosionmsq3_002": {
+      "deck": "quest",
+      "img": "images/bioLead(food).png",
+      "desc": "EXPLOSION CRISIS [1/3] — Toxic smoke is flooding the air ducts! Like Apollo 13, CO2 is spiking fast and our round lithium-hydroxide scrubbers don't fit the backup slots!",
+      "right": {
+        "desc": "Duct-tape spacesuit hoses to jury-rig a filter!",
+        "effects": { "power": -5, "food": -5, "shield": 0, "life": 5 },
+        "unlockCard": "explosionmsq3_003"
+      },
+      "left": {
+        "desc": "Overclock the greenhouse fans to scrub the air!",
+        "effects": { "power": -10, "food": 0, "shield": -5, "life": 10 },
+        "unlockCard": "explosionmsq3_003"
+      }
+    },
+    "explosionmsq3_003": {
+      "deck": "quest",
+      "img": "images/chiefEngineer(power).jpg",
+      "desc": "EXPLOSION CRISIS [2/3] — Shrapnel from the oxygen blast punctured our thermal cooling loop! Ammonia coolant is boiling into cabin vapor and overheating the mainframes.",
+      "right": {
+        "desc": "Cut secondary power grids and freeze the leak!",
+        "effects": { "power": -5, "food": 0, "shield": -5, "life": 5 },
+        "unlockCard": "explosionmsq3_004"
+      },
+      "left": {
+        "desc": "Flush the cooling pipes with emergency water!",
+        "effects": { "power": 5, "food": -10, "shield": 0, "life": 0 },
+        "unlockCard": "explosionmsq3_004"
+      }
+    },
+    "explosionmsq3_004": {
+      "deck": "quest",
+      "img": "images/flightSurgeon(life).jpg",
+      "desc": "EXPLOSION CRISIS [3/3] — The fire is out and air pressure is holding! Using NASA epoxy patch kits, the crew bolts an armored bulkhead over the ruptured wall.",
+      "right": {
+        "desc": "Crack open emergency oxygen reserves for the crew!",
+        "effects": { "power": 0, "food": 5, "shield": 5, "life": 15 },
+        "unlockCard": "upgrademsq2_visit_security"
+      },
+      "left": {
+        "desc": "Salvage the wrecked tank into hull armor and wire!",
+        "effects": { "power": 15, "food": 0, "shield": 10, "life": 0 },
+        "unlockCard": "upgrademsq2_visit_security"
+      }
+    },
+    "meteorshowermsq3_001_start": {
+      "deck": "quest",
+      "img": "images/safetyOfficer(shielding).png",
+      "desc": "METEOR CRISIS [START] — SIREN ALERT! Because we skipped the Defense Grid, a hypervelocity Taurid meteoroid swarm is slamming into the unshielded base at 65,000 mph!",
+      "right": {
+        "desc": "Drop internal blast shutters and evacuate the rim!",
+        "effects": { "power": -5, "food": 0, "shield": -10, "life": 5 },
+        "unlockCard": "meteorshowermsq3_002"
+      },
+      "left": {
+        "desc": "Dump all reactor power into emergency magnetic fields!",
+        "effects": { "power": -10, "food": 0, "shield": 0, "life": -5 },
+        "unlockCard": "meteorshowermsq3_002"
+      }
+    },
+    "meteorshowermsq3_002": {
+      "deck": "quest",
+      "img": "images/chiefEngineer(power).jpg",
+      "desc": "METEOR CRISIS [1/3] — A marble-sized meteoroid just punched through Solar Array Alpha with the force of dynamite! Live high-voltage cables are arcing across the hull.",
+      "right": {
+        "desc": "Fire explosive bolts to sever the shorted solar wing!",
+        "effects": { "power": -10, "food": 0, "shield": 5, "life": 0 },
+        "unlockCard": "meteorshowermsq3_003"
+      },
+      "left": {
+        "desc": "Send an EVA team into the meteor storm to rewire it!",
+        "effects": { "power": 10, "food": -5, "shield": -5, "life": -5 },
+        "unlockCard": "meteorshowermsq3_003"
+      }
+    },
+    "meteorshowermsq3_003": {
+      "deck": "quest",
+      "img": "images/bioLead(food).png",
+      "desc": "METEOR CRISIS [2/3] — Micrometeorites shredded the outer Kevlar bladder of the Bio-Dome! Warm air is whistling into the vacuum and our crops are flash-freezing!",
+      "right": {
+        "desc": "Inject rapid-curing NASA polymer foam into the holes!",
+        "effects": { "power": -5, "food": -5, "shield": 10, "life": -5 },
+        "unlockCard": "meteorshowermsq3_004"
+      },
+      "left": {
+        "desc": "Harvest the freezing crops and seal off the outer dome!",
+        "effects": { "power": 0, "food": 10, "shield": -10, "life": -5 },
+        "unlockCard": "meteorshowermsq3_004"
+      }
+    },
+    "meteorshowermsq3_004": {
+      "deck": "quest",
+      "img": "images/safetyOfficer(shielding).png",
+      "desc": "METEOR CRISIS [3/3] — The Taurid swarm finally passes! The lunar dust settles around a fresh crater field packed with dense nickel-iron meteorite fragments.",
+      "right": {
+        "desc": "Pile lunar regolith sandbags over the battered domes!",
+        "effects": { "power": 0, "food": 0, "shield": 20, "life": 5 },
+        "unlockCard": "upgrademsq2_visit_lifesupport"
+      },
+      "left": {
+        "desc": "Smelt the meteor iron to repair the grid and habitats!",
+        "effects": { "power": 15, "food": 5, "shield": 5, "life": 0 },
         "unlockCard": "upgrademsq2_visit_lifesupport"
       }
     },
