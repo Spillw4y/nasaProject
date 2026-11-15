@@ -662,7 +662,7 @@
     },
     "aliensidequest_001_dip": {
       "deck": "quest",
-      "img": "None",
+      "img": "images/alien_card.jpg",
       "desc": "An alien delegation approaches the perimeter, broadcasting a peaceful mathematical sequence.",
       "right": {
         "desc": "Welcome them with open arms.",
@@ -677,7 +677,7 @@
     },
     "aliensidequest_001_com": {
       "deck": "quest",
-      "img": "None",
+      "img": "images/alien_card.jpg",
       "desc": "Alien vessels lock weapons onto our primary dome! Our refusal to share resources has provoked an attack.",
       "right": {
         "desc": "Return fire with everything we have!",
@@ -692,7 +692,7 @@
     },
     "aliensidequest_002_dip": {
       "deck": "quest",
-      "img": "None",
+      "img": "images/alien_card.jpg",
       "desc": "The alien envoys share either crystalline zero-point energy matrices or bio-seeds in exchange for our peaceful hospitality!",
       "right": {
         "desc": "Plug their zero-point matrix into our main grid!",
@@ -707,7 +707,7 @@
     },
     "aliensidequest_002_com": {
       "deck": "quest",
-      "img": "None",
+      "img": "images/alien_card.jpg",
       "desc": "The alien scout ship crashes into a nearby crater after our laser barrage! Its exotic alloy hull is still smoking.",
       "right": {
         "desc": "Salvage the alien armor plating for our domes!",
@@ -722,7 +722,7 @@
     },
     "aliensidequest_003_war": {
       "deck": "quest",
-      "img": "None",
+      "img": "images/alien_card.jpg",
       "desc": "Smoke drifts off of the colony and the evading alien fleet as shots are exchanged, the sounds of explosions loud in the air. The crew hears them ramping back up to attack again.",
       "right": {
         "desc": "Ask for a truce...",
@@ -737,7 +737,7 @@
     },
     "aliensidequest_003_peace": {
       "deck": "quest",
-      "img": null,
+      "img": "images/alien_card.jpg",
       "desc": "ALIEN CONTACT [CONCLUSION] — The aliens' ship prepares for lift off, and the alien leader asks for a gift to show our friendship. Which gift should the colony give?",
       "right": {
         "desc": "Give them a flashdrive with all of Nickelbacks albums on it, and they loved it! They reward us with resources.",
