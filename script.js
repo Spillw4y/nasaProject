@@ -24,11 +24,6 @@ const choiceText = {
     left: decisionHints.left.querySelector(".choice-desc"),
     right: decisionHints.right.querySelector(".choice-desc")
 };
-const choiceEffects = {
-    left: decisionHints.left.querySelector(".choice-effects"),
-    right: decisionHints.right.querySelector(".choice-effects")
-};
-const meterNames = { power: "Power", food: "Food", shield: "Shield", life: "Life" };
 // Every game opens with this card. The cards it unlocks whose ids start with OPENING_PREFIX play
 // straight after it, one after another with no random events in between, until that chain ends.
 // After that, cards unlock and play with the usual 1 to 3 random events between them.
@@ -107,14 +102,6 @@ function unlockFrom(choice) {
     questQueue.push(id);
 }
 
-// Turns { power: -5, food: 20, shield: 0 } into "Power \u22125 \u00b7 Food +20". Zero changes are left out.
-function describeEffects(effects = {}) {
-    const parts = Object.keys(meterNames)
-        .filter((name) => effects[name])
-        .map((name) => `${meterNames[name]} ${effects[name] > 0 ? "+" : "\u2212"}${Math.abs(effects[name])}`);
-    return parts.length > 0 ? parts.join(" \u00b7 ") : "No change";
-}
-
 // Show a card's picture, or an empty card when it has none. path comes from "img" in decks.json.
 function showCardImage(path) {
     if (path) {
@@ -133,7 +120,6 @@ function renderCard() {
     showCardImage(data.img);
     for (const side of ["left", "right"]) {
         choiceText[side].textContent = data[side].desc;
-        choiceEffects[side].textContent = describeEffects(data[side].effects);
     }
 }
 
@@ -143,7 +129,6 @@ function renderEnding(message) {
     showCardImage(null);
     for (const side of ["left", "right"]) {
         choiceText[side].textContent = "Start again";
-        choiceEffects[side].textContent = "";
     }
 }
 

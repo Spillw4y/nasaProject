@@ -83,10 +83,10 @@ body {
             .card-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; -webkit-user-drag: none; user-select: none; }
             .card-img[hidden] { display: none; }
 
-            /* Decision labels beside the arrows: the choice, then what it changes. Shown while dragging that way. */
-            .arrow-label { display: flex; flex-direction: column; gap: 6px; width: max-content; max-width: min(240px, 62vw); padding: 10px 12px; border-radius: 8px; background: #fff; box-shadow: 0 6px 20px rgb(34 52 72 / 20%); font-family: system-ui, sans-serif; font-size: 0.95rem; line-height: 1.3; letter-spacing: 0.01em; text-transform: none; white-space: normal; }
-            .arrow[data-direction="left"] .arrow-label { left: 0; transform: none; text-align: left; border-left: 4px solid #9b4545; }
-            .arrow[data-direction="right"] .arrow-label { left: auto; right: 0; transform: none; text-align: right; border-right: 4px solid #326e5a; }
-            .choice-effects { font-size: 0.8rem; font-weight: 600; color: #526579; }
-            .choice-effects:empty { display: none; }
+            /* Decision labels beside the arrows: the choice's text only, shown while dragging that way.
+               It does not say how much each meter changes; the icons turning green or red are the only hint.
+               Styled like the rest of the game: white text on a dark see-through panel with a thin white edge. */
+            .arrow-label { display: block; width: max-content; max-width: min(240px, 62vw); padding: 12px 14px; border: 1px solid rgb(255 255 255 / 28%); border-radius: 12px; background: rgb(2 3 6 / 78%); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); box-shadow: 0 8px 24px rgb(0 0 0 / 45%); color: #fff; font-family: system-ui, sans-serif; font-size: 1rem; font-weight: 700; line-height: 1.3; letter-spacing: 0.01em; text-transform: none; white-space: normal; text-shadow: 0 1px 3px rgb(0 0 0 / 90%); }
+            .arrow[data-direction="left"] .arrow-label { left: 0; transform: none; text-align: left; }
+            .arrow[data-direction="right"] .arrow-label { left: auto; right: 0; transform: none; text-align: right; }
             @media (max-width: 480px) { .card-desc { font-size: 1.2rem; } }
