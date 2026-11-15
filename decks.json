@@ -333,7 +333,7 @@
     "upgrademsq4_001_start": {
       "deck": "quest",
       "img": "images/spacestation.png",
-      "desc": "CAVERN EXPANSION [START] — Silver lining! The shockwaves from our recent crisis cracked the crater floor, opening a massive subterranean lava tube! How should we remodel the new cavern?",
+      "desc": "Silver lining! The shockwaves from our recent crisis cracked the crater floor, opening a massive subterranean lava tube! How should we remodel the new cavern?",
       "right": {
         "desc": "Build the Subterranean Helium-3 Fusion Core.",
         "effects": { "power": 30, "food": 0, "shield": 10, "life": 10 },
@@ -348,7 +348,7 @@
     "upgrademsq4_002_power": {
       "deck": "quest",
       "img": "images/chiefEngineer(power).jpg",
-      "desc": "POWER UPGRADE [1/3] — Fusion Tokamak: While repairing the blast zone, engineers anchor a magnetic-confinement fusion reactor into the exposed bedrock!",
+      "desc": "While repairing the blast zone, engineers anchor a magnetic-confinement fusion reactor into the exposed bedrock!",
       "right": {
         "desc": "Ignite the Helium-3 plasma injector for maximum megawatts!",
         "effects": { "power": 30, "food": 0, "shield": 10, "life": 10 },
@@ -363,7 +363,7 @@
     "upgrademsq4_002_food": {
       "deck": "quest",
       "img": "images/bioLead(food).png",
-      "desc": "FOOD UPGRADE [1/3] — Subterranean Meltwater Lake: The blast exposed an ancient vein of pure lunar water-ice! We're melting it into an underground reservoir.",
+      "desc": "The blast exposed an ancient vein of pure lunar water-ice! We're melting it into an underground reservoir.",
       "right": {
         "desc": "Flood the vertical aeroponic towers with mineral-rich water!",
         "effects": { "power": 5, "food": 30, "shield": 5, "life": 15 },
@@ -378,7 +378,7 @@
     "upgrademsq4_003_power": {
       "deck": "quest",
       "img": "images/chiefEngineer(power).jpg",
-      "desc": "POWER UPGRADE [2/3] — Superconducting Mag-Grid: We're replacing the damaged surface cables with zero-resistance superconducting conduits cooled by the freezing cavern walls!",
+      "desc": "We're replacing the damaged surface cables with zero-resistance superconducting conduits cooled by the freezing cavern walls!",
       "right": {
         "desc": "Overcharge the colony's main capacitor banks!",
         "effects": { "power": 35, "food": 5, "shield": 15, "life": 5 },
@@ -393,7 +393,7 @@
     "upgrademsq4_003_food": {
       "deck": "quest",
       "img": "images/bioLead(food).png",
-      "desc": "FOOD UPGRADE [2/3] — Rotary Gravity-Farms: Inside the wide lava tube, we're spinning up centrifuge crop rings that simulate Earth gravity for giant yields!",
+      "desc": "Inside the wide lava tube, we're spinning up centrifuge crop rings that simulate Earth gravity for giant yields!",
       "right": {
         "desc": "Cultivate dense dwarf-wheat, soybeans, and sweet potatoes!",
         "effects": { "power": 5, "food": 35, "shield": 5, "life": 15 },
@@ -408,7 +408,7 @@
     "upgrademsq4_004_power": {
       "deck": "quest",
       "img": "images/chiefEngineer(power).jpg",
-      "desc": "POWER UPGRADE [3/3] — Helios-3 Core Complete! What started as disaster repairs is now a subterranean miniature sun, flooding the colony with limitless clean energy!",
+      "desc": "Helios-3 Core Complete! What started as disaster repairs is now a subterranean miniature sun, flooding the colony with limitless clean energy!",
       "right": {
         "desc": "Run all colony systems at 150% capacity!",
         "effects": { "power": 35, "food": 10, "shield": 15, "life": 15 },
@@ -423,7 +423,7 @@
     "upgrademsq4_004_food": {
       "deck": "quest",
       "img": "images/bioLead(food).png",
-      "desc": "FOOD UPGRADE [3/3] — Demeter Vault Complete! The scarred crater is now a thriving underground biosphere overflowing with golden grain, fresh fish, and fruit!",
+      "desc": "Demeter Vault Complete! The scarred crater is now a thriving underground biosphere overflowing with golden grain, fresh fish, and fruit!",
       "right": {
         "desc": "Host a massive five-course harvest banquet for the crew!",
         "effects": { "power": 5, "food": 35, "shield": 10, "life": 25 },
