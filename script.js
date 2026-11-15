@@ -43,7 +43,8 @@ const BASE_PARTS = {
     intromsq1_005: "outpost",                   // the mission design phase is over: the outpost lands
     roversidequest_001_start: "rover",          // VIPER rolls up to the airlock, which starts the rover quest
     upgrademsq2_004_lifesupport: "lifesupport", // colony upgrade, life support branch done: oxygen tanks and the Bio-Dome
-    upgrademsq2_004_security: "security"        // colony upgrade, security branch done: laser turrets and the magnetic shield
+    upgrademsq2_004_security: "security",       // colony upgrade, security branch done: laser turrets and the magnetic shield
+    aliensidequest_001_dip: "ship"              // the alien delegation arrives: their saucer comes down from space and lands
 };
 
 function buildBasePart(cardId) {
