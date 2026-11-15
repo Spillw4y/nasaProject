@@ -117,3 +117,14 @@ body {
             @keyframes base-drive { 0% { opacity: 0; transform: translateX(160%); } 15% { opacity: 1; } 70% { transform: translateX(-4%); } 82% { transform: translateX(0) translateY(-3%); } 100% { opacity: 1; transform: none; } }
             @keyframes base-dust { 0% { opacity: 0.9; transform: translate(-50%, -50%) scale(0.3); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.4); } }
             @media (prefers-reduced-motion: reduce) { .base-part.is-built > .base-img, .base-addon.is-built { animation: none; opacity: 1; transform: none; } .base-part.is-built::after { animation: none; } }
+
+            /* The game-over picture runs the card's full width instead of filling it. script.js sets its top so its horizon is
+               level with the Moon behind the card; the picture's sky is black, so the card behind it is black too. */
+            .card-img.is-scene { bottom: auto; height: auto; object-fit: fill; }
+            .panel:has(.card-img.is-scene) { background: #000; }
+            /* A meter that ran out (on the game-over card) or is running low (below 25, set in Meters.js): its icon turns red
+               and pulses. Its name stays white. While a choice is previewed, the green or red preview shows instead of the warning red. */
+            .meter-item[data-empty], .meter-item[data-low]:not([data-preview]) { --tone: #e5484d; }
+            .meter-item[data-empty] .meter-icon, .meter-item[data-low] .meter-icon { animation: meter-alarm 900ms ease-in-out infinite alternate; }
+            @keyframes meter-alarm { from { opacity: 1; } to { opacity: 0.45; } }
+            @media (prefers-reduced-motion: reduce) { .meter-item[data-empty] .meter-icon, .meter-item[data-low] .meter-icon { animation: none; } }

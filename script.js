@@ -122,6 +122,8 @@ function unlockFrom(choice) {
 
 // Show a card's picture, or an empty card when it has none. path comes from "img" in decks.json.
 function showCardImage(path) {
+    cardImg.classList.remove("is-scene");   // a normal card picture fills the card; see placeSceneImage for the exception
+    cardImg.style.top = "";
     if (path) {
         cardImg.src = path;
         cardImg.hidden = false;
@@ -142,17 +144,71 @@ function renderCard() {
 }
 
 // Show an ending on the card. The next swipe starts a new game.
-function renderEnding(message) {
+// The picture on the card when a meter runs out: the wrecked base. Loaded now so it is ready when the game ends.
+// game_over_card.jpg is game_over.jpg with Earth painted out (the background already has one) and more ground
+// added below, so it can run the full width of the card with its horizon level with the Moon behind the card.
+const GAME_OVER_IMG = "images/game_over_card.jpg";
+const GAME_OVER_HORIZON = 0.352;   // how far down the picture its horizon meets the left and right edges, as a share of its width
+new Image().src = GAME_OVER_IMG;
+
+// What each empty meter means for the outpost, for the game-over message.
+const OUT_OF = {
+    power: "The outpost ran out of Power. The heaters and air pumps have gone dark.",
+    food: "The outpost ran out of Food. The greenhouses are empty and the crew is starving.",
+    shield: "The outpost ran out of Shield. Radiation and meteorites tore through the domes.",
+    life: "The outpost ran out of Life. The crew is too sick and worn out to carry on."
+};
+const METER_LABELS = { power: "Power", food: "Food", shield: "Shield", life: "Life" };
+
+// The Moon's edge in background.jpg (1920 x 1280): a circle with this centre and radius, in the photo's pixels.
+const MOON_CIRCLE = { x: 960, y: 1144.5, r: 929.5 };
+
+// Line the game-over picture's horizon up with the edge of the Moon behind the card. .base-layer has the same
+// size and position as the background photo, so it tells us where the photo is on screen.
+function placeSceneImage() {
+    if (!cardImg.classList.contains("is-scene")) return;
+    const photo = document.querySelector(".base-layer").getBoundingClientRect();
+    const scale = photo.width / 1920;
+    const box = card.getBoundingClientRect();
+    const left = box.left + card.clientLeft;      // inside the card's border
+    const top = box.top + card.clientTop;
+    const dx = Math.min(MOON_CIRCLE.r, Math.abs((left - photo.left) / scale - MOON_CIRCLE.x));
+    const moonEdge = photo.top + (MOON_CIRCLE.y - Math.sqrt(MOON_CIRCLE.r ** 2 - dx ** 2)) * scale;
+    cardImg.style.top = `${moonEdge - top - GAME_OVER_HORIZON * card.clientWidth}px`;
+}
+window.addEventListener("resize", placeSceneImage);
+
+// img is the picture to show on the ending card, or null for a blank card. scene: true for a picture that
+// runs the card's full width and lines up with the Moon behind the card instead of filling the card.
+function renderEnding(message, img = null, scene = false) {
     cardDesc.textContent = message;
-    showCardImage(null);
+    showCardImage(img);
+    if (img && scene) {
+        cardImg.classList.add("is-scene");
+        requestAnimationFrame(placeSceneImage);   // once the card is back in place
+    }
     for (const side of ["left", "right"]) {
         choiceText[side].textContent = "Start again";
     }
 }
 
+// Mark the meters that ran out, so their icons turn red; null clears them.
+function markEmptyMeters(empty) {
+    for (const name in meterIds) {
+        const item = document.getElementById(meterIds[name])?.closest(".meter-item");
+        if (!item) continue;
+        if (empty && empty.includes(name)) item.dataset.empty = "";
+        else delete item.dataset.empty;
+    }
+}
+
 function renderGameOver() {
     const empty = Object.keys(meters).filter((name) => meters[name] <= 0);
-    renderEnding(`The outpost ran out of ${empty.join(" and ")}.`);
+    const message = empty.length === 1
+        ? OUT_OF[empty[0]]
+        : `The outpost ran out of ${empty.map((name) => METER_LABELS[name]).join(" and ")} at once.`;
+    markEmptyMeters(empty);
+    renderEnding(message, GAME_OVER_IMG, true);
 }
 
 // Draw and show the next card, or end the game if no card is left to play.
@@ -182,6 +238,7 @@ function startGame() {
     played = new Set();
     currentId = null;
     resetMeters();
+    markEmptyMeters(null);
     clearBase();
     if (cards[START_CARD]) {
         currentId = START_CARD;
