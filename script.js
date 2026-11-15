@@ -355,8 +355,9 @@ function startGame() {
     placeMoon();
 }
 
-// Colour the meters a choice would change: green if it goes up, red if it goes down.
-// Pass null to put every meter back to its normal colour.
+// Colour the meters a choice would change: green if it goes up, red if it goes down, white if it doesn't change
+// ("none"). Every meter gets a preview state, so a meter that is running low stops its red warning while a
+// choice is previewed (see styles.css). Pass null to put every meter back to its normal colour, and warnings back on.
 function previewMeters(direction) {
     const showing = direction && !gameOver && currentId !== null;
     const effects = showing ? (currentCard()[direction].effects || {}) : {};
@@ -367,6 +368,7 @@ function previewMeters(direction) {
         const change = effects[name] || 0;
         if (change > 0) item.dataset.preview = "up";
         else if (change < 0) item.dataset.preview = "down";
+        else if (showing) item.dataset.preview = "none";
         else item.removeAttribute("data-preview");
     }
 }
