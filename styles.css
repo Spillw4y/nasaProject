@@ -446,6 +446,14 @@ main {
 .base-addon[data-part="security"] {
     transform-origin: 41.86% 88.4%;
 }
+/* Cavern expansion upgrades (base-fusion.svg, base-agridome.svg) stand on the outpost's left, so they are drawn on a
+   frame that reaches further left: x from -150 to 300 and y from 0 to 200, in the outpost's coordinates. That frame
+   starts 50% of the outpost's width to its left and is 150% as wide. Each grows from the middle of its module's base. */
+.base-addon.is-left {
+    left: -50%;
+    width: 150%;
+    transform-origin: 17% 79%;
+}
 .base-addon.is-built {
     animation: base-pop 900ms cubic-bezier(.2, 1.4, .4, 1) forwards;
 }
