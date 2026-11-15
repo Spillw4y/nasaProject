@@ -36,6 +36,24 @@ let currentId = null;         // id of the card on screen, or null when none is 
 let ready = false;            // true once decks.json has loaded
 let gameOver = false;
 
+// The base on the Moon in the background grows as the player progresses. Making either choice on
+// one of these cards builds that piece, and it stays until the next game. Each name matches the
+// data-part of a .base-part in index.html. To add a piece: draw it, add it to index.html and styles.css, list it here.
+const BASE_PARTS = {
+    design_005: "outpost",   // the mission design phase is over: the outpost lands
+    main_003: "rover"        // VIPER rolls up to the airlock, which starts the rover quest
+};
+
+function buildBasePart(cardId) {
+    const part = BASE_PARTS[cardId];
+    const el = part && document.querySelector(`.base-part[data-part="${part}"]`);
+    if (el) el.classList.add("is-built");
+}
+
+function clearBase() {
+    document.querySelectorAll(".base-part.is-built").forEach((el) => el.classList.remove("is-built"));
+}
+
 function currentCard() {
     return cards[currentId];
 }
@@ -162,6 +180,7 @@ function startGame() {
     played = new Set();
     currentId = null;
     resetMeters();
+    clearBase();
     if (cards[START_CARD]) {
         currentId = START_CARD;
         played.add(START_CARD);
@@ -199,6 +218,7 @@ function setDecisionHint(direction) {
 function showSwipe(direction) {
     const x = direction === "left" ? -window.innerWidth : window.innerWidth;
     const restarting = gameOver;
+    const chosenId = restarting ? null : currentId;
 
     // Apply the choice to the meters straight away.
     if (!restarting) {
@@ -215,6 +235,9 @@ function showSwipe(direction) {
     window.clearTimeout(resetTimer);
 
     resetTimer = window.setTimeout(() => {
+        // Build any piece of the base this choice unlocks, as the card clears the screen.
+        if (chosenId) buildBasePart(chosenId);
+
         // Swap the card's content while it is off screen.
         if (restarting) {
             startGame();

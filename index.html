@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- The base on the Moon, behind the game. Pieces appear as the player progresses: see BASE_PARTS in script.js. -->
+    <div class="base-layer" aria-hidden="true">
+        <div class="base-part" data-part="outpost"><img src="images/base-outpost.svg" alt="" draggable="false"></div>
+        <div class="base-part" data-part="rover"><img src="images/base-rover.svg" alt="" draggable="false"></div>
+    </div>
     <div class="app-shell">
     <header>
         <div class="meter-item">
