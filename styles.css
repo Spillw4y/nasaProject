@@ -1,6 +1,9 @@
 
 * { box-sizing: border-box; }
 html, body { min-height: 100%; margin: 0; }
+/* A dragged or swiped card tilts and flies past the edges of the window. The game always fits the window,
+   so hiding overflow here stops the card from adding scrollbars without cutting anything else off. */
+html { overflow: hidden; }
 body {
     min-height: 100vh;
     margin: 0;
@@ -20,7 +23,8 @@ body {
                 min-height: 100vh;
                 display: flex;
                 flex-direction: column;
-                overflow: hidden;
+                /* Not hidden: the card must stay visible when it is dragged past the edges of this column. */
+                overflow: visible;
                 background: transparent;
                 border-radius: 12px;
                 box-shadow: 0 12px 40px rgb(34 52 72 / 18%);
