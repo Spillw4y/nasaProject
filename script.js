@@ -1,12 +1,10 @@
 const card = document.querySelector(".panel");
-const toast = document.querySelector(".swipe-toast");
 const decisionHints = {
     left: document.querySelector('.arrow[data-direction="left"]'),
     right: document.querySelector('.arrow[data-direction="right"]')
 };
 let startX = 0;
 let activePointerId = null;
-let toastTimer;
 let resetTimer;
 const swipeDuration = 460;
 
@@ -24,11 +22,6 @@ const choiceText = {
     left: decisionHints.left.querySelector(".choice-desc"),
     right: decisionHints.right.querySelector(".choice-desc")
 };
-const choiceEffects = {
-    left: decisionHints.left.querySelector(".choice-effects"),
-    right: decisionHints.right.querySelector(".choice-effects")
-};
-const meterNames = { power: "Power", food: "Food", shield: "Shield", life: "Life" };
 // Every game opens with this card. The cards it unlocks whose ids start with OPENING_PREFIX play
 // straight after it, one after another with no random events in between, until that chain ends.
 // After that, cards unlock and play with the usual 1 to 3 random events between them.
@@ -42,6 +35,24 @@ let played = new Set();       // ids already shown this game, so no card repeats
 let currentId = null;         // id of the card on screen, or null when none is left
 let ready = false;            // true once decks.json has loaded
 let gameOver = false;
+
+// The base on the Moon in the background grows as the player progresses. Making either choice on
+// one of these cards builds that piece, and it stays until the next game. Each name matches the
+// data-part of a .base-part in index.html. To add a piece: draw it, add it to index.html and styles.css, list it here.
+const BASE_PARTS = {
+    design_005: "outpost",   // the mission design phase is over: the outpost lands
+    main_003: "rover"        // VIPER rolls up to the airlock, which starts the rover quest
+};
+
+function buildBasePart(cardId) {
+    const part = BASE_PARTS[cardId];
+    const el = part && document.querySelector(`.base-part[data-part="${part}"]`);
+    if (el) el.classList.add("is-built");
+}
+
+function clearBase() {
+    document.querySelectorAll(".base-part.is-built").forEach((el) => el.classList.remove("is-built"));
+}
 
 function currentCard() {
     return cards[currentId];
@@ -107,14 +118,6 @@ function unlockFrom(choice) {
     questQueue.push(id);
 }
 
-// Turns { power: -5, food: 20, shield: 0 } into "Power \u22125 \u00b7 Food +20". Zero changes are left out.
-function describeEffects(effects = {}) {
-    const parts = Object.keys(meterNames)
-        .filter((name) => effects[name])
-        .map((name) => `${meterNames[name]} ${effects[name] > 0 ? "+" : "\u2212"}${Math.abs(effects[name])}`);
-    return parts.length > 0 ? parts.join(" \u00b7 ") : "No change";
-}
-
 // Show a card's picture, or an empty card when it has none. path comes from "img" in decks.json.
 function showCardImage(path) {
     if (path) {
@@ -133,7 +136,6 @@ function renderCard() {
     showCardImage(data.img);
     for (const side of ["left", "right"]) {
         choiceText[side].textContent = data[side].desc;
-        choiceEffects[side].textContent = describeEffects(data[side].effects);
     }
 }
 
@@ -143,7 +145,6 @@ function renderEnding(message) {
     showCardImage(null);
     for (const side of ["left", "right"]) {
         choiceText[side].textContent = "Start again";
-        choiceEffects[side].textContent = "";
     }
 }
 
@@ -163,6 +164,15 @@ function showNextCard() {
     }
 }
 
+// Keep the top of the moon in the background photo level with the top of the card, so it sits
+// below the icons and the card text. offsetTop ignores the swipe animation, so this is safe mid-swipe.
+function placeMoon() {
+    let top = 0;
+    for (let el = card; el; el = el.offsetParent) top += el.offsetTop;
+    document.body.style.setProperty("--moon-top", `${top}px`);
+}
+window.addEventListener("resize", placeMoon);
+
 function startGame() {
     gameOver = false;
     questQueue = [];
@@ -170,6 +180,7 @@ function startGame() {
     played = new Set();
     currentId = null;
     resetMeters();
+    clearBase();
     if (cards[START_CARD]) {
         currentId = START_CARD;
         played.add(START_CARD);
@@ -178,6 +189,7 @@ function startGame() {
         console.warn(`decks.json: no card has the start id "${START_CARD}", so the game starts with a random card`);
         showNextCard();
     }
+    placeMoon();
 }
 
 // Colour the meters a choice would change: green if it goes up, red if it goes down.
@@ -206,15 +218,13 @@ function setDecisionHint(direction) {
 function showSwipe(direction) {
     const x = direction === "left" ? -window.innerWidth : window.innerWidth;
     const restarting = gameOver;
+    const chosenId = restarting ? null : currentId;
 
     // Apply the choice to the meters straight away.
-    if (restarting) {
-        toast.textContent = "New game";
-    } else {
+    if (!restarting) {
         const chosen = currentCard();
         applyChoice(chosen, direction);
         unlockFrom(chosen[direction]);
-        toast.textContent = chosen[direction].desc;
     }
 
     setDecisionHint(direction);
@@ -222,12 +232,12 @@ function showSwipe(direction) {
     card.classList.add("is-exiting");
     card.dataset.swipeDirection = direction;
     card.style.transform = `translateX(${x}px) scale(0.94) rotate(${direction === "left" ? -12 : 12}deg)`;
-    toast.classList.add("is-visible");
-    window.clearTimeout(toastTimer);
-    toastTimer = window.setTimeout(() => toast.classList.remove("is-visible"), 2400);
     window.clearTimeout(resetTimer);
 
     resetTimer = window.setTimeout(() => {
+        // Build any piece of the base this choice unlocks, as the card clears the screen.
+        if (chosenId) buildBasePart(chosenId);
+
         // Swap the card's content while it is off screen.
         if (restarting) {
             startGame();

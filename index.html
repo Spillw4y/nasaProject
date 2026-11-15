@@ -7,27 +7,36 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- The base on the Moon, behind the game. Pieces appear as the player progresses: see BASE_PARTS in script.js. -->
+    <div class="base-layer" aria-hidden="true">
+        <div class="base-part" data-part="outpost"><img src="images/base-outpost.svg" alt="" draggable="false"></div>
+        <div class="base-part" data-part="rover"><img src="images/base-rover.svg" alt="" draggable="false"></div>
+    </div>
     <div class="app-shell">
     <header>
         <div class="meter-item">
+            <span class="meter-label" aria-hidden="true">Power</span>
             <div class="meter-icon" data-meter="power" role="img" aria-label="Power">
                 <div class="meter-fill" id="powerMeter"></div>
                 <div class="meter-outline"></div>
             </div>
         </div>
         <div class="meter-item">
+            <span class="meter-label" aria-hidden="true">Food</span>
             <div class="meter-icon" data-meter="food" role="img" aria-label="Food">
                 <div class="meter-fill" id="foodMeter"></div>
                 <div class="meter-outline"></div>
             </div>
         </div>
         <div class="meter-item">
+            <span class="meter-label" aria-hidden="true">Shield</span>
             <div class="meter-icon" data-meter="shield" role="img" aria-label="Shield">
                 <div class="meter-fill" id="shieldMeter"></div>
                 <div class="meter-outline"></div>
             </div>
         </div>
         <div class="meter-item">
+            <span class="meter-label" aria-hidden="true">Life</span>
             <div class="meter-icon" data-meter="life" role="img" aria-label="Life">
                 <div class="meter-fill" id="lifeMeter"></div>
                 <div class="meter-outline"></div>
@@ -36,7 +45,7 @@
     </header>
     <main aria-label="Main content">
         <div class="arrow" data-direction="left" aria-hidden="true">
-            <span class="arrow-label"><span class="choice-desc"></span><span class="choice-effects"></span></span>
+            <span class="arrow-label"><span class="choice-desc"></span></span>
             <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
         </div>
         <div class="card-stack">
@@ -46,11 +55,10 @@
             </section>
         </div>
         <div class="arrow" data-direction="right" aria-hidden="true">
-            <span class="arrow-label"><span class="choice-desc"></span><span class="choice-effects"></span></span>
+            <span class="arrow-label"><span class="choice-desc"></span></span>
             <svg viewBox="0 0 24 24"><path d="M5 12h14m-7-7 7 7-7 7"></path></svg>
         </div>
     </main>
-    <div class="swipe-toast" role="status" aria-live="polite"></div>
     </div>
     <script src="Meters.js" defer></script>
     <script src="script.js" defer></script>
