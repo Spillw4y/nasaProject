@@ -498,7 +498,7 @@
     "aliensidequest_002_dip": {
       "deck": "quest",
       "img": "images/spacestation.png",
-      "desc": "ALIEN CONTACT [2/2] — The alien envoys share crystalline zero-point energy matrices and bio-seeds in exchange for our peaceful hospitality!",
+      "desc": "ALIEN CONTACT [2/2] — The alien envoys share either crystalline zero-point energy matrices or bio-seeds in exchange for our peaceful hospitality!",
       "right": {
         "desc": "Plug their zero-point matrix into our main grid!",
         "effects": { "power": 25, "food": 10, "shield": 15, "life": 10 },
