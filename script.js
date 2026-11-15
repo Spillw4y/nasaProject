@@ -36,42 +36,54 @@ const choiceText = {
 // they play like side quest cards, so they never hold up the next quest.
 const STORY = [
     { name: "Mission design", prefixes: ["intromsq1_"], start: "intromsq1_001", ends: ["intromsq1_005"] },
-    { name: "Colony upgrade", prefixes: ["upgrademsq2_"], start: "upgrademsq2_001_start",
-      ends: ["upgrademsq2_004_lifesupport", "upgrademsq2_004_security"] },
-    { name: "Crisis", prefixes: ["explosionmsq3_", "meteorshowermsq3_"],
-      start: () => played.has("upgrademsq2_004_lifesupport") ? "meteorshowermsq3_001_start" : "explosionmsq3_001_start",
-      ends: ["explosionmsq3_004", "meteorshowermsq3_004"] },
-    { name: "Cavern expansion", prefixes: ["upgrademsq4_"], start: "upgrademsq4_001_start",
-      ends: ["upgrademsq4_004_power", "upgrademsq4_004_food"] },
+    {
+        name: "Colony upgrade",
+        prefixes: ["upgrademsq2_"],
+        start: "upgrademsq2_001_start",
+        ends: ["upgrademsq2_004_lifesupport", "upgrademsq2_004_security"]
+    },
+    {
+        name: "Crisis",
+        prefixes: ["explosionmsq3_", "meteorshowermsq3_"],
+        start: () =>
+            played.has("upgrademsq2_004_lifesupport") ? "meteorshowermsq3_001_start" : "explosionmsq3_001_start",
+        ends: ["explosionmsq3_004", "meteorshowermsq3_004"]
+    },
+    {
+        name: "Cavern expansion",
+        prefixes: ["upgrademsq4_"],
+        start: "upgrademsq4_001_start",
+        ends: ["upgrademsq4_004_power", "upgrademsq4_004_food"]
+    },
     { name: "Landing pad", prefixes: ["finalemsq5_"], start: "finalemsq5_001_start", ends: ["finalemsq5_004_win"] }
 ];
 const START_CARD = STORY[0].start;
-const STORY_START_GAP = [2, 4];   // cards between one main quest ending and the next one starting
-const STORY_STEP_GAP = [1, 3];    // cards between two steps of a running main quest
-const SIDE_GAP = [1, 2];          // cards before a waiting side quest card plays
-const RECENT_LIMIT = 8;           // a main deck card that comes back never repeats one of the last 8 cards shown
+const STORY_START_GAP = [2, 4]; // cards between one main quest ending and the next one starting
+const STORY_STEP_GAP = [1, 3]; // cards between two steps of a running main quest
+const SIDE_GAP = [1, 2]; // cards before a waiting side quest card plays
+const RECENT_LIMIT = 8; // a main deck card that comes back never repeats one of the last 8 cards shown
 
-let cards = {};               // every card from decks.json, keyed by its id
-let storyIndex = 0;           // which main quest is running or up next (index into STORY)
-let storyNext = null;         // id of the next main story card, waiting for its turn; null when none is waiting
-let cardsUntilStory = 0;      // other cards still to play before storyNext
-let sideQueue = [];           // ids of unlocked side quest cards waiting their turn, in order
-let cardsUntilSide = 0;       // other cards still to play before the first side quest card in the queue
-let won = false;              // true once the last main quest is done
-let played = new Set();       // ids already shown this game, so no card repeats
-let currentId = null;         // id of the card on screen, or null when none is left
-let ready = false;            // true once decks.json has loaded
+let cards = {}; // every card from decks.json, keyed by its id
+let storyIndex = 0; // which main quest is running or up next (index into STORY)
+let storyNext = null; // id of the next main story card, waiting for its turn; null when none is waiting
+let cardsUntilStory = 0; // other cards still to play before storyNext
+let sideQueue = []; // ids of unlocked side quest cards waiting their turn, in order
+let cardsUntilSide = 0; // other cards still to play before the first side quest card in the queue
+let won = false; // true once the last main quest is done
+let played = new Set(); // ids already shown this game, so no card repeats
+let currentId = null; // id of the card on screen, or null when none is left
+let ready = false; // true once decks.json has loaded
 let gameOver = false;
 
 // The base on the Moon in the background grows as the player progresses. Making either choice on
 // one of these cards builds that piece, and it stays until the next game. Each name matches the
 // data-part of a .base-part or .base-addon in index.html. To add a piece: draw it, add it to index.html and styles.css, list it here.
 const BASE_PARTS = {
-    intromsq1_005: "outpost",                   // the mission design phase is over: the outpost lands
-    roversidequest_001_start: "rover",          // VIPER rolls up to the airlock, which starts the rover quest
+    intromsq1_005: "outpost", // the mission design phase is over: the outpost lands
+    roversidequest_001_start: "rover", // VIPER rolls up to the airlock, which starts the rover quest
     upgrademsq2_004_lifesupport: "lifesupport", // colony upgrade, life support branch done: oxygen tanks and the Bio-Dome
-    upgrademsq2_004_security: "security",       // colony upgrade, security branch done: laser turrets and the magnetic shield
-    aliensidequest_001_dip: "ship"              // the alien delegation arrives: their saucer comes down from space and lands
+    upgrademsq2_004_security: "security", // colony upgrade, security branch done: laser turrets and the magnetic shield
+    aliensidequest_001_dip: "ship" // the alien delegation arrives: their saucer comes down from space and lands
 };
 
 function buildBasePart(cardId) {
@@ -134,15 +146,31 @@ function queueStoryStart(gap) {
 // If none of those can be drawn, a waiting story or side card plays early instead.
 // Story and side quest cards are never shown twice in one game. Leaves currentId as null when there is nothing left to play.
 function drawCard() {
-    sideQueue = sideQueue.filter((id) => !played.has(id));   // drop anything already shown
-    const mainPool = Object.keys(cards).filter((id) =>
-        cards[id].deck === "main" && storyIndexOf(id) === -1 && !played.has(id) && !sideQueue.includes(id) && conditionsMet(cards[id]));
+    sideQueue = sideQueue.filter((id) => !played.has(id)); // drop anything already shown
+    const mainPool = Object.keys(cards).filter(
+        (id) =>
+            cards[id].deck === "main" &&
+            storyIndexOf(id) === -1 &&
+            !played.has(id) &&
+            !sideQueue.includes(id) &&
+            conditionsMet(cards[id])
+    );
     // Once every main deck card has been seen, they can come back (a full run needs more cards than the deck has),
     // except cards that unlock something and the last RECENT_LIMIT cards shown. Story and side cards never repeat.
     const recent = [...played].slice(-RECENT_LIMIT);
-    const reusePool = mainPool.length > 0 ? [] : Object.keys(cards).filter((id) =>
-        cards[id].deck === "main" && storyIndexOf(id) === -1 && played.has(id) && !recent.includes(id) &&
-        !cards[id].left.unlockCard && !cards[id].right.unlockCard && conditionsMet(cards[id]));
+    const reusePool =
+        mainPool.length > 0
+            ? []
+            : Object.keys(cards).filter(
+                  (id) =>
+                      cards[id].deck === "main" &&
+                      storyIndexOf(id) === -1 &&
+                      played.has(id) &&
+                      !recent.includes(id) &&
+                      !cards[id].left.unlockCard &&
+                      !cards[id].right.unlockCard &&
+                      conditionsMet(cards[id])
+              );
     const storyDue = storyNext !== null && cardsUntilStory <= 0;
     const sideDue = sideQueue.length > 0 && cardsUntilSide <= 0;
 
@@ -165,7 +193,7 @@ function drawCard() {
         currentId = mainPool[Math.floor(Math.random() * mainPool.length)];
     } else if (kind === "reuse") {
         currentId = reusePool[Math.floor(Math.random() * reusePool.length)];
-        played.delete(currentId);   // re-added below, so it counts as the most recent card
+        played.delete(currentId); // re-added below, so it counts as the most recent card
     } else {
         currentId = null;
     }
@@ -196,7 +224,7 @@ function unlockFrom(choice) {
         console.warn(`decks.json: "${currentId}" unlocks "${id}", but no card has that id yet`);
         return;
     }
-    if (played.has(id) || sideQueue.includes(id) || id === storyNext) return;   // cards never repeat
+    if (played.has(id) || sideQueue.includes(id) || id === storyNext) return; // cards never repeat
 
     if (storyIndexOf(id) !== -1) {
         // A story card. Only the next step of the running quest is queued here; quest starts are queued above
@@ -204,7 +232,7 @@ function unlockFrom(choice) {
         // at quest 4's start) is ignored. That also keeps two main quests from ever running at once.
         if (isStoryStep && storyIndexOf(id) === quest && storyNext === null) {
             storyNext = id;
-            cardsUntilStory = quest === 0 ? 0 : randomBetween(STORY_STEP_GAP);   // the opening plays back to back
+            cardsUntilStory = quest === 0 ? 0 : randomBetween(STORY_STEP_GAP); // the opening plays back to back
         }
         return;
     }
@@ -216,9 +244,9 @@ function unlockFrom(choice) {
 
 // Show a card's picture, or an empty card when it has none. path comes from "img" in decks.json.
 function showCardImage(path) {
-    cardImg.classList.remove("is-scene");   // a normal card picture fills the card; see placeSceneImage for the exception
+    cardImg.classList.remove("is-scene"); // a normal card picture fills the card; see placeSceneImage for the exception
     cardImg.style.top = "";
-    victoryScene.hidden = true;             // only the victory card shows it; see renderWin
+    victoryScene.hidden = true; // only the victory card shows it; see renderWin
     victoryScene.innerHTML = "";
     if (path) {
         cardImg.src = path;
@@ -244,7 +272,7 @@ function renderCard() {
 // game_over_card.jpg is game_over.jpg with Earth painted out (the background already has one) and more ground
 // added below, so it can run the full width of the card with its horizon level with the Moon behind the card.
 const GAME_OVER_IMG = "images/game_over_card.jpg";
-const GAME_OVER_HORIZON = 0.352;   // how far down the picture its horizon meets the left and right edges, as a share of its width
+const GAME_OVER_HORIZON = 0.352; // how far down the picture its horizon meets the left and right edges, as a share of its width
 new Image().src = GAME_OVER_IMG;
 
 // What each empty meter means for the outpost, for the game-over message.
@@ -266,7 +294,7 @@ function placeSceneImage() {
     const photo = document.querySelector(".base-layer").getBoundingClientRect();
     const scale = photo.width / 1920;
     const box = card.getBoundingClientRect();
-    const left = box.left + card.clientLeft;      // inside the card's border
+    const left = box.left + card.clientLeft; // inside the card's border
     const top = box.top + card.clientTop;
     const dx = Math.min(MOON_CIRCLE.r, Math.abs((left - photo.left) / scale - MOON_CIRCLE.x));
     const moonEdge = photo.top + (MOON_CIRCLE.y - Math.sqrt(MOON_CIRCLE.r ** 2 - dx ** 2)) * scale;
@@ -282,7 +310,7 @@ function renderEnding(message, img = null, scene = false, label = "Start again")
     showCardImage(img);
     if (img && scene) {
         cardImg.classList.add("is-scene");
-        requestAnimationFrame(placeSceneImage);   // once the card is back in place
+        requestAnimationFrame(placeSceneImage); // once the card is back in place
     }
     for (const side of ["left", "right"]) {
         choiceText[side].textContent = label;
@@ -301,9 +329,10 @@ function markEmptyMeters(empty) {
 
 function renderGameOver() {
     const empty = Object.keys(meters).filter((name) => meters[name] <= 0);
-    const message = empty.length === 1
-        ? OUT_OF[empty[0]]
-        : `The outpost ran out of ${empty.map((name) => METER_LABELS[name]).join(" and ")} at once.`;
+    const message =
+        empty.length === 1
+            ? OUT_OF[empty[0]]
+            : `The outpost ran out of ${empty.map((name) => METER_LABELS[name]).join(" and ")} at once.`;
     markEmptyMeters(empty);
     renderEnding(message, GAME_OVER_IMG, true);
 }
@@ -326,7 +355,8 @@ function seededRandom(seed) {
     };
 }
 
-function shadeColor(hex, amount) {   // amount from -1 (black) to 1 (white)
+function shadeColor(hex, amount) {
+    // amount from -1 (black) to 1 (white)
     const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
     const to = amount < 0 ? 0 : 255;
     const k = Math.abs(amount);
@@ -354,7 +384,9 @@ function drawVictoryScene(landed = false) {
     // Sky and stars (the Moon covers the ones below the horizon).
     svg.push(`<rect width="${W}" height="${H}" fill="#020306"/>`);
     for (let i = 0; i < 40; i++) {
-        svg.push(`<rect x="${(rand() * W).toFixed(0)}" y="${(rand() * H * 0.3).toFixed(0)}" width="2" height="2" fill="#e8ecf2" opacity="${(0.4 + rand() * 0.6).toFixed(2)}"/>`);
+        svg.push(
+            `<rect x="${(rand() * W).toFixed(0)}" y="${(rand() * H * 0.3).toFixed(0)}" width="2" height="2" fill="#e8ecf2" opacity="${(0.4 + rand() * 0.6).toFixed(2)}"/>`
+        );
     }
 
     // The Moon's surface: flat low-poly facets inside the background Moon's circle, lighter near the horizon.
@@ -379,48 +411,84 @@ function drawVictoryScene(landed = false) {
             const [a, b, d, e] = [grid[r][c], grid[r][c + 1], grid[r + 1][c + 1], grid[r + 1][c]];
             const depth = r / rows;
             const base = depth < 0.5 ? "#85868b" : "#717277";
-            svg.push(`<polygon points="${points([a, b, d])}" fill="${shadeColor(base, 0.06 - depth * 0.12 + (rand() - 0.5) * 0.12)}"/>`);
-            svg.push(`<polygon points="${points([a, d, e])}" fill="${shadeColor(base, -0.06 - depth * 0.12 + (rand() - 0.5) * 0.12)}"/>`);
+            svg.push(
+                `<polygon points="${points([a, b, d])}" fill="${shadeColor(base, 0.06 - depth * 0.12 + (rand() - 0.5) * 0.12)}"/>`
+            );
+            svg.push(
+                `<polygon points="${points([a, d, e])}" fill="${shadeColor(base, -0.06 - depth * 0.12 + (rand() - 0.5) * 0.12)}"/>`
+            );
         }
     }
     // A few craters and rocks.
-    for (const [fx, fy, fr] of [[0.15, 0.3, 0.09], [0.82, 0.22, 0.07], [0.2, 0.9, 0.13], [0.86, 0.82, 0.1]]) {
-        const cx = fx * W, cy = fy * H, rx = fr * W;
+    for (const [fx, fy, fr] of [
+        [0.15, 0.3, 0.09],
+        [0.82, 0.22, 0.07],
+        [0.2, 0.9, 0.13],
+        [0.86, 0.82, 0.1]
+    ]) {
+        const cx = fx * W,
+            cy = fy * H,
+            rx = fr * W;
         svg.push(`<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${rx * 0.3}" fill="#5f6065"/>`);
-        svg.push(`<ellipse cx="${cx + rx * 0.08}" cy="${cy + rx * 0.05}" rx="${rx * 0.78}" ry="${rx * 0.22}" fill="#727378"/>`);
+        svg.push(
+            `<ellipse cx="${cx + rx * 0.08}" cy="${cy + rx * 0.05}" rx="${rx * 0.78}" ry="${rx * 0.22}" fill="#727378"/>`
+        );
     }
     svg.push(`</g>`);
 
     // The launch pad: a big round slab with hazard stripes, a landing target and floodlights.
     const pad = { x: W / 2, y: H * 0.64, rx: W * 0.47, ry: W * 0.47 * 0.32 };
     const thick = pad.ry * 0.28;
-    for (const side of [-1, 1]) {   // floodlight masts behind the pad
+    for (const side of [-1, 1]) {
+        // floodlight masts behind the pad
         const x = pad.x + side * pad.rx * 0.78;
         const y = pad.y - pad.ry * 0.62;
-        svg.push(`<line x1="${x}" y1="${y}" x2="${x}" y2="${y - H * 0.2}" stroke="#55585e" stroke-width="${W * 0.012}"/>`);
-        svg.push(`<rect x="${x - W * 0.03}" y="${y - H * 0.2 - W * 0.025}" width="${W * 0.06}" height="${W * 0.03}" fill="#44474d"/>`);
-        svg.push(`<rect x="${x - W * 0.026}" y="${y - H * 0.2 - W * 0.012}" width="${W * 0.052}" height="${W * 0.012}" fill="#ffe7a6"/>`);
+        svg.push(
+            `<line x1="${x}" y1="${y}" x2="${x}" y2="${y - H * 0.2}" stroke="#55585e" stroke-width="${W * 0.012}"/>`
+        );
+        svg.push(
+            `<rect x="${x - W * 0.03}" y="${y - H * 0.2 - W * 0.025}" width="${W * 0.06}" height="${W * 0.03}" fill="#44474d"/>`
+        );
+        svg.push(
+            `<rect x="${x - W * 0.026}" y="${y - H * 0.2 - W * 0.012}" width="${W * 0.052}" height="${W * 0.012}" fill="#ffe7a6"/>`
+        );
     }
     svg.push(`<ellipse cx="${pad.x}" cy="${pad.y + thick}" rx="${pad.rx}" ry="${pad.ry}" fill="#33353a"/>`);
     svg.push(`<rect x="${pad.x - pad.rx}" y="${pad.y}" width="${pad.rx * 2}" height="${thick}" fill="#33353a"/>`);
     svg.push(`<ellipse cx="${pad.x}" cy="${pad.y}" rx="${pad.rx}" ry="${pad.ry}" fill="#5b5e64"/>`);
     // lit facet on the left half of the slab, like the rest of the art (light from the upper left)
-    svg.push(`<path d="M ${pad.x - pad.rx} ${pad.y} A ${pad.rx} ${pad.ry} 0 0 1 ${pad.x} ${pad.y - pad.ry} L ${pad.x - pad.rx * 0.2} ${pad.y + pad.ry} A ${pad.rx} ${pad.ry} 0 0 1 ${pad.x - pad.rx} ${pad.y} Z" fill="#676a70"/>`);
+    svg.push(
+        `<path d="M ${pad.x - pad.rx} ${pad.y} A ${pad.rx} ${pad.ry} 0 0 1 ${pad.x} ${pad.y - pad.ry} L ${pad.x - pad.rx * 0.2} ${pad.y + pad.ry} A ${pad.rx} ${pad.ry} 0 0 1 ${pad.x - pad.rx} ${pad.y} Z" fill="#676a70"/>`
+    );
     // hazard stripes round the edge
-    svg.push(`<ellipse cx="${pad.x}" cy="${pad.y}" rx="${pad.rx * 0.93}" ry="${pad.ry * 0.93}" fill="none" stroke="#e0b03f" stroke-width="${pad.ry * 0.11}"/>`);
-    svg.push(`<ellipse cx="${pad.x}" cy="${pad.y}" rx="${pad.rx * 0.93}" ry="${pad.ry * 0.93}" fill="none" stroke="#2d2f34" stroke-width="${pad.ry * 0.11}" stroke-dasharray="${W * 0.03} ${W * 0.03}"/>`);
+    svg.push(
+        `<ellipse cx="${pad.x}" cy="${pad.y}" rx="${pad.rx * 0.93}" ry="${pad.ry * 0.93}" fill="none" stroke="#e0b03f" stroke-width="${pad.ry * 0.11}"/>`
+    );
+    svg.push(
+        `<ellipse cx="${pad.x}" cy="${pad.y}" rx="${pad.rx * 0.93}" ry="${pad.ry * 0.93}" fill="none" stroke="#2d2f34" stroke-width="${pad.ry * 0.11}" stroke-dasharray="${W * 0.03} ${W * 0.03}"/>`
+    );
     // landing target
-    svg.push(`<ellipse cx="${pad.x}" cy="${pad.y}" rx="${pad.rx * 0.55}" ry="${pad.ry * 0.55}" fill="none" stroke="#e9e9e7" stroke-width="${pad.ry * 0.07}"/>`);
-    svg.push(`<line x1="${pad.x - pad.rx * 0.7}" y1="${pad.y}" x2="${pad.x + pad.rx * 0.7}" y2="${pad.y}" stroke="#e0b03f" stroke-width="${pad.ry * 0.06}"/>`);
-    svg.push(`<line x1="${pad.x}" y1="${pad.y - pad.ry * 0.7}" x2="${pad.x}" y2="${pad.y + pad.ry * 0.7}" stroke="#e0b03f" stroke-width="${pad.ry * 0.06}"/>`);
+    svg.push(
+        `<ellipse cx="${pad.x}" cy="${pad.y}" rx="${pad.rx * 0.55}" ry="${pad.ry * 0.55}" fill="none" stroke="#e9e9e7" stroke-width="${pad.ry * 0.07}"/>`
+    );
+    svg.push(
+        `<line x1="${pad.x - pad.rx * 0.7}" y1="${pad.y}" x2="${pad.x + pad.rx * 0.7}" y2="${pad.y}" stroke="#e0b03f" stroke-width="${pad.ry * 0.06}"/>`
+    );
+    svg.push(
+        `<line x1="${pad.x}" y1="${pad.y - pad.ry * 0.7}" x2="${pad.x}" y2="${pad.y + pad.ry * 0.7}" stroke="#e0b03f" stroke-width="${pad.ry * 0.06}"/>`
+    );
     // pad lights round the rim
     for (let i = 0; i < 10; i++) {
         const a = Math.PI * 2 * i / 10;
-        svg.push(`<circle class="vs-light" style="animation-delay:${(i % 2) * 0.5}s" cx="${pad.x + Math.cos(a) * pad.rx * 0.985}" cy="${pad.y + Math.sin(a) * pad.ry * 0.985}" r="${W * 0.008}" fill="#7fe0ff"/>`);
+        svg.push(
+            `<circle class="vs-light" style="animation-delay:${(i % 2) * 0.5}s" cx="${pad.x + Math.cos(a) * pad.rx * 0.985}" cy="${pad.y + Math.sin(a) * pad.ry * 0.985}" r="${W * 0.008}" fill="#7fe0ff"/>`
+        );
     }
 
     // The container's shadow on the pad: small and faint while it is high up, full once it lands.
-    svg.push(`<ellipse class="vs-shadow" cx="${pad.x + W * 0.03}" cy="${pad.y + pad.ry * 0.12}" rx="${W * 0.3}" ry="${pad.ry * 0.36}" fill="#000" opacity="0.38"/>`);
+    svg.push(
+        `<ellipse class="vs-shadow" cx="${pad.x + W * 0.03}" cy="${pad.y + pad.ry * 0.12}" rx="${W * 0.3}" ry="${pad.ry * 0.36}" fill="#000" opacity="0.38"/>`
+    );
 
     // Dust kicked up on touchdown.
     for (const side of [-1, 1]) {
@@ -439,31 +507,84 @@ function drawVictoryScene(landed = false) {
     }
 
     // The flying container: a 3/4 view of a shipping container with thruster pods and short landing legs.
-    const cw = W * 0.4;          // front face width
-    const ch = cw * 0.42;        // front face height
-    const sw = cw * 0.2;         // end face (the doors), seen at an angle
-    const th = ch * 0.3;         // top face depth
+    const cw = W * 0.4; // front face width
+    const ch = cw * 0.42; // front face height
+    const sw = cw * 0.2; // end face (the doors), seen at an angle
+    const th = ch * 0.3; // top face depth
     const legs = ch * 0.24;
     const x0 = W / 2 - (cw + sw) / 2;
     const x1 = x0 + cw;
-    const yb = pad.y + pad.ry * 0.12 - legs;     // bottom of the box when it has landed
+    const yb = pad.y + pad.ry * 0.12 - legs; // bottom of the box when it has landed
     const yt = yb - ch;
     const ship = [];
     // legs and foot pads
-    for (const [lx, ly] of [[x0 + cw * 0.06, yb], [x1 - cw * 0.06, yb], [x0 + sw + cw * 0.06, yb - th], [x1 + sw - cw * 0.06, yb - th]]) {
-        ship.push(`<polygon points="${points([[lx - 3, ly], [lx + 3, ly], [lx + 7, ly + legs], [lx - 7, ly + legs]])}" fill="#55585e"/>`);
+    for (const [lx, ly] of [
+        [x0 + cw * 0.06, yb],
+        [x1 - cw * 0.06, yb],
+        [x0 + sw + cw * 0.06, yb - th],
+        [x1 + sw - cw * 0.06, yb - th]
+    ]) {
+        ship.push(
+            `<polygon points="${points([
+                [lx - 3, ly],
+                [lx + 3, ly],
+                [lx + 7, ly + legs],
+                [lx - 7, ly + legs]
+            ])}" fill="#55585e"/>`
+        );
         ship.push(`<rect x="${lx - 11}" y="${ly + legs - 3}" width="22" height="5" fill="#2d2f34"/>`);
     }
     // thruster pods and flames (the flames go out on touchdown)
-    for (const [nx, ny] of [[x0 + cw * 0.2, yb], [x1 - cw * 0.2, yb], [x0 + sw + cw * 0.5, yb - th * 0.6]]) {
-        ship.push(`<polygon class="vs-flame" points="${points([[nx - 10, ny + 8], [nx + 10, ny + 8], [nx + 4, ny + 48], [nx, ny + 64], [nx - 4, ny + 48]])}" fill="#ff7a2f"/>`);
-        ship.push(`<polygon class="vs-flame" points="${points([[nx - 6, ny + 8], [nx + 6, ny + 8], [nx + 2, ny + 34], [nx, ny + 42], [nx - 2, ny + 34]])}" fill="#ffd36b"/>`);
-        ship.push(`<polygon points="${points([[nx - 8, ny - 2], [nx + 8, ny - 2], [nx + 12, ny + 9], [nx - 12, ny + 9]])}" fill="#3a3c41"/>`);
+    for (const [nx, ny] of [
+        [x0 + cw * 0.2, yb],
+        [x1 - cw * 0.2, yb],
+        [x0 + sw + cw * 0.5, yb - th * 0.6]
+    ]) {
+        ship.push(
+            `<polygon class="vs-flame" points="${points([
+                [nx - 10, ny + 8],
+                [nx + 10, ny + 8],
+                [nx + 4, ny + 48],
+                [nx, ny + 64],
+                [nx - 4, ny + 48]
+            ])}" fill="#ff7a2f"/>`
+        );
+        ship.push(
+            `<polygon class="vs-flame" points="${points([
+                [nx - 6, ny + 8],
+                [nx + 6, ny + 8],
+                [nx + 2, ny + 34],
+                [nx, ny + 42],
+                [nx - 2, ny + 34]
+            ])}" fill="#ffd36b"/>`
+        );
+        ship.push(
+            `<polygon points="${points([
+                [nx - 8, ny - 2],
+                [nx + 8, ny - 2],
+                [nx + 12, ny + 9],
+                [nx - 12, ny + 9]
+            ])}" fill="#3a3c41"/>`
+        );
     }
     // top, front and end faces
-    ship.push(`<polygon points="${points([[x0, yt], [x1, yt], [x1 + sw, yt - th], [x0 + sw, yt - th]])}" fill="#e2774b"/>`);
+    ship.push(
+        `<polygon points="${points([
+            [x0, yt],
+            [x1, yt],
+            [x1 + sw, yt - th],
+            [x0 + sw, yt - th]
+        ])}" fill="#e2774b"/>`
+    );
     ship.push(`<rect x="${x0}" y="${yt}" width="${cw}" height="${ch}" fill="#c9562e"/>`);
-    ship.push(`<polygon points="${points([[x1, yt], [x1 + sw, yt - th], [x1 + sw, yb - th], [x1, yb]])}" fill="#9a3e20"/>`);
+    ship.push(
+        `<polygon points="${points([
+            [x1, yt],
+            [x1 + sw, yt - th],
+            [x1 + sw, yb - th],
+            [x1, yb]
+        ])}" fill="#9a3e20"/>`
+    );
     // corrugated ribs on the front, door bars on the end
     for (let i = 1; i < 14; i++) {
         const x = x0 + cw * i / 14;
@@ -471,18 +592,37 @@ function drawVictoryScene(landed = false) {
     }
     for (const f of [0.33, 0.66]) {
         const x = x1 + sw * f;
-        ship.push(`<line x1="${x}" y1="${yt - th * f + 4}" x2="${x}" y2="${yb - th * f - 4}" stroke="#7a2f17" stroke-width="2.5"/>`);
+        ship.push(
+            `<line x1="${x}" y1="${yt - th * f + 4}" x2="${x}" y2="${yb - th * f - 4}" stroke="#7a2f17" stroke-width="2.5"/>`
+        );
     }
-    ship.push(`<line x1="${x1 + sw * 0.5}" y1="${yt - th * 0.5 + 4}" x2="${x1 + sw * 0.5}" y2="${yb - th * 0.5 - 4}" stroke="#5e2410" stroke-width="1.5"/>`);
+    ship.push(
+        `<line x1="${x1 + sw * 0.5}" y1="${yt - th * 0.5 + 4}" x2="${x1 + sw * 0.5}" y2="${yb - th * 0.5 - 4}" stroke="#5e2410" stroke-width="1.5"/>`
+    );
     // corner castings and the stencilled name
-    for (const [cx, cy] of [[x0, yt], [x1, yt], [x0, yb], [x1, yb], [x1 + sw, yt - th], [x1 + sw, yb - th]]) {
+    for (const [cx, cy] of [
+        [x0, yt],
+        [x1, yt],
+        [x0, yb],
+        [x1, yb],
+        [x1 + sw, yt - th],
+        [x1 + sw, yb - th]
+    ]) {
         ship.push(`<rect x="${cx - 5}" y="${cy - 5}" width="10" height="10" fill="#3a3c41"/>`);
     }
-    ship.push(`<rect x="${x0 + cw * 0.2}" y="${yt + ch * 0.3}" width="${cw * 0.6}" height="${ch * 0.36}" fill="#c9562e"/>`);
-    ship.push(`<text x="${x0 + cw / 2}" y="${yt + ch * 0.56}" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="800" font-size="${ch * 0.24}" fill="#f3f3f1" letter-spacing="1">LUNAR CARGO</text>`);
-    ship.push(`<text x="${x0 + cw * 0.06}" y="${yt + ch * 0.2}" font-family="system-ui, sans-serif" font-weight="700" font-size="${ch * 0.11}" fill="#f3f3f1" opacity="0.85">LC-001</text>`);
+    ship.push(
+        `<rect x="${x0 + cw * 0.2}" y="${yt + ch * 0.3}" width="${cw * 0.6}" height="${ch * 0.36}" fill="#c9562e"/>`
+    );
+    ship.push(
+        `<text x="${x0 + cw / 2}" y="${yt + ch * 0.56}" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="800" font-size="${ch * 0.24}" fill="#f3f3f1" letter-spacing="1">LUNAR CARGO</text>`
+    );
+    ship.push(
+        `<text x="${x0 + cw * 0.06}" y="${yt + ch * 0.2}" font-family="system-ui, sans-serif" font-weight="700" font-size="${ch * 0.11}" fill="#f3f3f1" opacity="0.85">LC-001</text>`
+    );
     // beacon on top
-    ship.push(`<circle class="vs-beacon" cx="${x0 + sw / 2 + cw / 2}" cy="${yt - th / 2}" r="${W * 0.012}" fill="#ff5c5c"/>`);
+    ship.push(
+        `<circle class="vs-beacon" cx="${x0 + sw / 2 + cw / 2}" cy="${yt - th / 2}" r="${W * 0.012}" fill="#ff5c5c"/>`
+    );
 
     // How far it falls: from above the top of the card down to the pad.
     const drop = yb + ch + th + 70;
@@ -494,10 +634,15 @@ function drawVictoryScene(landed = false) {
 window.addEventListener("resize", () => drawVictoryScene(true));
 
 function renderWin() {
-    renderEnding("VICTORY! The cargo has landed on our new launch pad. The Earth-Moon Spaceport is open, " +
-        "and humanity is on the Moon to stay!", null, false, "Play again");
+    renderEnding(
+        "VICTORY! The cargo has landed on our new launch pad. The Earth-Moon Spaceport is open, " +
+            "and humanity is on the Moon to stay!",
+        null,
+        false,
+        "Play again"
+    );
     victoryScene.hidden = false;
-    requestAnimationFrame(() => drawVictoryScene(false));   // once the card is back in place
+    requestAnimationFrame(() => drawVictoryScene(false)); // once the card is back in place
 }
 
 // Draw and show the next card, or end the game if no card is left to play.
@@ -549,7 +694,7 @@ function startGame() {
 // choice is previewed (see styles.css). Pass null to put every meter back to its normal colour, and warnings back on.
 function previewMeters(direction) {
     const showing = direction && !gameOver && currentId !== null;
-    const effects = showing ? (currentCard()[direction].effects || {}) : {};
+    const effects = showing ?( currentCard()[direction].effects || {}) : {};
     for (const name in meterIds) {
         const fill = document.getElementById(meterIds[name]);
         const item = fill && fill.closest(".meter-item");
@@ -687,7 +832,11 @@ function useDecks(decks) {
     }
     cards = loaded;
     // Load every card picture now, so each one is ready the moment its card comes up.
-    for (const path of new Set(Object.values(cards).map((data) => data.img).filter(Boolean))) {
+    for (const path of new Set(
+        Object.values(cards)
+            .map((data) => data.img)
+            .filter(Boolean)
+    )) {
         new Image().src = path;
     }
     ready = true;
@@ -700,9 +849,10 @@ if (typeof loadDecks !== "function") {
     loadDecks()
         .then(useDecks)
         .catch((error) => {
-            cardDesc.textContent = window.location.protocol === "file:"
-                ? "Could not load decks.json. Open this page through a local server, not by double-clicking it."
-                : `Could not load decks.json: ${error.message}`;
+            cardDesc.textContent =
+                window.location.protocol === "file:"
+                    ? "Could not load decks.json. Open this page through a local server, not by double-clicking it."
+                    : `Could not load decks.json: ${error.message}`;
             console.error(error);
         });
 }
