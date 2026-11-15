@@ -1,9 +1,16 @@
-
-* { box-sizing: border-box; }
-html, body { min-height: 100%; margin: 0; }
+* {
+    box-sizing: border-box;
+}
+html,
+body {
+    min-height: 100%;
+    margin: 0;
+}
 /* A dragged or swiped card tilts and flies past the edges of the window. The game always fits the window,
    so hiding overflow here stops the card from adding scrollbars without cutting anything else off. */
-html { overflow: hidden; }
+html {
+    overflow: hidden;
+}
 body {
     min-height: 100vh;
     margin: 0;
@@ -17,146 +24,682 @@ body {
     background: #020306 url("images/background.jpg") no-repeat fixed;
     background-size: var(--bg-w) auto;
     background-position: center calc(var(--moon-top, 45vh) - var(--bg-w) * 0.1114);
+}
+body > .app-shell {
+    width: min(45vw, 900px);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* Not hidden: the card must stay visible when it is dragged past the edges of this column. */
+    overflow: visible;
+    background: transparent;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgb(34 52 72 / 18%);
+}
+header {
+    height: 150px;
+    flex: 0 0 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 0;
+    padding: 0 24px;
+    background: transparent;
+    border-bottom: 1px solid rgb(255 255 255 / 12%);
+}
+.icon-button {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    color: #263648;
+}
+.icon-button svg {
+    width: 28px;
+    height: 28px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+main {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(42px, 1fr) minmax(120px, 480px) minmax(42px, 1fr);
+    align-items: center;
+    justify-items: center;
+    gap: 24px;
+    padding: 24px;
+}
+.panel {
+    position: relative;
+    touch-action: pan-y;
+    user-select: none;
+    cursor: grab;
+    width: min(100%, 480px, 48vh);
+    height: min(76vh, 700px);
+    min-height: 160px;
+    background: linear-gradient(145deg, #fff 50%, #f5f7fa);
+    border: 1px solid #dce2e9;
+    border-radius: 12px;
+    box-shadow: 0 8px 28px rgb(34 52 72 / 8%);
+    transition:
+        transform 460ms cubic-bezier(.2, .8, .2, 1),
+        border-color 160ms ease,
+        box-shadow 460ms ease;
+}
+.panel.is-dragging {
+    cursor: grabbing;
+    transition: none;
+    box-shadow: 0 18px 44px rgb(19 34 52 / 18%);
+}
+.panel.is-exiting {
+    pointer-events: none;
+    box-shadow: 0 26px 64px rgb(19 34 52 / 24%);
+}
+.panel[data-swipe-direction="left"] {
+    border-color: #9b4545;
+}
+.panel[data-swipe-direction="right"] {
+    border-color: #326e5a;
+}
+.arrow {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #c9d2dc;
+}
+.arrow-label {
+    position: absolute;
+    bottom: calc(100% + 24px);
+    left: 50%;
+    z-index: 1;
+    color: #263648;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(-50%);
+    transition: opacity 160ms ease;
+}
+.arrow.is-active {
+    z-index: 2;
+}
+.arrow.is-active .arrow-label {
+    visibility: visible;
+    opacity: 1;
+}
+.arrow svg {
+    width: 42px;
+    height: 42px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+@media (max-width: 480px) {
+    body > .app-shell {
+        width: 90vw;
     }
-            body > .app-shell {
-                width: min(45vw, 900px);
-                min-height: 100vh;
-                display: flex;
-                flex-direction: column;
-                /* Not hidden: the card must stay visible when it is dragged past the edges of this column. */
-                overflow: visible;
-                background: transparent;
-                border-radius: 12px;
-                box-shadow: 0 12px 40px rgb(34 52 72 / 18%);
-            }
-            header { height: 150px; flex: 0 0 150px; display: flex; align-items: center; justify-content: space-evenly; gap: 0; padding: 0 24px; background: transparent; border-bottom: 1px solid rgb(255 255 255 / 12%); }
-            .icon-button { width: 52px; height: 52px; display: grid; place-items: center; padding: 0; color: #263648; }
-            .icon-button svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-            main { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(42px, 1fr) minmax(120px, 480px) minmax(42px, 1fr); align-items: center; justify-items: center; gap: 24px; padding: 24px; }
-            .panel { position: relative; touch-action: pan-y; user-select: none; cursor: grab; width: min(100%, 480px, 48vh); height: min(76vh, 700px); min-height: 160px; background: linear-gradient(145deg, #fff 50%, #f5f7fa); border: 1px solid #dce2e9; border-radius: 12px; box-shadow: 0 8px 28px rgb(34 52 72 / 8%); transition: transform 460ms cubic-bezier(.2,.8,.2,1), border-color 160ms ease, box-shadow 460ms ease; }
-            .panel.is-dragging { cursor: grabbing; transition: none; box-shadow: 0 18px 44px rgb(19 34 52 / 18%); }
-            .panel.is-exiting { pointer-events: none; box-shadow: 0 26px 64px rgb(19 34 52 / 24%); }
-            .panel[data-swipe-direction="left"] { border-color: #9b4545; }
-            .panel[data-swipe-direction="right"] { border-color: #326e5a; }
-            .arrow { position: relative; display: flex; flex-direction: column; align-items: center; color: #c9d2dc; }
-            .arrow-label { position: absolute; bottom: calc(100% + 24px); left: 50%; z-index: 1; color: #263648; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; visibility: hidden; opacity: 0; transform: translateX(-50%); transition: opacity 160ms ease; }
-            .arrow.is-active { z-index: 2; }
-            .arrow.is-active .arrow-label { visibility: visible; opacity: 1; }
-            .arrow svg { width: 42px; height: 42px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-            @media (max-width: 480px) { body > .app-shell { width: 90vw; } header { padding: 0 12px; gap: 4px; } main { gap: 8px; padding: 20px 10px; } }
+    header {
+        padding: 0 12px;
+        gap: 4px;
+    }
+    main {
+        gap: 8px;
+        padding: 20px 10px;
+    }
+}
 
-            /* Meters in the header. Each icon is two layers that share one colour, --tone:
+/* Meters in the header. Each icon is two layers that share one colour, --tone:
                .meter-outline is the symbol's outline, and .meter-fill is the level inside it.
                Both are plain coloured boxes cut to shape by a mask image (images/<name>-outline.png and -fill.png).
                Meters.js sets --level (0 to 100) on .meter-fill, which is clipped from the top so it rises from the
                bottom. Every symbol sits between 4% and 96% of its tile, so 0 is empty and 100 is full for all four.
                --tone is white at rest. While a choice is previewed, script.js marks each meter it would change,
                and the outline and fill both turn green (going up) or red (going down). */
-            .meter-item { --tone: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
-            /* The meter's name, above its icon. It is always white: it does not use --tone, so it stays white while the icon turns green or red. */
-            .meter-label { color: #fff; font-family: system-ui, sans-serif; font-size: clamp(0.7rem, 3.6vw, 0.95rem); font-weight: 700; line-height: 1.2; letter-spacing: 0.08em; text-transform: uppercase; text-shadow: 0 1px 4px rgb(0 0 0 / 80%); }
-            .meter-item[data-preview="up"] { --tone: #3ecf8e; }
-            .meter-item[data-preview="down"] { --tone: #e5484d; }
-            .meter-icon { position: relative; width: min(100px, 21vw); aspect-ratio: 1; }
-            .meter-outline, .meter-fill { position: absolute; inset: 0; background: var(--tone); -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-size: 100% 100%; mask-size: 100% 100%; transition: background-color 160ms ease; }
-            .meter-fill { --level: 50; opacity: 0.55; clip-path: inset(calc(4% + (100 - var(--level)) * 0.92%) 0 0 0); transition: clip-path 400ms ease, background-color 160ms ease; }
-            .meter-icon[data-meter="power"] .meter-outline { -webkit-mask-image: url("images/energy-outline.png"); mask-image: url("images/energy-outline.png"); }
-            .meter-icon[data-meter="power"] .meter-fill { -webkit-mask-image: url("images/energy-fill.png"); mask-image: url("images/energy-fill.png"); }
-            .meter-icon[data-meter="food"] .meter-outline { -webkit-mask-image: url("images/food-outline.png"); mask-image: url("images/food-outline.png"); }
-            .meter-icon[data-meter="food"] .meter-fill { -webkit-mask-image: url("images/food-fill.png"); mask-image: url("images/food-fill.png"); }
-            .meter-icon[data-meter="shield"] .meter-outline { -webkit-mask-image: url("images/shielding-outline.png"); mask-image: url("images/shielding-outline.png"); }
-            .meter-icon[data-meter="shield"] .meter-fill { -webkit-mask-image: url("images/shielding-fill.png"); mask-image: url("images/shielding-fill.png"); }
-            .meter-icon[data-meter="life"] .meter-outline { -webkit-mask-image: url("images/morale-outline.png"); mask-image: url("images/morale-outline.png"); }
-            .meter-icon[data-meter="life"] .meter-fill { -webkit-mask-image: url("images/morale-fill.png"); mask-image: url("images/morale-fill.png"); }
+.meter-item {
+    --tone: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+/* The meter's name, above its icon. It is always white: it does not use --tone, so it stays white while the icon turns green or red. */
+.meter-label {
+    color: #fff;
+    font-family: system-ui, sans-serif;
+    font-size: clamp(0.7rem, 3.6vw, 0.95rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-shadow: 0 1px 4px rgb(0 0 0 / 80%);
+}
+.meter-item[data-preview="up"] {
+    --tone: #3ecf8e;
+}
+.meter-item[data-preview="down"] {
+    --tone: #e5484d;
+}
+.meter-icon {
+    position: relative;
+    width: min(100px, 21vw);
+    aspect-ratio: 1;
+}
+.meter-outline,
+.meter-fill {
+    position: absolute;
+    inset: 0;
+    background: var(--tone);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    transition: background-color 160ms ease;
+}
+.meter-fill {
+    --level: 50;
+    opacity: 0.55;
+    clip-path: inset(calc(4% + (100 - var(--level)) * 0.92%) 0 0 0);
+    transition:
+        clip-path 400ms ease,
+        background-color 160ms ease;
+}
+.meter-icon[data-meter="power"] .meter-outline {
+    -webkit-mask-image: url("images/energy-outline.png");
+    mask-image: url("images/energy-outline.png");
+}
+.meter-icon[data-meter="power"] .meter-fill {
+    -webkit-mask-image: url("images/energy-fill.png");
+    mask-image: url("images/energy-fill.png");
+}
+.meter-icon[data-meter="food"] .meter-outline {
+    -webkit-mask-image: url("images/food-outline.png");
+    mask-image: url("images/food-outline.png");
+}
+.meter-icon[data-meter="food"] .meter-fill {
+    -webkit-mask-image: url("images/food-fill.png");
+    mask-image: url("images/food-fill.png");
+}
+.meter-icon[data-meter="shield"] .meter-outline {
+    -webkit-mask-image: url("images/shielding-outline.png");
+    mask-image: url("images/shielding-outline.png");
+}
+.meter-icon[data-meter="shield"] .meter-fill {
+    -webkit-mask-image: url("images/shielding-fill.png");
+    mask-image: url("images/shielding-fill.png");
+}
+.meter-icon[data-meter="life"] .meter-outline {
+    -webkit-mask-image: url("images/morale-outline.png");
+    mask-image: url("images/morale-outline.png");
+}
+.meter-icon[data-meter="life"] .meter-fill {
+    -webkit-mask-image: url("images/morale-fill.png");
+    mask-image: url("images/morale-fill.png");
+}
 
-            /* The situation text sits above the card. .card-stack holds the two in the middle column:
+/* The situation text sits above the card. .card-stack holds the two in the middle column:
                the text keeps room for about three lines so the card does not jump between cards,
                and the card takes the height that is left. */
-            body > .app-shell { height: 100vh; height: 100dvh; }
-            main { grid-template-rows: minmax(0, 1fr); }
-            .card-stack { align-self: stretch; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 18px; width: 100%; min-height: 0; }
-            .card-desc { flex: 0 0 auto; display: flex; align-items: flex-end; justify-content: center; min-height: 3.9em; margin: 0; font-family: system-ui, sans-serif; font-size: 1.35rem; font-weight: 700; line-height: 1.3; text-align: center; color: #f4f6f9; text-shadow: 0 1px 3px rgb(0 0 0 / 90%), 0 0 12px rgb(0 0 0 / 80%); }
-            .panel { flex: 0 1 min(76vh, 700px); height: auto; font-family: system-ui, sans-serif; color: #263648; overflow: hidden; }
-            /* The card's picture fills the whole card and is cropped to fit. It ignores the pointer so dragging still works. */
-            .card-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; -webkit-user-drag: none; user-select: none; }
-            .card-img[hidden] { display: none; }
+body > .app-shell {
+    height: 100vh;
+    height: 100dvh;
+}
+main {
+    grid-template-rows: minmax(0, 1fr);
+}
+.card-stack {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+    min-height: 0;
+}
+.card-desc {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    min-height: 3.9em;
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: center;
+    color: #f4f6f9;
+    text-shadow:
+        0 1px 3px rgb(0 0 0 / 90%),
+        0 0 12px rgb(0 0 0 / 80%);
+}
+.panel {
+    flex: 0 1 min(76vh, 700px);
+    height: auto;
+    font-family: system-ui, sans-serif;
+    color: #263648;
+    overflow: hidden;
+}
+/* The card's picture fills the whole card and is cropped to fit. It ignores the pointer so dragging still works. */
+.card-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    -webkit-user-drag: none;
+    user-select: none;
+}
+.card-img[hidden] {
+    display: none;
+}
 
-            /* Decision labels beside the arrows: the choice's text only, shown while dragging that way.
+/* Decision labels beside the arrows: the choice's text only, shown while dragging that way.
                It does not say how much each meter changes; the icons turning green or red are the only hint.
                Styled like the rest of the game: white text on a dark see-through panel with a thin white edge. */
-            .arrow-label { display: block; width: max-content; max-width: min(240px, 62vw); padding: 12px 14px; border: 1px solid rgb(255 255 255 / 28%); border-radius: 12px; background: rgb(2 3 6 / 78%); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); box-shadow: 0 8px 24px rgb(0 0 0 / 45%); color: #fff; font-family: system-ui, sans-serif; font-size: 1rem; font-weight: 700; line-height: 1.3; letter-spacing: 0.01em; text-transform: none; white-space: normal; text-shadow: 0 1px 3px rgb(0 0 0 / 90%); }
-            .arrow[data-direction="left"] .arrow-label { left: 0; transform: none; text-align: left; }
-            .arrow[data-direction="right"] .arrow-label { left: auto; right: 0; transform: none; text-align: right; }
-            @media (max-width: 480px) { .card-desc { font-size: 1.2rem; } }
+.arrow-label {
+    display: block;
+    width: max-content;
+    max-width: min(240px, 62vw);
+    padding: 12px 14px;
+    border: 1px solid rgb(255 255 255 / 28%);
+    border-radius: 12px;
+    background: rgb(2 3 6 / 78%);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 24px rgb(0 0 0 / 45%);
+    color: #fff;
+    font-family: system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    white-space: normal;
+    text-shadow: 0 1px 3px rgb(0 0 0 / 90%);
+}
+.arrow[data-direction="left"] .arrow-label {
+    left: 0;
+    transform: none;
+    text-align: left;
+}
+.arrow[data-direction="right"] .arrow-label {
+    left: auto;
+    right: 0;
+    transform: none;
+    text-align: right;
+}
+@media (max-width: 480px) {
+    .card-desc {
+        font-size: 1.2rem;
+    }
+}
 
-            /* The base on the Moon. .base-layer is the same size and position as the background photo, so each piece
+/* The base on the Moon. .base-layer is the same size and position as the background photo, so each piece
                stays on the same spot of the Moon at any window size. Positions are in % of the photo (1920 x 1280),
                just inside the Moon's edge, and each piece is tilted to stand upright on the curve (--tilt).
                A piece is hidden until script.js adds .is-built: the outpost pops up, the rover drives out from behind the card.
                The outpost is on the right because Earth is in the sky on the left of the photo. */
-            body > .app-shell { position: relative; z-index: 1; }
-            .base-layer { position: fixed; z-index: 0; left: 50%; top: calc(var(--moon-top, 45vh) - var(--bg-w) * 0.1114); width: var(--bg-w); aspect-ratio: 3 / 2; transform: translateX(-50%); pointer-events: none; }
-            .base-part { position: absolute; transform: translate(-50%, -91%) rotate(var(--tilt)); transform-origin: 50% 91%; }
-            .base-part[data-part="outpost"] { left: 76%; top: 28.2%; width: 13%; --tilt: 32.5deg; }
-            .base-part[data-part="rover"] { left: 22.4%; top: 29.8%; width: 6.5%; --tilt: -34.8deg; }
-            /* Alien saucer, photo x 1705: far enough right of the outpost to clear the Bio-Dome and the shield bubble. */
-            .base-part[data-part="ship"] { left: 88.80%; top: 46.29%; width: 7.5%; --tilt: 53.3deg; }
-            .base-part > .base-img { display: block; width: 100%; height: auto; filter: brightness(0.9); opacity: 0; transform: scale(0); transform-origin: 50% 91%; }
-            .base-part.is-built > .base-img { animation: base-pop 760ms cubic-bezier(.2, 1.5, .4, 1) forwards; }
-            .base-part[data-part="rover"].is-built > .base-img { animation: base-drive 1500ms cubic-bezier(.25, .8, .35, 1) forwards; }
-            /* The saucer drops in from space along its own "up", hovers, then sets down; the dust puffs on touchdown. */
-            .base-part[data-part="ship"].is-built > .base-img { animation: base-land 2600ms cubic-bezier(.3, .7, .4, 1) forwards; }
-            .base-part[data-part="ship"].is-built::after { animation-delay: 2050ms; }
-            /* A puff of moon dust where the piece lands. */
-            .base-part::after { content: ""; position: absolute; left: 50%; top: 91%; width: 130%; height: 26%; border-radius: 50%; background: radial-gradient(closest-side, rgb(214 212 206 / 70%), rgb(214 212 206 / 0%)); opacity: 0; transform: translate(-50%, -50%) scale(0.3); pointer-events: none; }
-            .base-part.is-built::after { animation: base-dust 1100ms ease-out 120ms; }
-            /* Outpost upgrades (base-lifesupport.svg, base-security.svg). Each is drawn in the outpost's own coordinates on a
+body > .app-shell {
+    position: relative;
+    z-index: 1;
+}
+.base-layer {
+    position: fixed;
+    z-index: 0;
+    left: 50%;
+    top: calc(var(--moon-top, 45vh) - var(--bg-w) * 0.1114);
+    width: var(--bg-w);
+    aspect-ratio: 3 / 2;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+.base-part {
+    position: absolute;
+    transform: translate(-50%, -91%) rotate(var(--tilt));
+    transform-origin: 50% 91%;
+}
+.base-part[data-part="outpost"] {
+    left: 76%;
+    top: 28.2%;
+    width: 13%;
+    --tilt: 32.5deg;
+}
+.base-part[data-part="rover"] {
+    left: 22.4%;
+    top: 29.8%;
+    width: 6.5%;
+    --tilt: -34.8deg;
+}
+/* Alien saucer, photo x 1705: far enough right of the outpost to clear the Bio-Dome and the shield bubble. */
+.base-part[data-part="ship"] {
+    left: 88.80%;
+    top: 46.29%;
+    width: 7.5%;
+    --tilt: 53.3deg;
+}
+.base-part > .base-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: brightness(0.9);
+    opacity: 0;
+    transform: scale(0);
+    transform-origin: 50% 91%;
+}
+.base-part.is-built > .base-img {
+    animation: base-pop 760ms cubic-bezier(.2, 1.5, .4, 1) forwards;
+}
+.base-part[data-part="rover"].is-built > .base-img {
+    animation: base-drive 1500ms cubic-bezier(.25, .8, .35, 1) forwards;
+}
+/* The saucer drops in from space along its own "up", hovers, then sets down; the dust puffs on touchdown. */
+.base-part[data-part="ship"].is-built > .base-img {
+    animation: base-land 2600ms cubic-bezier(.3, .7, .4, 1) forwards;
+}
+.base-part[data-part="ship"].is-built::after {
+    animation-delay: 2050ms;
+}
+/* A puff of moon dust where the piece lands. */
+.base-part::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 91%;
+    width: 130%;
+    height: 26%;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgb(214 212 206 / 70%), rgb(214 212 206 / 0%));
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+    pointer-events: none;
+}
+.base-part.is-built::after {
+    animation: base-dust 1100ms ease-out 120ms;
+}
+/* Outpost upgrades (base-lifesupport.svg, base-security.svg). Each is drawn in the outpost's own coordinates on a
                larger frame: x from -30 to 400 and y from 0 to 190, where the outpost is 0 to 300 by 0 to 170. So it sits
                10% left of the outpost and is 143.333% as wide, which lays it exactly over the outpost, tilt and all.
                Each grows from where it meets the ground: the Bio-Dome on the right, the shield from the middle of the base. */
-            .base-addon { position: absolute; left: -10%; top: 0; width: 143.333%; height: auto; filter: brightness(0.9); opacity: 0; transform: scale(0); pointer-events: none; }
-            .base-addon[data-part="lifesupport"] { transform-origin: 87% 88.4%; }
-            .base-addon[data-part="security"] { transform-origin: 41.86% 88.4%; }
-            .base-addon.is-built { animation: base-pop 900ms cubic-bezier(.2, 1.4, .4, 1) forwards; }
-            @keyframes base-pop { 0% { opacity: 0; transform: scale(0, 0.2); } 35% { opacity: 1; } 100% { opacity: 1; transform: scale(1); } }
-            @keyframes base-drive { 0% { opacity: 0; transform: translateX(160%); } 15% { opacity: 1; } 70% { transform: translateX(-4%); } 82% { transform: translateX(0) translateY(-3%); } 100% { opacity: 1; transform: none; } }
-            @keyframes base-land { 0% { opacity: 0; transform: translateY(-900%) scale(0.45); } 12% { opacity: 1; } 62% { transform: translateY(-30%) scale(1); } 74% { transform: translateY(-24%); } 84% { transform: translateY(0) scale(1.04, 0.95); } 92% { transform: translateY(-3%) scale(1); } 100% { opacity: 1; transform: none; } }
-            @keyframes base-dust { 0% { opacity: 0.9; transform: translate(-50%, -50%) scale(0.3); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.4); } }
-            @media (prefers-reduced-motion: reduce) { .base-part.is-built > .base-img, .base-addon.is-built { animation: none; opacity: 1; transform: none; } .base-part.is-built::after { animation: none; } }
+.base-addon {
+    position: absolute;
+    left: -10%;
+    top: 0;
+    width: 143.333%;
+    height: auto;
+    filter: brightness(0.9);
+    opacity: 0;
+    transform: scale(0);
+    pointer-events: none;
+}
+.base-addon[data-part="lifesupport"] {
+    transform-origin: 87% 88.4%;
+}
+.base-addon[data-part="security"] {
+    transform-origin: 41.86% 88.4%;
+}
+.base-addon.is-built {
+    animation: base-pop 900ms cubic-bezier(.2, 1.4, .4, 1) forwards;
+}
+@keyframes base-pop {
+    0% {
+        opacity: 0;
+        transform: scale(0, 0.2);
+    }
+    35% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+@keyframes base-drive {
+    0% {
+        opacity: 0;
+        transform: translateX(160%);
+    }
+    15% {
+        opacity: 1;
+    }
+    70% {
+        transform: translateX(-4%);
+    }
+    82% {
+        transform: translateX(0) translateY(-3%);
+    }
+    100% {
+        opacity: 1;
+        transform: none;
+    }
+}
+@keyframes base-land {
+    0% {
+        opacity: 0;
+        transform: translateY(-900%) scale(0.45);
+    }
+    12% {
+        opacity: 1;
+    }
+    62% {
+        transform: translateY(-30%) scale(1);
+    }
+    74% {
+        transform: translateY(-24%);
+    }
+    84% {
+        transform: translateY(0) scale(1.04, 0.95);
+    }
+    92% {
+        transform: translateY(-3%) scale(1);
+    }
+    100% {
+        opacity: 1;
+        transform: none;
+    }
+}
+@keyframes base-dust {
+    0% {
+        opacity: 0.9;
+        transform: translate(-50%, -50%) scale(0.3);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.4);
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .base-part.is-built > .base-img,
+    .base-addon.is-built {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+    .base-part.is-built::after {
+        animation: none;
+    }
+}
 
-            /* The game-over picture runs the card's full width instead of filling it. script.js sets its top so its horizon is
+/* The game-over picture runs the card's full width instead of filling it. script.js sets its top so its horizon is
                level with the Moon behind the card; the picture's sky is black, so the card behind it is black too. */
-            .card-img.is-scene { bottom: auto; height: auto; object-fit: fill; }
-            .panel:has(.card-img.is-scene) { background: #000; }
-            /* The victory scene (drawn by drawVictoryScene in script.js): the container drops in from above the card,
+.card-img.is-scene {
+    bottom: auto;
+    height: auto;
+    object-fit: fill;
+}
+.panel:has(.card-img.is-scene) {
+    background: #000;
+}
+/* The victory scene (drawn by drawVictoryScene in script.js): the container drops in from above the card,
                slows, and sets down on the pad. Its thrusters cut out, dust puffs up, and its shadow grows as it comes down. */
-            .victory-scene { position: absolute; inset: 0; pointer-events: none; }
-            .victory-scene[hidden] { display: none; }
-            .victory-scene svg { display: block; width: 100%; height: 100%; }
-            .panel:has(.victory-scene:not([hidden])) { background: #000; }
-            .vs-ship { animation: vs-descend 3200ms cubic-bezier(.22, .75, .3, 1) both; }
-            .vs-flame { transform-box: fill-box; transform-origin: 50% 0; animation: vs-flicker 110ms ease-in-out infinite alternate, vs-cutoff 3300ms ease-in both; }
-            .vs-shadow { transform-box: fill-box; transform-origin: 50% 50%; animation: vs-shadow 3200ms cubic-bezier(.22, .75, .3, 1) both; }
-            .vs-dust { transform-box: fill-box; transform-origin: 50% 100%; opacity: 0.35; animation: vs-dust 3800ms ease-out both; }
-            .vs-beacon { animation: vs-blink 900ms steps(2, jump-none) infinite; }
-            .vs-light { animation: vs-blink 1000ms ease-in-out infinite alternate; }
-            @keyframes vs-descend { 0% { transform: translateY(calc(var(--drop) * -1)); } 72% { transform: translateY(calc(var(--drop) * -0.06)); } 86% { transform: translateY(2px); } 93% { transform: translateY(-2px); } 100% { transform: none; } }
-            @keyframes vs-flicker { from { transform: scaleY(0.82); } to { transform: scaleY(1.08); } }
-            @keyframes vs-cutoff { 0%, 82% { opacity: 1; } 100% { opacity: 0; } }
-            @keyframes vs-shadow { 0% { opacity: 0; transform: scale(0.35); } 100% { opacity: 0.38; transform: scale(1); } }
-            @keyframes vs-dust { 0%, 68% { opacity: 0; transform: scale(0.3); } 82% { opacity: 0.9; transform: scale(1); } 100% { opacity: 0.35; transform: scale(1.25); } }
-            @keyframes vs-blink { from { opacity: 1; } to { opacity: 0.25; } }
-            /* Already landed (after a resize) or reduced motion: show the end of the landing straight away. */
-            .victory-scene.is-landed .vs-ship, .victory-scene.is-landed .vs-shadow, .victory-scene.is-landed .vs-dust { animation: none; }
-            .victory-scene.is-landed .vs-flame { animation: none; opacity: 0; }
-            @media (prefers-reduced-motion: reduce) {
-                .vs-ship, .vs-shadow, .vs-dust, .vs-beacon, .vs-light { animation: none; }
-                .vs-flame { animation: none; opacity: 0; }
-            }
-            /* A meter that ran out (on the game-over card) or is running low (below 25, set in Meters.js): its icon turns red
+.victory-scene {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+.victory-scene[hidden] {
+    display: none;
+}
+.victory-scene svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.panel:has(.victory-scene:not([hidden])) {
+    background: #000;
+}
+.vs-ship {
+    animation: vs-descend 3200ms cubic-bezier(.22, .75, .3, 1) both;
+}
+.vs-flame {
+    transform-box: fill-box;
+    transform-origin: 50% 0;
+    animation:
+        vs-flicker 110ms ease-in-out infinite alternate,
+        vs-cutoff 3300ms ease-in both;
+}
+.vs-shadow {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    animation: vs-shadow 3200ms cubic-bezier(.22, .75, .3, 1) both;
+}
+.vs-dust {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    opacity: 0.35;
+    animation: vs-dust 3800ms ease-out both;
+}
+.vs-beacon {
+    animation: vs-blink 900ms steps(2, jump-none) infinite;
+}
+.vs-light {
+    animation: vs-blink 1000ms ease-in-out infinite alternate;
+}
+@keyframes vs-descend {
+    0% {
+        transform: translateY(calc(var(--drop) * -1));
+    }
+    72% {
+        transform: translateY(calc(var(--drop) * -0.06));
+    }
+    86% {
+        transform: translateY(2px);
+    }
+    93% {
+        transform: translateY(-2px);
+    }
+    100% {
+        transform: none;
+    }
+}
+@keyframes vs-flicker {
+    from {
+        transform: scaleY(0.82);
+    }
+    to {
+        transform: scaleY(1.08);
+    }
+}
+@keyframes vs-cutoff {
+    0%,
+    82% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+@keyframes vs-shadow {
+    0% {
+        opacity: 0;
+        transform: scale(0.35);
+    }
+    100% {
+        opacity: 0.38;
+        transform: scale(1);
+    }
+}
+@keyframes vs-dust {
+    0%,
+    68% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    82% {
+        opacity: 0.9;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0.35;
+        transform: scale(1.25);
+    }
+}
+@keyframes vs-blink {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.25;
+    }
+}
+/* Already landed (after a resize) or reduced motion: show the end of the landing straight away. */
+.victory-scene.is-landed .vs-ship,
+.victory-scene.is-landed .vs-shadow,
+.victory-scene.is-landed .vs-dust {
+    animation: none;
+}
+.victory-scene.is-landed .vs-flame {
+    animation: none;
+    opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+    .vs-ship,
+    .vs-shadow,
+    .vs-dust,
+    .vs-beacon,
+    .vs-light {
+        animation: none;
+    }
+    .vs-flame {
+        animation: none;
+        opacity: 0;
+    }
+}
+/* A meter that ran out (on the game-over card) or is running low (below 25, set in Meters.js): its icon turns red
                and pulses. Its name stays white. While a choice is previewed, a low meter stops pulsing and shows its preview
                like any other meter: green (going up), red (going down) or white (no change). It pulses red again once the preview ends. */
-            .meter-item[data-empty], .meter-item[data-low]:not([data-preview]) { --tone: #e5484d; }
-            .meter-item[data-empty] .meter-icon, .meter-item[data-low]:not([data-preview]) .meter-icon { animation: meter-alarm 900ms ease-in-out infinite alternate; }
-            @keyframes meter-alarm { from { opacity: 1; } to { opacity: 0.45; } }
-            @media (prefers-reduced-motion: reduce) { .meter-item[data-empty] .meter-icon, .meter-item[data-low] .meter-icon { animation: none; } }
+.meter-item[data-empty],
+.meter-item[data-low]:not([data-preview]) {
+    --tone: #e5484d;
+}
+.meter-item[data-empty] .meter-icon,
+.meter-item[data-low]:not([data-preview]) .meter-icon {
+    animation: meter-alarm 900ms ease-in-out infinite alternate;
+}
+@keyframes meter-alarm {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.45;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .meter-item[data-empty] .meter-icon,
+    .meter-item[data-low] .meter-icon {
+        animation: none;
+    }
+}
