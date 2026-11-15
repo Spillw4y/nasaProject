@@ -405,6 +405,21 @@
         "unlockCard": "aliensidequest_003_war"
       }
     },
+    "aliensidequest_003_war": {
+      "deck": "quest",
+      "img": null,
+      "desc": "ALIEN CONTACT [CONCLUSION] — Smoke drifts off of the colony and the evading alien fleet as shots are exchanged, the sounds of explosions loud in the air. The crew hears them ramping back up to attack again. ",
+      "right": {
+        "desc": "Ask for a truce...",
+        "effects": { "power": -5, "food": 0, "shield": 10, "life": 20 },
+        "unlockCard": null
+      },
+      "left": {
+        "desc": "Arm the domes and fight them off!",
+        "effects": { "power": 10, "food": 0, "shield": 20, "life": 20 },
+        "unlockCard": null
+      }
+    },
     "aliensidequest_003_peace": {
       "deck": "quest",
       "img": null,
