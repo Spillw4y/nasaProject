@@ -1,28 +1,32 @@
+// Outpost Trainer: everything except the meters, which live in Meters.js (loaded first).
+//   1. Page elements and settings   2. The main story       3. Game state          4. Moon base
+//   5. Choosing the next card       6. Showing a card       7. Lining up with the Moon
+//   8. Endings                      9. Victory scene        10. Game flow          11. Input        12. Start
+
+// ---- 1. Page elements and settings ----
 const card = document.querySelector(".panel");
+const cardDesc = document.querySelector(".card-desc"); // the situation text, above the card
+const cardImg = card.querySelector(".card-img");
+const victoryScene = card.querySelector(".victory-scene"); // only shown on the victory card
 const decisionHints = {
     left: document.querySelector('.arrow[data-direction="left"]'),
     right: document.querySelector('.arrow[data-direction="right"]')
 };
-let startX = 0;
-let activePointerId = null;
-let resetTimer;
-const swipeDuration = 460;
-
-const directionLabels = {
-    left: "DECLINE",
-    right: "APPROVE"
-};
-
-// ---- Card data ----
-// The situation text sits above the card, not inside it.
-const cardDesc = document.querySelector(".card-desc");
-const cardImg = card.querySelector(".card-img");
 // The decision text lives in the labels beside the arrows.
 const choiceText = {
     left: decisionHints.left.querySelector(".choice-desc"),
     right: decisionHints.right.querySelector(".choice-desc")
 };
-// ---- The main story ----
+const SIDES = ["left", "right"];
+const KEY_DIRECTIONS = { ArrowLeft: "left", ArrowRight: "right" };
+const SWIPE_DURATION = 460; // ms for a swiped card to fly off; matches the card's transition in styles.css
+
+// The background photo (images/background.jpg) is 1920 pixels wide. The Moon's edge in it is a circle with
+// this centre and radius, in the photo's pixels.
+const PHOTO_WIDTH = 1920;
+const MOON_CIRCLE = { x: 960, y: 1144.5, r: 929.5 };
+
+// ---- 2. The main story ----
 // Five main story quests (MSQs), always in this order and never two at once. Each card of a quest unlocks the
 // next one through "unlockCard" in decks.json; a quest is over once one of its "ends" cards has been played.
 //   - Quest 1, mission design, is the opening: its cards play back to back, starting with START_CARD.
@@ -63,18 +67,25 @@ const STORY_STEP_GAP = [1, 3]; // cards between two steps of a running main ques
 const SIDE_GAP = [1, 2]; // cards before a waiting side quest card plays
 const RECENT_LIMIT = 8; // a main deck card that comes back never repeats one of the last 8 cards shown
 
+// ---- 3. Game state ----
 let cards = {}; // every card from decks.json, keyed by its id
+let ready = false; // true once decks.json has loaded
+// Reset by startGame() at the start of every game:
 let storyIndex = 0; // which main quest is running or up next (index into STORY)
 let storyNext = null; // id of the next main story card, waiting for its turn; null when none is waiting
 let cardsUntilStory = 0; // other cards still to play before storyNext
 let sideQueue = []; // ids of unlocked side quest cards waiting their turn, in order
 let cardsUntilSide = 0; // other cards still to play before the first side quest card in the queue
 let won = false; // true once the last main quest is done
+let gameOver = false; // true while an ending (game over or victory) is on the card; the next swipe restarts
 let played = new Set(); // ids already shown this game, so no card repeats
 let currentId = null; // id of the card on screen, or null when none is left
-let ready = false; // true once decks.json has loaded
-let gameOver = false;
+// Dragging the card:
+let startX = 0; // where the pointer went down
+let activePointerId = null; // the pointer dragging the card, or null
+let resetTimer; // the timer that swaps the card's content while a swiped card is off screen
 
+// ---- 4. Moon base ----
 // The base on the Moon in the background grows as the player progresses. Making either choice on
 // one of these cards builds that piece, and it stays until the next game. Each name matches the
 // data-part of a .base-part or .base-addon in index.html. To add a piece: draw it, add it to index.html and styles.css, list it here.
@@ -96,8 +107,18 @@ function clearBase() {
     document.querySelectorAll(".base-layer .is-built").forEach((el) => el.classList.remove("is-built"));
 }
 
+// ---- 5. Choosing the next card ----
 function currentCard() {
     return cards[currentId];
+}
+
+// A whole number from range[0] to range[1], both included.
+function randomBetween([low, high]) {
+    return low + Math.floor(Math.random() * (high - low + 1));
+}
+
+function pickRandom(list) {
+    return list[Math.floor(Math.random() * list.length)];
 }
 
 // Checks a card's conditions, such as { "maxFood": 25 } or { "minPower": 40 }.
@@ -114,16 +135,20 @@ function conditionsMet(data) {
     });
 }
 
-// A whole number from range[0] to range[1], both included.
-function randomBetween([low, high]) {
-    return low + Math.floor(Math.random() * (high - low + 1));
-}
-
 // Which main quest a card belongs to (an index into STORY), or -1 for any other card.
 // "_visit_" cards are not story steps (see STORY).
 function storyIndexOf(id) {
     if (!id || id.includes("_visit_")) return -1;
     return STORY.findIndex((quest) => quest.prefixes.some((prefix) => id.startsWith(prefix)));
+}
+
+// A card from the main deck that can come up at random: marked "main" in decks.json and not a story card.
+function isMainDeckCard(id) {
+    return cards[id].deck === "main" && storyIndexOf(id) === -1;
+}
+
+function unlocksSomething(id) {
+    return Boolean(cards[id].left.unlockCard || cards[id].right.unlockCard);
 }
 
 // Get the next main quest ready to start, after `gap` other cards. Quest 3 picks its version here.
@@ -147,13 +172,9 @@ function queueStoryStart(gap) {
 // Story and side quest cards are never shown twice in one game. Leaves currentId as null when there is nothing left to play.
 function drawCard() {
     sideQueue = sideQueue.filter((id) => !played.has(id)); // drop anything already shown
-    const mainPool = Object.keys(cards).filter(
-        (id) =>
-            cards[id].deck === "main" &&
-            storyIndexOf(id) === -1 &&
-            !played.has(id) &&
-            !sideQueue.includes(id) &&
-            conditionsMet(cards[id])
+    const ids = Object.keys(cards);
+    const mainPool = ids.filter(
+        (id) => isMainDeckCard(id) && !played.has(id) && !sideQueue.includes(id) && conditionsMet(cards[id])
     );
     // Once every main deck card has been seen, they can come back (a full run needs more cards than the deck has),
     // except cards that unlock something and the last RECENT_LIMIT cards shown. Story and side cards never repeat.
@@ -161,14 +182,12 @@ function drawCard() {
     const reusePool =
         mainPool.length > 0
             ? []
-            : Object.keys(cards).filter(
+            : ids.filter(
                   (id) =>
-                      cards[id].deck === "main" &&
-                      storyIndexOf(id) === -1 &&
+                      isMainDeckCard(id) &&
                       played.has(id) &&
                       !recent.includes(id) &&
-                      !cards[id].left.unlockCard &&
-                      !cards[id].right.unlockCard &&
+                      !unlocksSomething(id) &&
                       conditionsMet(cards[id])
               );
     const storyDue = storyNext !== null && cardsUntilStory <= 0;
@@ -190,9 +209,9 @@ function drawCard() {
         currentId = sideQueue.shift();
         if (sideQueue.length > 0) cardsUntilSide = randomBetween(SIDE_GAP);
     } else if (kind === "main") {
-        currentId = mainPool[Math.floor(Math.random() * mainPool.length)];
+        currentId = pickRandom(mainPool);
     } else if (kind === "reuse") {
-        currentId = reusePool[Math.floor(Math.random() * reusePool.length)];
+        currentId = pickRandom(reusePool);
         played.delete(currentId); // re-added below, so it counts as the most recent card
     } else {
         currentId = null;
@@ -242,11 +261,13 @@ function unlockFrom(choice) {
     sideQueue.push(id);
 }
 
+// ---- 6. Showing a card ----
 // Show a card's picture, or an empty card when it has none. path comes from "img" in decks.json.
+// Also clears the two ending pictures: the game-over scene (placeSceneImage) and the victory scene (renderWin).
 function showCardImage(path) {
-    cardImg.classList.remove("is-scene"); // a normal card picture fills the card; see placeSceneImage for the exception
+    cardImg.classList.remove("is-scene");
     cardImg.style.top = "";
-    victoryScene.hidden = true; // only the victory card shows it; see renderWin
+    victoryScene.hidden = true;
     victoryScene.innerHTML = "";
     if (path) {
         cardImg.src = path;
@@ -262,12 +283,71 @@ function renderCard() {
     const data = currentCard();
     cardDesc.textContent = data.desc;
     showCardImage(data.img);
-    for (const side of ["left", "right"]) {
+    for (const side of SIDES) {
         choiceText[side].textContent = data[side].desc;
     }
 }
 
-// Show an ending on the card. The next swipe starts a new game.
+// The .meter-item around a meter's icon, or null if the page has no such meter.
+function meterItem(name) {
+    return document.getElementById(meterIds[name])?.closest(".meter-item") ?? null;
+}
+
+// Colour the meters a choice would change: green if it goes up, red if it goes down, white if it doesn't change
+// ("none"). Every meter gets a preview state, so a meter that is running low stops its red warning while a
+// choice is previewed (see styles.css). Pass null to put every meter back to its normal colour, and warnings back on.
+function previewMeters(direction) {
+    const showing = Boolean(direction) && !gameOver && currentId !== null;
+    const effects = showing ? currentCard()[direction].effects || {} : {};
+    for (const name in meterIds) {
+        const item = meterItem(name);
+        if (!item) continue;
+        const change = effects[name] || 0;
+        if (change > 0) item.dataset.preview = "up";
+        else if (change < 0) item.dataset.preview = "down";
+        else if (showing) item.dataset.preview = "none";
+        else item.removeAttribute("data-preview");
+    }
+}
+
+// Highlight the arrow for a direction ("left", "right" or null for neither) and preview that choice on the meters.
+function setDecisionHint(direction) {
+    for (const [side, arrow] of Object.entries(decisionHints)) {
+        arrow.classList.toggle("is-active", side === direction);
+    }
+    previewMeters(direction);
+}
+
+// Put the card back in the middle, with no direction showing.
+function resetCardPosition() {
+    card.style.transform = "";
+    card.removeAttribute("data-swipe-direction");
+    setDecisionHint(null);
+}
+
+// ---- 7. Lining things up with the Moon in the background ----
+// Keep the top of the moon in the background photo level with the top of the card, so it sits
+// below the icons and the card text. offsetTop ignores the swipe animation, so this is safe mid-swipe.
+function placeMoon() {
+    let top = 0;
+    for (let el = card; el; el = el.offsetParent) top += el.offsetTop;
+    document.body.style.setProperty("--moon-top", `${top}px`);
+}
+
+// The background Moon's circle in the card's own pixels (from the inside of its top-left corner).
+// .base-layer has the same size and position as the background photo, so it tells us where the photo is on screen.
+function moonInCard() {
+    const photo = document.querySelector(".base-layer").getBoundingClientRect();
+    const scale = photo.width / PHOTO_WIDTH;
+    const box = card.getBoundingClientRect();
+    return {
+        x: photo.left + MOON_CIRCLE.x * scale - (box.left + card.clientLeft),
+        y: photo.top + MOON_CIRCLE.y * scale - (box.top + card.clientTop),
+        r: MOON_CIRCLE.r * scale
+    };
+}
+
+// ---- 8. Endings ----
 // The picture on the card when a meter runs out: the wrecked base. Loaded now so it is ready when the game ends.
 // game_over_card.jpg is game_over.jpg with Earth painted out (the background already has one) and more ground
 // added below, so it can run the full width of the card with its horizon level with the Moon behind the card.
@@ -284,35 +364,29 @@ const OUT_OF = {
 };
 const METER_LABELS = { power: "Power", food: "Food", shield: "Shield", life: "Life" };
 
-// The Moon's edge in background.jpg (1920 x 1280): a circle with this centre and radius, in the photo's pixels.
-const MOON_CIRCLE = { x: 960, y: 1144.5, r: 929.5 };
-
-// Line the game-over picture's horizon up with the edge of the Moon behind the card. .base-layer has the same
-// size and position as the background photo, so it tells us where the photo is on screen.
+// Line the game-over picture's horizon up with the edge of the Moon behind the card, where the Moon meets the
+// card's left edge.
 function placeSceneImage() {
     if (!cardImg.classList.contains("is-scene")) return;
-    const photo = document.querySelector(".base-layer").getBoundingClientRect();
-    const scale = photo.width / 1920;
-    const box = card.getBoundingClientRect();
-    const left = box.left + card.clientLeft; // inside the card's border
-    const top = box.top + card.clientTop;
-    const dx = Math.min(MOON_CIRCLE.r, Math.abs((left - photo.left) / scale - MOON_CIRCLE.x));
-    const moonEdge = photo.top + (MOON_CIRCLE.y - Math.sqrt(MOON_CIRCLE.r ** 2 - dx ** 2)) * scale;
-    cardImg.style.top = `${moonEdge - top - GAME_OVER_HORIZON * card.clientWidth}px`;
+    const moon = moonInCard();
+    const dx = Math.min(moon.r, Math.abs(moon.x));
+    const moonEdge = moon.y - Math.sqrt(moon.r ** 2 - dx ** 2);
+    cardImg.style.top = `${moonEdge - GAME_OVER_HORIZON * card.clientWidth}px`;
 }
-window.addEventListener("resize", placeSceneImage);
 
-// img is the picture to show on the ending card, or null for a blank card. scene: true for a picture that
-// runs the card's full width and lines up with the Moon behind the card instead of filling the card.
-// label is the text beside both arrows; either swipe starts a new game.
-function renderEnding(message, img = null, scene = false, label = "Start again") {
+// Show an ending on the card. The next swipe starts a new game.
+//   img: the picture to show, or null for a blank card.
+//   scene: true for a picture that runs the card's full width and lines up with the Moon behind the card,
+//          instead of filling the card.
+//   label: the text beside both arrows.
+function renderEnding(message, { img = null, scene = false, label = "Start again" } = {}) {
     cardDesc.textContent = message;
     showCardImage(img);
     if (img && scene) {
         cardImg.classList.add("is-scene");
         requestAnimationFrame(placeSceneImage); // once the card is back in place
     }
-    for (const side of ["left", "right"]) {
+    for (const side of SIDES) {
         choiceText[side].textContent = label;
     }
 }
@@ -320,7 +394,7 @@ function renderEnding(message, img = null, scene = false, label = "Start again")
 // Mark the meters that ran out, so their icons turn red; null clears them.
 function markEmptyMeters(empty) {
     for (const name in meterIds) {
-        const item = document.getElementById(meterIds[name])?.closest(".meter-item");
+        const item = meterItem(name);
         if (!item) continue;
         if (empty && empty.includes(name)) item.dataset.empty = "";
         else delete item.dataset.empty;
@@ -334,16 +408,25 @@ function renderGameOver() {
             ? OUT_OF[empty[0]]
             : `The outpost ran out of ${empty.map((name) => METER_LABELS[name]).join(" and ")} at once.`;
     markEmptyMeters(empty);
-    renderEnding(message, GAME_OVER_IMG, true);
+    renderEnding(message, { img: GAME_OVER_IMG, scene: true });
 }
 
-// ---- The victory card ----
-// Shown right after the last card of the last main quest. Both sides say "Play again".
-// Its picture is drawn here as an SVG, not loaded from a file: a cargo container with thrusters flies down
-// and lands on the big launch pad. The Moon in the picture is drawn with the exact circle of the Moon in
-// the background photo (MOON_CIRCLE), so its horizon lines up with the background at any window size.
+// The victory card: shown right after the last card of the last main quest. Both sides say "Play again".
+function renderWin() {
+    renderEnding(
+        "VICTORY! The cargo has landed on our new launch pad. The Earth-Moon Spaceport is open, " +
+            "and humanity is on the Moon to stay!",
+        { label: "Play again" }
+    );
+    victoryScene.hidden = false;
+    requestAnimationFrame(() => drawVictoryScene(false)); // once the card is back in place
+}
+
+// ---- 9. Victory scene ----
+// The victory card's picture is drawn here as an SVG, not loaded from a file: a cargo container with thrusters
+// flies down and lands on the big launch pad. The Moon in the picture is drawn with the exact circle of the Moon
+// in the background photo (moonInCard), so its horizon lines up with the background at any window size.
 // The landing is animated in styles.css (.victory-scene); after a resize it is redrawn already landed.
-const victoryScene = card.querySelector(".victory-scene");
 
 // A repeatable random sequence, so the ground looks the same every time it is drawn.
 function seededRandom(seed) {
@@ -355,33 +438,22 @@ function seededRandom(seed) {
     };
 }
 
+// Lighten (amount up to 1, white) or darken (amount down to -1, black) a "#rrggbb" colour.
 function shadeColor(hex, amount) {
-    // amount from -1 (black) to 1 (white)
     const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
     const to = amount < 0 ? 0 : 255;
     const k = Math.abs(amount);
     return `rgb(${[r, g, b].map((c) => Math.round(c + (to - c) * k)).join(",")})`;
 }
 
+// SVG markup helpers. attrs is extra attribute text placed first, such as ' class="vs-flame"'.
 const points = (list) => list.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(" ");
+const polygon = (list, fill, attrs = "") => `<polygon${attrs} points="${points(list)}" fill="${fill}"/>`;
 
-function drawVictoryScene(landed = false) {
-    if (victoryScene.hidden) return;
-    const W = card.clientWidth;
-    const H = card.clientHeight;
-    const box = card.getBoundingClientRect();
-    const photo = document.querySelector(".base-layer").getBoundingClientRect();
-    const scale = photo.width / 1920;
-    // The background Moon, in the card's own pixels.
-    const moon = {
-        x: photo.left + MOON_CIRCLE.x * scale - (box.left + card.clientLeft),
-        y: photo.top + MOON_CIRCLE.y * scale - (box.top + card.clientTop),
-        r: MOON_CIRCLE.r * scale
-    };
-    const rand = seededRandom(2026);
+// Black sky with a few stars, then the Moon's surface: flat low-poly facets inside the background Moon's circle,
+// darker further down, with a few craters.
+function drawSkyAndMoon(W, H, moon, rand) {
     const svg = [];
-
-    // Sky and stars (the Moon covers the ones below the horizon).
     svg.push(`<rect width="${W}" height="${H}" fill="#020306"/>`);
     for (let i = 0; i < 40; i++) {
         svg.push(
@@ -389,9 +461,9 @@ function drawVictoryScene(landed = false) {
         );
     }
 
-    // The Moon's surface: flat low-poly facets inside the background Moon's circle, lighter near the horizon.
     svg.push(`<defs><clipPath id="vs-moon"><circle cx="${moon.x}" cy="${moon.y}" r="${moon.r}"/></clipPath></defs>`);
     svg.push(`<g clip-path="url(#vs-moon)"><circle cx="${moon.x}" cy="${moon.y}" r="${moon.r}" fill="#76777c"/>`);
+    // A jittered grid over the card; each cell becomes two shaded triangles. The outer points stay on the grid.
     const cols = 6;
     const rows = 9;
     const grid = [];
@@ -411,33 +483,32 @@ function drawVictoryScene(landed = false) {
             const [a, b, d, e] = [grid[r][c], grid[r][c + 1], grid[r + 1][c + 1], grid[r + 1][c]];
             const depth = r / rows;
             const base = depth < 0.5 ? "#85868b" : "#717277";
-            svg.push(
-                `<polygon points="${points([a, b, d])}" fill="${shadeColor(base, 0.06 - depth * 0.12 + (rand() - 0.5) * 0.12)}"/>`
-            );
-            svg.push(
-                `<polygon points="${points([a, d, e])}" fill="${shadeColor(base, -0.06 - depth * 0.12 + (rand() - 0.5) * 0.12)}"/>`
-            );
+            svg.push(polygon([a, b, d], shadeColor(base, 0.06 - depth * 0.12 + (rand() - 0.5) * 0.12)));
+            svg.push(polygon([a, d, e], shadeColor(base, -0.06 - depth * 0.12 + (rand() - 0.5) * 0.12)));
         }
     }
-    // A few craters and rocks.
-    for (const [fx, fy, fr] of [
+    const craters = [
         [0.15, 0.3, 0.09],
         [0.82, 0.22, 0.07],
         [0.2, 0.9, 0.13],
         [0.86, 0.82, 0.1]
-    ]) {
-        const cx = fx * W,
-            cy = fy * H,
-            rx = fr * W;
+    ];
+    for (const [fx, fy, fr] of craters) {
+        const cx = fx * W;
+        const cy = fy * H;
+        const rx = fr * W;
         svg.push(`<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${rx * 0.3}" fill="#5f6065"/>`);
         svg.push(
             `<ellipse cx="${cx + rx * 0.08}" cy="${cy + rx * 0.05}" rx="${rx * 0.78}" ry="${rx * 0.22}" fill="#727378"/>`
         );
     }
     svg.push(`</g>`);
+    return svg.join("");
+}
 
-    // The launch pad: a big round slab with hazard stripes, a landing target and floodlights.
-    const pad = { x: W / 2, y: H * 0.64, rx: W * 0.47, ry: W * 0.47 * 0.32 };
+// The launch pad: a big round slab with hazard stripes, a landing target, rim lights and two floodlights.
+function drawLaunchPad(W, H, pad) {
+    const svg = [];
     const thick = pad.ry * 0.28;
     for (const side of [-1, 1]) {
         // floodlight masts behind the pad
@@ -484,13 +555,16 @@ function drawVictoryScene(landed = false) {
             `<circle class="vs-light" style="animation-delay:${(i % 2) * 0.5}s" cx="${pad.x + Math.cos(a) * pad.rx * 0.985}" cy="${pad.y + Math.sin(a) * pad.ry * 0.985}" r="${W * 0.008}" fill="#7fe0ff"/>`
         );
     }
+    return svg.join("");
+}
 
-    // The container's shadow on the pad: small and faint while it is high up, full once it lands.
+// The container's shadow on the pad (small and faint while it is high up, full once it lands) and the dust
+// kicked up on touchdown.
+function drawShadowAndDust(W, pad, rand) {
+    const svg = [];
     svg.push(
         `<ellipse class="vs-shadow" cx="${pad.x + W * 0.03}" cy="${pad.y + pad.ry * 0.12}" rx="${W * 0.3}" ry="${pad.ry * 0.36}" fill="#000" opacity="0.38"/>`
     );
-
-    // Dust kicked up on touchdown.
     for (const side of [-1, 1]) {
         for (let i = 0; i < 3; i++) {
             const cx = pad.x + side * W * (0.2 + i * 0.09);
@@ -502,11 +576,15 @@ function drawVictoryScene(landed = false) {
                 const rr = r * (0.8 + rand() * 0.35);
                 pts.push([cx + Math.cos(a) * rr, cy + Math.sin(a) * rr * 0.7]);
             }
-            svg.push(`<polygon class="vs-dust" points="${points(pts)}" fill="#cfc8bb"/>`);
+            svg.push(polygon(pts, "#cfc8bb", ' class="vs-dust"'));
         }
     }
+    return svg.join("");
+}
 
-    // The flying container: a 3/4 view of a shipping container with thruster pods and short landing legs.
+// The flying container: a 3/4 view of a shipping container with thruster pods and short landing legs,
+// drawn where it ends up (standing on the pad). Wrapped in .vs-ship, which styles.css drops in from above.
+function drawContainer(W, pad) {
     const cw = W * 0.4; // front face width
     const ch = cw * 0.42; // front face height
     const sw = cw * 0.2; // end face (the doors), seen at an angle
@@ -518,72 +596,94 @@ function drawVictoryScene(landed = false) {
     const yt = yb - ch;
     const ship = [];
     // legs and foot pads
-    for (const [lx, ly] of [
+    const feet = [
         [x0 + cw * 0.06, yb],
         [x1 - cw * 0.06, yb],
         [x0 + sw + cw * 0.06, yb - th],
         [x1 + sw - cw * 0.06, yb - th]
-    ]) {
+    ];
+    for (const [lx, ly] of feet) {
         ship.push(
-            `<polygon points="${points([
-                [lx - 3, ly],
-                [lx + 3, ly],
-                [lx + 7, ly + legs],
-                [lx - 7, ly + legs]
-            ])}" fill="#55585e"/>`
+            polygon(
+                [
+                    [lx - 3, ly],
+                    [lx + 3, ly],
+                    [lx + 7, ly + legs],
+                    [lx - 7, ly + legs]
+                ],
+                "#55585e"
+            )
         );
         ship.push(`<rect x="${lx - 11}" y="${ly + legs - 3}" width="22" height="5" fill="#2d2f34"/>`);
     }
     // thruster pods and flames (the flames go out on touchdown)
-    for (const [nx, ny] of [
+    const thrusters = [
         [x0 + cw * 0.2, yb],
         [x1 - cw * 0.2, yb],
         [x0 + sw + cw * 0.5, yb - th * 0.6]
-    ]) {
+    ];
+    for (const [nx, ny] of thrusters) {
         ship.push(
-            `<polygon class="vs-flame" points="${points([
-                [nx - 10, ny + 8],
-                [nx + 10, ny + 8],
-                [nx + 4, ny + 48],
-                [nx, ny + 64],
-                [nx - 4, ny + 48]
-            ])}" fill="#ff7a2f"/>`
+            polygon(
+                [
+                    [nx - 10, ny + 8],
+                    [nx + 10, ny + 8],
+                    [nx + 4, ny + 48],
+                    [nx, ny + 64],
+                    [nx - 4, ny + 48]
+                ],
+                "#ff7a2f",
+                ' class="vs-flame"'
+            )
         );
         ship.push(
-            `<polygon class="vs-flame" points="${points([
-                [nx - 6, ny + 8],
-                [nx + 6, ny + 8],
-                [nx + 2, ny + 34],
-                [nx, ny + 42],
-                [nx - 2, ny + 34]
-            ])}" fill="#ffd36b"/>`
+            polygon(
+                [
+                    [nx - 6, ny + 8],
+                    [nx + 6, ny + 8],
+                    [nx + 2, ny + 34],
+                    [nx, ny + 42],
+                    [nx - 2, ny + 34]
+                ],
+                "#ffd36b",
+                ' class="vs-flame"'
+            )
         );
         ship.push(
-            `<polygon points="${points([
-                [nx - 8, ny - 2],
-                [nx + 8, ny - 2],
-                [nx + 12, ny + 9],
-                [nx - 12, ny + 9]
-            ])}" fill="#3a3c41"/>`
+            polygon(
+                [
+                    [nx - 8, ny - 2],
+                    [nx + 8, ny - 2],
+                    [nx + 12, ny + 9],
+                    [nx - 12, ny + 9]
+                ],
+                "#3a3c41"
+            )
         );
     }
     // top, front and end faces
     ship.push(
-        `<polygon points="${points([
-            [x0, yt],
-            [x1, yt],
-            [x1 + sw, yt - th],
-            [x0 + sw, yt - th]
-        ])}" fill="#e2774b"/>`
+        polygon(
+            [
+                [x0, yt],
+                [x1, yt],
+                [x1 + sw, yt - th],
+                [x0 + sw, yt - th]
+            ],
+            "#e2774b"
+        )
     );
     ship.push(`<rect x="${x0}" y="${yt}" width="${cw}" height="${ch}" fill="#c9562e"/>`);
     ship.push(
-        `<polygon points="${points([
-            [x1, yt],
-            [x1 + sw, yt - th],
-            [x1 + sw, yb - th],
-            [x1, yb]
-        ])}" fill="#9a3e20"/>`
+        polygon(
+            [
+                [x1, yt],
+                [x1 + sw, yt - th],
+                [x1 + sw, yb - th],
+                [x1, yb]
+            ],
+            "#9a3e20"
+        )
     );
     // corrugated ribs on the front, door bars on the end
     for (let i = 1; i < 14; i++) {
@@ -600,14 +700,15 @@ function drawVictoryScene(landed = false) {
         `<line x1="${x1 + sw * 0.5}" y1="${yt - th * 0.5 + 4}" x2="${x1 + sw * 0.5}" y2="${yb - th * 0.5 - 4}" stroke="#5e2410" stroke-width="1.5"/>`
     );
     // corner castings and the stencilled name
-    for (const [cx, cy] of [
+    const corners = [
         [x0, yt],
         [x1, yt],
         [x0, yb],
         [x1, yb],
         [x1 + sw, yt - th],
         [x1 + sw, yb - th]
-    ]) {
+    ];
+    for (const [cx, cy] of corners) {
         ship.push(`<rect x="${cx - 5}" y="${cy - 5}" width="10" height="10" fill="#3a3c41"/>`);
     }
     ship.push(
@@ -626,45 +727,26 @@ function drawVictoryScene(landed = false) {
 
     // How far it falls: from above the top of the card down to the pad.
     const drop = yb + ch + th + 70;
-    svg.push(`<g class="vs-ship" style="--drop:${drop.toFixed(0)}px">${ship.join("")}</g>`);
+    return `<g class="vs-ship" style="--drop:${drop.toFixed(0)}px">${ship.join("")}</g>`;
+}
 
+// Draw the whole victory scene into the card. landed: true to skip the landing animation.
+function drawVictoryScene(landed = false) {
+    if (victoryScene.hidden) return;
+    const W = card.clientWidth;
+    const H = card.clientHeight;
+    const pad = { x: W / 2, y: H * 0.64, rx: W * 0.47, ry: W * 0.47 * 0.32 };
+    const rand = seededRandom(2026); // used in this order: stars, ground facets, dust
+    const svg =
+        drawSkyAndMoon(W, H, moonInCard(), rand) +
+        drawLaunchPad(W, H, pad) +
+        drawShadowAndDust(W, pad, rand) +
+        drawContainer(W, pad);
     victoryScene.classList.toggle("is-landed", landed);
-    victoryScene.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">${svg.join("")}</svg>`;
-}
-window.addEventListener("resize", () => drawVictoryScene(true));
-
-function renderWin() {
-    renderEnding(
-        "VICTORY! The cargo has landed on our new launch pad. The Earth-Moon Spaceport is open, " +
-            "and humanity is on the Moon to stay!",
-        null,
-        false,
-        "Play again"
-    );
-    victoryScene.hidden = false;
-    requestAnimationFrame(() => drawVictoryScene(false)); // once the card is back in place
+    victoryScene.innerHTML = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">${svg}</svg>`;
 }
 
-// Draw and show the next card, or end the game if no card is left to play.
-function showNextCard() {
-    drawCard();
-    if (currentId === null) {
-        gameOver = true;
-        renderEnding("The outpost made it through every event. You survived!");
-    } else {
-        renderCard();
-    }
-}
-
-// Keep the top of the moon in the background photo level with the top of the card, so it sits
-// below the icons and the card text. offsetTop ignores the swipe animation, so this is safe mid-swipe.
-function placeMoon() {
-    let top = 0;
-    for (let el = card; el; el = el.offsetParent) top += el.offsetTop;
-    document.body.style.setProperty("--moon-top", `${top}px`);
-}
-window.addEventListener("resize", placeMoon);
-
+// ---- 10. Game flow ----
 function startGame() {
     gameOver = false;
     won = false;
@@ -689,31 +771,19 @@ function startGame() {
     placeMoon();
 }
 
-// Colour the meters a choice would change: green if it goes up, red if it goes down, white if it doesn't change
-// ("none"). Every meter gets a preview state, so a meter that is running low stops its red warning while a
-// choice is previewed (see styles.css). Pass null to put every meter back to its normal colour, and warnings back on.
-function previewMeters(direction) {
-    const showing = direction && !gameOver && currentId !== null;
-    const effects = showing ?( currentCard()[direction].effects || {}) : {};
-    for (const name in meterIds) {
-        const fill = document.getElementById(meterIds[name]);
-        const item = fill && fill.closest(".meter-item");
-        if (!item) continue;
-        const change = effects[name] || 0;
-        if (change > 0) item.dataset.preview = "up";
-        else if (change < 0) item.dataset.preview = "down";
-        else if (showing) item.dataset.preview = "none";
-        else item.removeAttribute("data-preview");
+// Draw and show the next card, or end the game if no card is left to play.
+function showNextCard() {
+    drawCard();
+    if (currentId === null) {
+        gameOver = true;
+        renderEnding("The outpost made it through every event. You survived!");
+    } else {
+        renderCard();
     }
 }
 
-function setDecisionHint(direction) {
-    Object.entries(decisionHints).forEach(([key, arrow]) => {
-        arrow.classList.toggle("is-active", key === direction);
-    });
-    previewMeters(direction);
-}
-
+// Make the choice on one side of the card (or restart, on an ending), and fly the card off that way.
+// The card's content is swapped while it is off screen, then it snaps back to the middle.
 function showSwipe(direction) {
     const x = direction === "left" ? -window.innerWidth : window.innerWidth;
     const restarting = gameOver;
@@ -737,7 +807,6 @@ function showSwipe(direction) {
         // Build any piece of the base this choice unlocks, as the card clears the screen.
         if (chosenId) buildBasePart(chosenId);
 
-        // Swap the card's content while it is off screen.
         if (restarting) {
             startGame();
         } else if (isGameOver()) {
@@ -750,17 +819,25 @@ function showSwipe(direction) {
             showNextCard();
         }
 
+        // Snap back to the middle without animating, then turn the card's transition back on.
         card.style.transition = "none";
-        card.style.transform = "";
         card.classList.remove("is-exiting");
-        card.removeAttribute("data-swipe-direction");
-        setDecisionHint(null);
+        resetCardPosition();
         requestAnimationFrame(() => {
             card.style.transition = "";
         });
-    }, swipeDuration);
+    }, SWIPE_DURATION);
 }
 
+// After a resize: move the Moon first, because the two ending pictures are lined up with it.
+window.addEventListener("resize", () => {
+    placeMoon();
+    placeSceneImage();
+    drawVictoryScene(true);
+});
+
+// ---- 11. Input: drag the card, or use the arrow keys ----
+// A drag counts as a choice once it goes past a quarter of the card's width (at least 100 pixels).
 function directionFromDelta(deltaX) {
     if (Math.abs(deltaX) < Math.max(100, card.offsetWidth * 0.25)) return null;
     return deltaX < 0 ? "left" : "right";
@@ -777,11 +854,10 @@ card.addEventListener("pointerdown", (event) => {
 card.addEventListener("pointermove", (event) => {
     if (event.pointerId !== activePointerId) return;
     const deltaX = event.clientX - startX;
-    const direction = deltaX < 0 ? "left" : "right";
-    const distance = Math.abs(deltaX);
-
     card.style.transform = `translateX(${deltaX}px) rotate(${deltaX / 34}deg)`;
-    if (distance > 8) {
+    // Past a few pixels, preview the choice on that side.
+    if (Math.abs(deltaX) > 8) {
+        const direction = deltaX < 0 ? "left" : "right";
         card.dataset.swipeDirection = direction;
         setDecisionHint(direction);
     } else {
@@ -795,35 +871,24 @@ card.addEventListener("pointerup", (event) => {
     const direction = directionFromDelta(event.clientX - startX);
     activePointerId = null;
     card.classList.remove("is-dragging");
-    if (direction) {
-        showSwipe(direction);
-    } else {
-        card.style.transform = "";
-        card.removeAttribute("data-swipe-direction");
-        setDecisionHint(null);
-    }
+    if (direction) showSwipe(direction);
+    else resetCardPosition();
 });
 
 card.addEventListener("pointercancel", () => {
     activePointerId = null;
     card.classList.remove("is-dragging");
-    card.style.transform = "";
-    card.removeAttribute("data-swipe-direction");
-    setDecisionHint(null);
+    resetCardPosition();
 });
 
 card.addEventListener("keydown", (event) => {
-    const directions = {
-        ArrowLeft: "left",
-        ArrowRight: "right"
-    };
-    const direction = directions[event.key];
+    const direction = KEY_DIRECTIONS[event.key];
     if (!direction || !ready || card.classList.contains("is-exiting")) return;
     event.preventDefault();
     showSwipe(direction);
 });
 
-// ---- Start: load decks.json, then show the first card ----
+// ---- 12. Start: load decks.json, then show the first card ----
 function useDecks(decks) {
     const loaded = decks.cards || {};
     const hasMainCard = Object.values(loaded).some((data) => data.deck === "main");
@@ -832,11 +897,8 @@ function useDecks(decks) {
     }
     cards = loaded;
     // Load every card picture now, so each one is ready the moment its card comes up.
-    for (const path of new Set(
-        Object.values(cards)
-            .map((data) => data.img)
-            .filter(Boolean)
-    )) {
+    const pictures = new Set(Object.values(cards).map((data) => data.img).filter(Boolean));
+    for (const path of pictures) {
         new Image().src = path;
     }
     ready = true;
