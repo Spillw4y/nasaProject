@@ -94,6 +94,8 @@ const BASE_PARTS = {
     roversidequest_001_start: "rover", // VIPER rolls up to the airlock, which starts the rover quest
     upgrademsq2_004_lifesupport: "lifesupport", // colony upgrade, life support branch done: oxygen tanks and the Bio-Dome
     upgrademsq2_004_security: "security", // colony upgrade, security branch done: laser turrets and the magnetic shield
+    upgrademsq4_004_power: "fusion", // cavern expansion, power branch done: the Helios-3 fusion reactor
+    upgrademsq4_004_food: "agridome", // cavern expansion, food branch done: the Demeter Vault agricultural dome
     aliensidequest_001_dip: "ship" // the alien delegation arrives: their saucer comes down from space and lands
 };
 
