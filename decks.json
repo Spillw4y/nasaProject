@@ -1,78 +1,408 @@
 {
   "cards": {
-    "design_001": {
+    "intromsq1_001": {
       "deck": "quest",
       "img": "images/flightSurgeon(life).jpg",
       "desc": "MISSION DESIGN [1/5] — Launch Vehicle: Our mass budget is tight! Do we book NASA's Space Launch System (SLS) for crew comfort, or a heavy cargo rocket for extra armor?",
       "right": {
         "desc": "Launch on SLS Block 1B with full crew quarters.",
         "effects": { "power": -5, "food": 15, "shield": -10, "life": 15 },
-        "unlockCard": "design_002"
+        "unlockCard": "intromsq1_002"
       },
       "left": {
         "desc": "Cram the crew into a heavy cargo lander.",
         "effects": { "power": 10, "food": -10, "shield": 15, "life": -10 },
-        "unlockCard": "design_002"
+        "unlockCard": "intromsq1_002"
       }
     },
-    "design_002": {
+    "intromsq1_002": {
       "deck": "quest",
       "img": "images/spacestation.png",
       "desc": "MISSION DESIGN [2/5] — Lunar Orbit: We can dock at the Lunar Gateway station in a wide halo orbit for resupplies, or dive straight into Low Lunar Orbit to save fuel.",
       "right": {
         "desc": "Dock at Gateway for extra food and comms.",
         "effects": { "power": -10, "food": 15, "shield": 5, "life": 5 },
-        "unlockCard": "design_003"
+        "unlockCard": "intromsq1_003"
       },
       "left": {
         "desc": "Burn straight for Low Lunar Orbit to save power.",
         "effects": { "power": 15, "food": -5, "shield": -10, "life": -5 },
-        "unlockCard": "design_003"
+        "unlockCard": "intromsq1_003"
       }
     },
-    "design_003": {
+    "intromsq1_003": {
       "deck": "quest",
       "img": "images/safetyOfficer(shielding).png",
       "desc": "MISSION DESIGN [3/5] — Landing Site: Touch down on Shackleton Crater's sunny South Pole rim for constant solar power, or inside a basalt lava tube for natural shielding?",
       "right": {
         "desc": "Land on Shackleton's sunny South Pole ridge.",
         "effects": { "power": 15, "food": 0, "shield": -15, "life": 5 },
-        "unlockCard": "design_004"
+        "unlockCard": "intromsq1_004"
       },
       "left": {
         "desc": "Land inside the armored Mare Lava Tube pit.",
         "effects": { "power": -15, "food": 0, "shield": 20, "life": -5 },
-        "unlockCard": "design_004"
+        "unlockCard": "intromsq1_004"
       }
     },
-    "design_004": {
+    "intromsq1_004": {
       "deck": "quest",
       "img": "images/chiefEngineer(power).jpg",
       "desc": "MISSION DESIGN [4/5] — Base Systems: Our lander only has room for one heavy module! Pack a Kilopower nuclear reactor, or an expanded Veggie hydroponic farm?",
       "right": {
         "desc": "Pack the Kilopower nuclear fission core.",
         "effects": { "power": 20, "food": -10, "shield": -5, "life": -5 },
-        "unlockCard": "design_005"
+        "unlockCard": "intromsq1_005"
       },
       "left": {
         "desc": "Pack the expanded Veggie hydroponic greenhouse.",
         "effects": { "power": -15, "food": 20, "shield": 0, "life": 10 },
-        "unlockCard": "design_005"
+        "unlockCard": "intromsq1_005"
       }
     },
-    "design_005": {
+    "intromsq1_005": {
       "deck": "quest",
       "img": "images/rover.jpg",
       "desc": "MISSION DESIGN [5/5] — Science Payload: Touchdown confirmed! For our final payload bay, do we activate the NASA Rover homing beacon, or the deep-space SETI dish?",
       "right": {
         "desc": "Ping NASA's lost VIPER rover nearby!",
         "effects": { "power": -5, "food": 0, "shield": 5, "life": 10 },
-        "unlockCard": "main_003"
+        "unlockCard": "roversidequest_001_start"
       },
       "left": {
         "desc": "Fire up the deep-space SETI radio dish!",
         "effects": { "power": -10, "food": 0, "shield": 10, "life": 5 },
-        "unlockCard": "alien_001_dip"
+        "unlockCard": "aliensidequest_001_dip"
+      }
+    },
+    "upgrademsq2_001_start": {
+      "deck": "main",
+      "img": "images/spacestation.png",
+      "desc": "COLONY UPGRADE [START] — Lunar Gateway just dropped a heavy orbital upgrade module! Do we build the Anti-Meteor Defense Grid, or the Bio-Dome & Oxygen Control Core?",
+      "right": {
+        "desc": "Construct the Anti-Meteor Laser Turret & Shield Grid.",
+        "effects": { "power": 5, "food": 0, "shield": 20, "life": 5 },
+        "unlockCard": "upgrademsq2_002_security"
+      },
+      "left": {
+        "desc": "Build the Pressurized Bio-Dome & Oxygen Control Core.",
+        "effects": { "power": 0, "food": 15, "shield": 5, "life": 15 },
+        "unlockCard": "upgrademsq2_002_lifesupport"
+      }
+    },
+    "upgrademsq2_002_security": {
+      "deck": "quest",
+      "img": "images/spacestation.png",
+      "desc": "SECURITY UPGRADE [1/3] — Point-Defense Turrets: We're mounting automated Whipple shields and laser turrets on the roof to vaporize incoming micrometeorites!",
+      "right": {
+        "desc": "Link the turrets to orbital tracking radar for max accuracy.",
+        "effects": { "power": 5, "food": 0, "shield": 20, "life": 10 },
+        "unlockCard": "upgrademsq2_003_security"
+      },
+      "left": {
+        "desc": "Install solar-capacitor banks on the turret barrels.",
+        "effects": { "power": 15, "food": 0, "shield": 15, "life": 5 },
+        "unlockCard": "upgrademsq2_003_security"
+      }
+    },
+    "upgrademsq2_002_lifesupport": {
+      "deck": "quest",
+      "img": "images/spacestation.png",
+      "desc": "LIFE SUPPORT [1/3] — Cryo-Oxygen Tanks: We're replacing our old air valves with triple-redundant Kevlar oxygen tanks and automated pressure regulators!",
+      "right": {
+        "desc": "Enrich the cabin air mix for peak crew health and focus.",
+        "effects": { "power": 5, "food": 5, "shield": 5, "life": 20 },
+        "unlockCard": "upgrademsq2_003_lifesupport"
+      },
+      "left": {
+        "desc": "Route spare liquid oxygen to boost the fuel cells.",
+        "effects": { "power": 15, "food": 5, "shield": 5, "life": 10 },
+        "unlockCard": "upgrademsq2_003_lifesupport"
+      }
+    },
+    "upgrademsq2_003_security": {
+      "deck": "quest",
+      "img": "images/spacestation.png",
+      "desc": "SECURITY UPGRADE [2/3] — Magnetosphere Projector: The anti-meteor turrets are online! Now we're wiring a superconducting magnetic dome to deflect cosmic radiation.",
+      "right": {
+        "desc": "Tune the magnetic field to double as a radiation bunker.",
+        "effects": { "power": 0, "food": 5, "shield": 25, "life": 10 },
+        "unlockCard": "upgrademsq2_004_security"
+      },
+      "left": {
+        "desc": "Harvest solar-wind ions from the shield for free power.",
+        "effects": { "power": 20, "food": 0, "shield": 15, "life": 5 },
+        "unlockCard": "upgrademsq2_004_security"
+      }
+    },
+    "upgrademsq2_003_lifesupport": {
+      "deck": "quest",
+      "img": "images/spacestation.png",
+      "desc": "LIFE SUPPORT [2/3] — Eden Bio-Dome: With the oxygen tanks secured, we're inflating a sunlit hydroponic Bio-Dome filled with air-scrubbing orchard trees!",
+      "right": {
+        "desc": "Plant high-calorie dwarf fruit trees and berry vines.",
+        "effects": { "power": 0, "food": 25, "shield": 0, "life": 15 },
+        "unlockCard": "upgrademsq2_004_lifesupport"
+      },
+      "left": {
+        "desc": "Add therapeutic park benches and UV sunlamps for the crew.",
+        "effects": { "power": 5, "food": 10, "shield": 5, "life": 25 },
+        "unlockCard": "upgrademsq2_004_lifesupport"
+      }
+    },
+    "upgrademsq2_004_security": {
+      "deck": "quest",
+      "img": "images/spacestation.png",
+      "desc": "SECURITY UPGRADE [3/3] — Aegis Defense Network Complete! A meteor storm approaches, and our automated laser turrets blast the space rocks into harmless metallic dust!",
+      "right": {
+        "desc": "Scoop up the vaporized meteor iron to reinforce the hull!",
+        "effects": { "power": 10, "food": 5, "shield": 25, "life": 15 },
+        "unlockCard": "upgrademsq2_visit_security"
+      },
+      "left": {
+        "desc": "Throw a crew viewing party under the invincible dome!",
+        "effects": { "power": 10, "food": 15, "shield": 15, "life": 20 },
+        "unlockCard": "upgrademsq2_visit_security"
+      }
+    },
+    "upgrademsq2_004_lifesupport": {
+      "deck": "quest",
+      "img": "images/spacestation.png",
+      "desc": "LIFE SUPPORT [3/3] — Oasis Core Complete! The Bio-Dome and smart oxygen tanks are running in a 100% closed loop—fresh breeze and ripe harvests fill the base!",
+      "right": {
+        "desc": "Feast on fresh Bio-Dome produce and pure mountain air!",
+        "effects": { "power": 5, "food": 25, "shield": 5, "life": 25 },
+        "unlockCard": "upgrademsq2_visit_lifesupport"
+      },
+      "left": {
+        "desc": "Store excess liquid oxygen and biofuel for emergencies!",
+        "effects": { "power": 20, "food": 15, "shield": 10, "life": 15 },
+        "unlockCard": "upgrademsq2_visit_lifesupport"
+      }
+    },
+    "upgrademsq2_visit_security": {
+      "deck": "quest",
+      "img": "images/spacestation.png",
+      "desc": "Pew-pew! The Aegis anti-meteor turrets just sniped another stray asteroid chunk out of the sky, and the magnetic shield is humming smoothly!",
+      "right": {
+        "desc": "Smelt the asteroid fragments into fresh hull plating!",
+        "effects": { "power": 5, "food": 0, "shield": 20, "life": 10 },
+        "unlockCard": "upgrademsq2_visit_security"
+      },
+      "left": {
+        "desc": "Siphon excess capacitor energy straight into the base grid!",
+        "effects": { "power": 20, "food": 5, "shield": 10, "life": 5 },
+        "unlockCard": "upgrademsq2_visit_security"
+      }
+    },
+    "upgrademsq2_visit_lifesupport": {
+      "deck": "quest",
+      "img": "images/spacestation.png",
+      "desc": "Breathe easy! The Bio-Dome orchards just hit peak harvest, and the smart oxygen tanks report 100% pure air pressure across all habitats!",
+      "right": {
+        "desc": "Serve fresh orchard fruit and boost cabin oxygen!",
+        "effects": { "power": 0, "food": 20, "shield": 5, "life": 15 },
+        "unlockCard": "upgrademsq2_visit_lifesupport"
+      },
+      "left": {
+        "desc": "Vent spare oxygen into the fuel cells for clean energy!",
+        "effects": { "power": 15, "food": 10, "shield": 5, "life": 10 },
+        "unlockCard": "upgrademsq2_visit_lifesupport"
+      }
+    },
+    "roversidequest_001_start": {
+      "deck": "main",
+      "img": "images/rover.jpg",
+      "desc": "ROVER QUEST [START] — NASA's lost VIPER rover rolls up to our airlock, flashing its headlights! Its link to Earth is dead, and its ice-scanner is pinging nearby.",
+      "right": {
+        "desc": "Drain our grid to send it ice mining.",
+        "effects": { "power": -15, "food": 0, "shield": 0, "life": 5 },
+        "unlockCard": "roversidequest_002_ice"
+      },
+      "left": {
+        "desc": "Send it to the sunny ridge as a scout.",
+        "effects": { "power": 10, "food": -10, "shield": 5, "life": 0 },
+        "unlockCard": "roversidequest_002_scout"
+      }
+    },
+    "roversidequest_002_ice": {
+      "deck": "quest",
+      "img": "images/rover.jpg",
+      "desc": "ROVER QUEST [1/3] — VIPER's wheels are sinking into fluffy 'fairy-castle' moon dust inside a dark crater! Spinning the tires will bury its belly pan.",
+      "right": {
+        "desc": "Use NASA's 'Inchworm' wheel-lifting crawl.",
+        "effects": { "power": -15, "food": 0, "shield": 0, "life": 5 },
+        "unlockCard": "roversidequest_003_ice"
+      },
+      "left": {
+        "desc": "Floor the throttle and yank it out with winches!",
+        "effects": { "power": -15, "food": 0, "shield": -25, "life": -5 },
+        "unlockCard": "roversidequest_003_scout"
+      }
+    },
+    "roversidequest_002_scout": {
+      "deck": "quest",
+      "img": "images/rover.jpg",
+      "desc": "ROVER QUEST [1/3] — The rover clipped a rock and ripped off its back fender! Static-charged moon dust is coating its heat mirrors and cooking its circuits.",
+      "right": {
+        "desc": "Tape laminated colony maps over the wheel.",
+        "effects": { "power": -5, "food": -5, "shield": 10, "life": 5 },
+        "unlockCard": "roversidequest_003_scout"
+      },
+      "left": {
+        "desc": "Drive it into a freezing crater to cool down.",
+        "effects": { "power": -15, "food": 0, "shield": -20, "life": -5 },
+        "unlockCard": "roversidequest_003_ice"
+      }
+    },
+    "roversidequest_003_ice": {
+      "deck": "quest",
+      "img": "images/rover.jpg",
+      "desc": "ROVER QUEST [2/3] — At -235°C in the dark crater, VIPER's drill hits rock-hard ice! The drill is straining, and the battery heaters only have 4 hours left.",
+      "right": {
+        "desc": "Peck slowly using NASA's 'bite-and-brush' drill rule.",
+        "effects": { "power": -20, "food": 0, "shield": 10, "life": 0 },
+        "unlockCard": "roversidequest_004_ice"
+      },
+      "left": {
+        "desc": "Max the drill torque and ignore the battery alarm!",
+        "effects": { "power": -30, "food": 0, "shield": -20, "life": -15 },
+        "unlockCard": null
+      }
+    },
+    "roversidequest_003_scout": {
+      "deck": "quest",
+      "img": "images/rover.jpg",
+      "desc": "ROVER QUEST [2/3] — Siren alert! NASA satellites spotted a huge Solar Flare heading our way. Radiation on the exposed ridge will fry the rover's computer!",
+      "right": {
+        "desc": "Park behind a boulder in NASA 'Safe Mode.'",
+        "effects": { "power": -15, "food": -5, "shield": 15, "life": 0 },
+        "unlockCard": "roversidequest_004_scout"
+      },
+      "left": {
+        "desc": "Keep driving through the radiation storm!",
+        "effects": { "power": -25, "food": 0, "shield": -25, "life": -15 },
+        "unlockCard": null
+      }
+    },
+    "roversidequest_004_ice": {
+      "deck": "quest",
+      "img": "images/rover.jpg",
+      "desc": "ROVER QUEST [3/3] — Jackpot! VIPER dug up 5% pure water-ice and ammonia! It drops off the load at base before heading out on permanent deep-crater patrol.",
+      "right": {
+        "desc": "Melt the ice and ammonia for our farms!",
+        "effects": { "power": -10, "food": 25, "shield": 0, "life": 15 },
+        "unlockCard": "roversidequest_visit_ice"
+      },
+      "left": {
+        "desc": "Split the water into oxygen and rocket fuel!",
+        "effects": { "power": 25, "food": 5, "shield": 10, "life": 5 },
+        "unlockCard": "roversidequest_visit_ice"
+      }
+    },
+    "roversidequest_004_scout": {
+      "deck": "quest",
+      "img": "images/rover.jpg",
+      "desc": "ROVER QUEST [3/3] — VIPER found a 'Peak of Eternal Light' with 92% year-round sunshine and titanium ore! It sets up a ridge outpost to run solo patrols.",
+      "right": {
+        "desc": "Link its new solar tower to our power grid!",
+        "effects": { "power": 25, "food": 0, "shield": 10, "life": 10 },
+        "unlockCard": "roversidequest_visit_scout"
+      },
+      "left": {
+        "desc": "Bake the titanium dirt into dome armor bricks!",
+        "effects": { "power": 5, "food": 5, "shield": 25, "life": 10 },
+        "unlockCard": "roversidequest_visit_scout"
+      }
+    },
+    "roversidequest_visit_ice": {
+      "deck": "quest",
+      "img": "images/rover.jpg",
+      "desc": "Beep-beep! VIPER is back from its crater patrol, covered in frost and flashing its headlights at the airlock with a fresh load of ice!",
+      "right": {
+        "desc": "Refill the greenhouses and clean its camera!",
+        "effects": { "power": -5, "food": 15, "shield": 0, "life": 10 },
+        "unlockCard": "roversidequest_visit_ice"
+      },
+      "left": {
+        "desc": "Crack the ice for fuel and patch its drill!",
+        "effects": { "power": 15, "food": 0, "shield": 10, "life": -5 },
+        "unlockCard": "roversidequest_visit_ice"
+      }
+    },
+    "roversidequest_visit_scout": {
+      "deck": "quest",
+      "img": "images/rover.jpg",
+      "desc": "Look who's back! VIPER rolls down from the sunny ridge, beaming spare solar power and towing a sled of titanium rocks!",
+      "right": {
+        "desc": "Drain its batteries and tune up its wheels!",
+        "effects": { "power": 15, "food": -5, "shield": 0, "life": 10 },
+        "unlockCard": "roversidequest_visit_scout"
+      },
+      "left": {
+        "desc": "Armor the hull with titanium and send it back!",
+        "effects": { "power": -5, "food": 0, "shield": 15, "life": 10 },
+        "unlockCard": "roversidequest_visit_scout"
+      }
+    },
+    "aliensidequest_001_dip": {
+      "deck": "quest",
+      "img": "images/safetyOfficer(shielding).png",
+      "desc": "ALIEN CONTACT [1/2] — An alien delegation approaches the perimeter, broadcasting a peaceful mathematical sequence.",
+      "right": {
+        "desc": "Welcome them with open arms.",
+        "effects": { "power": -10, "food": -10, "shield": 0, "life": -5 },
+        "unlockCard": "aliensidequest_002_dip"
+      },
+      "left": {
+        "desc": "Lock down the base and aim weapons.",
+        "effects": { "power": -5, "food": 0, "shield": 10, "life": -10 },
+        "unlockCard": "aliensidequest_001_com"
+      }
+    },
+    "aliensidequest_001_com": {
+      "deck": "quest",
+      "img": "images/safetyOfficer(shielding).png",
+      "desc": "ALIEN CONTACT [1/2] — Alien vessels lock weapons onto our primary dome! Our refusal to share resources has provoked an attack.",
+      "right": {
+        "desc": "Return fire with everything we have!",
+        "effects": { "power": -15, "food": 0, "shield": -35, "life": -15 },
+        "unlockCard": "aliensidequest_002_com"
+      },
+      "left": {
+        "desc": "Beg for mercy and pay tribute.",
+        "effects": { "power": -30, "food": -30, "shield": 0, "life": -25 },
+        "unlockCard": "aliensidequest_002_dip"
+      }
+    },
+    "aliensidequest_002_dip": {
+      "deck": "quest",
+      "img": "images/spacestation.png",
+      "desc": "ALIEN CONTACT [2/2] — The alien envoys share crystalline zero-point energy matrices and bio-seeds in exchange for our peaceful hospitality!",
+      "right": {
+        "desc": "Plug their zero-point matrix into our main grid!",
+        "effects": { "power": 25, "food": 10, "shield": 15, "life": 10 },
+        "unlockCard": null
+      },
+      "left": {
+        "desc": "Plant the alien star-seeds in our hydroponic bays!",
+        "effects": { "power": 5, "food": 25, "shield": 5, "life": 25 },
+        "unlockCard": null
+      }
+    },
+    "aliensidequest_002_com": {
+      "deck": "quest",
+      "img": "images/safetyOfficer(shielding).png",
+      "desc": "ALIEN CONTACT [2/2] — The alien scout ship crashes into a nearby crater after our laser barrage! Its exotic alloy hull is still smoking.",
+      "right": {
+        "desc": "Salvage the alien armor plating for our domes!",
+        "effects": { "power": -10, "food": 0, "shield": 30, "life": 5 },
+        "unlockCard": null
+      },
+      "left": {
+        "desc": "Siphon the ship's antimatter fuel cells!",
+        "effects": { "power": 30, "food": 0, "shield": -10, "life": 5 },
+        "unlockCard": null
       }
     },
     "main_001": {
@@ -109,21 +439,6 @@
     },
     "main_003": {
       "deck": "main",
-      "img": "images/rover.jpg",
-      "desc": "NASA's lost VIPER rover rolls up to our airlock, flashing its headlights! Its link to Earth is dead, and its ice-scanner is pinging nearby.",
-      "right": {
-        "desc": "Drain our grid to send it ice mining.",
-        "effects": { "power": -15, "food": 0, "shield": 0, "life": 5 },
-        "unlockCard": "rover_001_ice"
-      },
-      "left": {
-        "desc": "Send it to the sunny ridge as a scout.",
-        "effects": { "power": 10, "food": -10, "shield": 5, "life": 0 },
-        "unlockCard": "rover_001_scout"
-      }
-    },
-    "main_004": {
-      "deck": "main",
       "img": "images/safetyOfficer(shielding).png",
       "desc": "A shallow magnitude 4.5 moonquake is shaking the ground! The habitat domes are groaning as the fault line shifts underneath us.",
       "right": {
@@ -137,7 +452,7 @@
         "unlockCard": null
       }
     },
-    "main_005": {
+    "main_004": {
       "deck": "main",
       "img": "images/bioLead(food).png",
       "desc": "Our NASA 'Veggie' garden pods are drowning! In low gravity, water forms bubbles around the lettuce roots and suffocates them.",
@@ -152,7 +467,7 @@
         "unlockCard": null
       }
     },
-    "main_006": {
+    "main_005": {
       "deck": "main",
       "img": "images/flightSurgeon(life).jpg",
       "desc": "Glass-sharp moon dust is sticking to our spacesuits! It's chewing up the airlock seals and giving the crew 'Apollo hay fever.'",
@@ -167,7 +482,7 @@
         "unlockCard": null
       }
     },
-    "main_007": {
+    "main_006": {
       "deck": "main",
       "img": "images/chiefEngineer(power).jpg",
       "desc": "Our Kilopower nuclear reactor is running hot! We can push the uranium core harder for energy, or cool it down to protect the base.",
@@ -182,7 +497,7 @@
         "unlockCard": null
       }
     },
-    "main_008": {
+    "main_007": {
       "deck": "main",
       "img": "images/safetyOfficer(shielding).png",
       "desc": "A lunar satellite spotted a collapsed lava tube cave two kilometers away! Its thick stone roof offers natural radiation shielding.",
@@ -197,7 +512,7 @@
         "unlockCard": null
       }
     },
-    "main_009": {
+    "main_008": {
       "deck": "main",
       "img": "images/flightSurgeon(life).jpg",
       "desc": "The life-support water recycler is clogged! Low gravity makes the crew lose bone calcium, and that mineral sludge is jamming our urine filters.",
@@ -212,7 +527,7 @@
         "unlockCard": null
       }
     },
-    "main_010": {
+    "main_009": {
       "deck": "main",
       "img": "images/safetyOfficer(shielding).png",
       "desc": "Wait—is that Surveyor 3?! A scout found a 1960s NASA probe sitting in a crater, still wrapped in shiny foil and titanium struts.",
@@ -227,7 +542,7 @@
         "unlockCard": null
       }
     },
-    "main_011": {
+    "main_010": {
       "deck": "main",
       "img": "images/safetyOfficer(shielding).png",
       "desc": "The Geminid meteor shower is pelting the Moon! With no atmosphere to burn them up, tiny space pebbles are hitting faster than bullets.",
@@ -242,7 +557,7 @@
         "unlockCard": null
       }
     },
-    "main_012": {
+    "main_011": {
       "deck": "main",
       "img": "images/chiefEngineer(power).jpg",
       "desc": "One of our cube-shaped NASA Astrobee robots went haywire in the cafeteria! Its fans are blowing floating crumbs everywhere while it sings 'Daisy Bell.'",
@@ -257,7 +572,7 @@
         "unlockCard": null
       }
     },
-    "main_013": {
+    "main_012": {
       "deck": "main",
       "img": "images/spacestation.png",
       "desc": "NASA's Lunar Gateway space station is passing right overhead! They can drop us a supply pod if we guide it down to the landing pad.",
@@ -272,7 +587,7 @@
         "unlockCard": null
       }
     },
-    "main_014": {
+    "main_013": {
       "deck": "main",
       "img": "images/flightSurgeon(life).jpg",
       "desc": "Living in one-sixth gravity is weakening the crew's bones and making their vision blurry! Doctors warn that health is slipping fast.",
@@ -287,7 +602,7 @@
         "unlockCard": null
       }
     },
-    "main_015": {
+    "main_014": {
       "deck": "main",
       "img": "images/chiefEngineer(power).jpg",
       "desc": "Our moon-dirt smelter is glowing at 1,600°C! Baking lunar soil separates out pure oxygen gas and leaves behind molten iron.",
@@ -302,7 +617,7 @@
         "unlockCard": null
       }
     },
-    "main_016": {
+    "main_015": {
       "deck": "main",
       "img": "images/chiefEngineer(power).jpg",
       "desc": "NASA's deep-space laser dish just locked onto our receiver! We have ultra-fast internet from Earth for the next 20 minutes.",
@@ -317,7 +632,7 @@
         "unlockCard": null
       }
     },
-    "main_017": {
+    "main_016": {
       "deck": "main",
       "img": "images/bioLead(food).png",
       "desc": "Weird pink space-slime is growing inside our cooling pipes! Tough bacteria survived radiation and are blocking water flow to the computers.",
@@ -332,7 +647,7 @@
         "unlockCard": null
       }
     },
-    "main_018": {
+    "main_017": {
       "deck": "main",
       "img": "images/chiefEngineer(power).jpg",
       "desc": "Our Valkyrie humanoid robot froze up while fixing the outer antenna! It's stuck hanging onto the tower as deadly shadow creeps in.",
@@ -347,7 +662,7 @@
         "unlockCard": null
       }
     },
-    "main_019": {
+    "main_018": {
       "deck": "main",
       "img": "images/chiefEngineer(power).jpg",
       "desc": "Our miners scooped up moon dirt packed with Helium-3 from solar wind! The engineers want to test it in our unshielded fusion prototype.",
@@ -362,7 +677,7 @@
         "unlockCard": null
       }
     },
-    "main_020": {
+    "main_019": {
       "deck": "main",
       "img": "images/safetyOfficer(shielding).png",
       "desc": "We found an old Apollo laser mirror out on the plains! Scientists on Earth still bounce green laser beams off it to measure the Moon's orbit.",
@@ -377,7 +692,7 @@
         "unlockCard": null
       }
     },
-    "main_021": {
+    "main_020": {
       "deck": "main",
       "img": "images/flightSurgeon(life).jpg",
       "desc": "The crew in Habitat B has 'space cabin fever,' and the sewage tank is full! NASA research shows human waste is great at blocking cosmic rays.",
@@ -392,7 +707,7 @@
         "unlockCard": null
       }
     },
-    "main_022": {
+    "main_021": {
       "deck": "main",
       "img": "images/bioLead(food).png",
       "desc": "We dug up a pocket of 'Orange Soil'—tiny volcanic glass beads from 3.6 billion years ago, just like Apollo 17 found!",
@@ -407,7 +722,7 @@
         "unlockCard": null
       }
     },
-    "main_023": {
+    "main_022": {
       "deck": "main",
       "img": "images/safetyOfficer(shielding).png",
       "desc": "The two-week lunar night is at its coldest! It's -248°C outside, and the habitat's outer cooling pipes are about to freeze solid and burst.",
@@ -420,156 +735,6 @@
         "desc": "Let the outer pipes freeze and burst!",
         "effects": { "power": 5, "food": -10, "shield": -30, "life": -20 },
         "unlockCard": null
-      }
-    },
-    "alien_001_dip": {
-      "deck": "quest",
-      "img": "images/safetyOfficer(shielding).png",
-      "desc": "An alien delegation approaches the perimeter, broadcasting a peaceful mathematical sequence.",
-      "right": {
-        "desc": "Welcome them with open arms.",
-        "effects": { "power": -10, "food": -10, "shield": 0, "life": -5 },
-        "unlockCard": "alien_002_dip"
-      },
-      "left": {
-        "desc": "Lock down the base and aim weapons.",
-        "effects": { "power": -5, "food": 0, "shield": 10, "life": -10 },
-        "unlockCard": "alien_001_com"
-      }
-    },
-    "alien_001_com": {
-      "deck": "quest",
-      "img": "images/safetyOfficer(shielding).png",
-      "desc": "Alien vessels lock weapons onto our primary dome! Our refusal to share resources has provoked an attack.",
-      "right": {
-        "desc": "Return fire with everything we have!",
-        "effects": { "power": -15, "food": 0, "shield": -35, "life": -15 },
-        "unlockCard": "alien_002_com"
-      },
-      "left": {
-        "desc": "Beg for mercy and pay tribute.",
-        "effects": { "power": -30, "food": -30, "shield": 0, "life": -25 },
-        "unlockCard": "alien_002_dip"
-      }
-    },
-    "rover_001_ice": {
-      "deck": "quest",
-      "img": "images/rover.jpg",
-      "desc": "VIPER's wheels are sinking into fluffy 'fairy-castle' moon dust inside a dark crater! Spinning the tires will bury its belly pan.",
-      "right": {
-        "desc": "Use NASA's 'Inchworm' wheel-lifting crawl.",
-        "effects": { "power": -15, "food": 0, "shield": 0, "life": 5 },
-        "unlockCard": "rover_002_ice"
-      },
-      "left": {
-        "desc": "Floor the throttle and yank it out with winches!",
-        "effects": { "power": -15, "food": 0, "shield": -25, "life": -5 },
-        "unlockCard": "rover_002_scout"
-      }
-    },
-    "rover_001_scout": {
-      "deck": "quest",
-      "img": "images/rover.jpg",
-      "desc": "The rover clipped a rock and ripped off its back fender! Static-charged moon dust is coating its heat mirrors and cooking its circuits.",
-      "right": {
-        "desc": "Tape laminated colony maps over the wheel.",
-        "effects": { "power": -5, "food": -5, "shield": 10, "life": 5 },
-        "unlockCard": "rover_002_scout"
-      },
-      "left": {
-        "desc": "Drive it into a freezing crater to cool down.",
-        "effects": { "power": -15, "food": 0, "shield": -20, "life": -5 },
-        "unlockCard": "rover_002_ice"
-      }
-    },
-    "rover_002_ice": {
-      "deck": "quest",
-      "img": "images/rover.jpg",
-      "desc": "At -235°C in the dark crater, VIPER's drill hits rock-hard ice! The drill is straining, and the battery heaters only have 4 hours left.",
-      "right": {
-        "desc": "Peck slowly using NASA's 'bite-and-brush' drill rule.",
-        "effects": { "power": -20, "food": 0, "shield": 10, "life": 0 },
-        "unlockCard": "rover_003_ice"
-      },
-      "left": {
-        "desc": "Max the drill torque and ignore the battery alarm!",
-        "effects": { "power": -30, "food": 0, "shield": -20, "life": -15 },
-        "unlockCard": null
-      }
-    },
-    "rover_002_scout": {
-      "deck": "quest",
-      "img": "images/rover.jpg",
-      "desc": "Siren alert! NASA satellites spotted a huge Solar Flare heading our way. Radiation on the exposed ridge will fry the rover's computer!",
-      "right": {
-        "desc": "Park behind a boulder in NASA 'Safe Mode.'",
-        "effects": { "power": -15, "food": -5, "shield": 15, "life": 0 },
-        "unlockCard": "rover_003_scout"
-      },
-      "left": {
-        "desc": "Keep driving through the radiation storm!",
-        "effects": { "power": -25, "food": 0, "shield": -25, "life": -15 },
-        "unlockCard": null
-      }
-    },
-    "rover_003_ice": {
-      "deck": "quest",
-      "img": "images/rover.jpg",
-      "desc": "Jackpot! VIPER dug up 5% pure water-ice and ammonia! It drops off the load at base before heading out on permanent deep-crater patrol.",
-      "right": {
-        "desc": "Melt the ice and ammonia for our farms!",
-        "effects": { "power": -10, "food": 25, "shield": 0, "life": 15 },
-        "unlockCard": "rover_visit_ice"
-      },
-      "left": {
-        "desc": "Split the water into oxygen and rocket fuel!",
-        "effects": { "power": 25, "food": 5, "shield": 10, "life": 5 },
-        "unlockCard": "rover_visit_ice"
-      }
-    },
-    "rover_003_scout": {
-      "deck": "quest",
-      "img": "images/rover.jpg",
-      "desc": "VIPER found a 'Peak of Eternal Light' with 92% year-round sunshine and titanium ore! It sets up a ridge outpost to run solo patrols.",
-      "right": {
-        "desc": "Link its new solar tower to our power grid!",
-        "effects": { "power": 25, "food": 0, "shield": 10, "life": 10 },
-        "unlockCard": "rover_visit_scout"
-      },
-      "left": {
-        "desc": "Bake the titanium dirt into dome armor bricks!",
-        "effects": { "power": 5, "food": 5, "shield": 25, "life": 10 },
-        "unlockCard": "rover_visit_scout"
-      }
-    },
-    "rover_visit_ice": {
-      "deck": "quest",
-      "img": "images/rover.jpg",
-      "desc": "Beep-beep! VIPER is back from its crater patrol, covered in frost and flashing its headlights at the airlock with a fresh load of ice!",
-      "right": {
-        "desc": "Refill the greenhouses and clean its camera!",
-        "effects": { "power": -5, "food": 15, "shield": 0, "life": 10 },
-        "unlockCard": "rover_visit_ice"
-      },
-      "left": {
-        "desc": "Crack the ice for fuel and patch its drill!",
-        "effects": { "power": 15, "food": 0, "shield": 10, "life": -5 },
-        "unlockCard": "rover_visit_ice"
-      }
-    },
-    "rover_visit_scout": {
-      "deck": "quest",
-      "img": "images/rover.jpg",
-      "desc": "Look who's back! VIPER rolls down from the sunny ridge, beaming spare solar power and towing a sled of titanium rocks!",
-      "right": {
-        "desc": "Drain its batteries and tune up its wheels!",
-        "effects": { "power": 15, "food": -5, "shield": 0, "life": 10 },
-        "unlockCard": "rover_visit_scout"
-      },
-      "left": {
-        "desc": "Armor the hull with titanium and send it back!",
-        "effects": { "power": -5, "food": 0, "shield": 15, "life": 10 },
-        "unlockCard": "rover_visit_scout"
       }
     }
   }
