@@ -128,6 +128,31 @@ body {
                level with the Moon behind the card; the picture's sky is black, so the card behind it is black too. */
             .card-img.is-scene { bottom: auto; height: auto; object-fit: fill; }
             .panel:has(.card-img.is-scene) { background: #000; }
+            /* The victory scene (drawn by drawVictoryScene in script.js): the container drops in from above the card,
+               slows, and sets down on the pad. Its thrusters cut out, dust puffs up, and its shadow grows as it comes down. */
+            .victory-scene { position: absolute; inset: 0; pointer-events: none; }
+            .victory-scene[hidden] { display: none; }
+            .victory-scene svg { display: block; width: 100%; height: 100%; }
+            .panel:has(.victory-scene:not([hidden])) { background: #000; }
+            .vs-ship { animation: vs-descend 3200ms cubic-bezier(.22, .75, .3, 1) both; }
+            .vs-flame { transform-box: fill-box; transform-origin: 50% 0; animation: vs-flicker 110ms ease-in-out infinite alternate, vs-cutoff 3300ms ease-in both; }
+            .vs-shadow { transform-box: fill-box; transform-origin: 50% 50%; animation: vs-shadow 3200ms cubic-bezier(.22, .75, .3, 1) both; }
+            .vs-dust { transform-box: fill-box; transform-origin: 50% 100%; opacity: 0.35; animation: vs-dust 3800ms ease-out both; }
+            .vs-beacon { animation: vs-blink 900ms steps(2, jump-none) infinite; }
+            .vs-light { animation: vs-blink 1000ms ease-in-out infinite alternate; }
+            @keyframes vs-descend { 0% { transform: translateY(calc(var(--drop) * -1)); } 72% { transform: translateY(calc(var(--drop) * -0.06)); } 86% { transform: translateY(2px); } 93% { transform: translateY(-2px); } 100% { transform: none; } }
+            @keyframes vs-flicker { from { transform: scaleY(0.82); } to { transform: scaleY(1.08); } }
+            @keyframes vs-cutoff { 0%, 82% { opacity: 1; } 100% { opacity: 0; } }
+            @keyframes vs-shadow { 0% { opacity: 0; transform: scale(0.35); } 100% { opacity: 0.38; transform: scale(1); } }
+            @keyframes vs-dust { 0%, 68% { opacity: 0; transform: scale(0.3); } 82% { opacity: 0.9; transform: scale(1); } 100% { opacity: 0.35; transform: scale(1.25); } }
+            @keyframes vs-blink { from { opacity: 1; } to { opacity: 0.25; } }
+            /* Already landed (after a resize) or reduced motion: show the end of the landing straight away. */
+            .victory-scene.is-landed .vs-ship, .victory-scene.is-landed .vs-shadow, .victory-scene.is-landed .vs-dust { animation: none; }
+            .victory-scene.is-landed .vs-flame { animation: none; opacity: 0; }
+            @media (prefers-reduced-motion: reduce) {
+                .vs-ship, .vs-shadow, .vs-dust, .vs-beacon, .vs-light { animation: none; }
+                .vs-flame { animation: none; opacity: 0; }
+            }
             /* A meter that ran out (on the game-over card) or is running low (below 25, set in Meters.js): its icon turns red
                and pulses. Its name stays white. While a choice is previewed, a low meter stops pulsing and shows its preview
                like any other meter: green (going up), red (going down) or white (no change). It pulses red again once the preview ends. */
