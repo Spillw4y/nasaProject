@@ -22,15 +22,42 @@ const choiceText = {
     left: decisionHints.left.querySelector(".choice-desc"),
     right: decisionHints.right.querySelector(".choice-desc")
 };
-// Every game opens with this card. The cards it unlocks whose ids start with OPENING_PREFIX play
-// straight after it, one after another with no random events in between, until that chain ends.
-// After that, cards unlock and play with the usual 1 or 2 random events between them.
-const START_CARD = "intromsq1_001";
-const OPENING_PREFIX = "intromsq1_";
+// ---- The main story ----
+// Five main story quests (MSQs), always in this order and never two at once. Each card of a quest unlocks the
+// next one through "unlockCard" in decks.json; a quest is over once one of its "ends" cards has been played.
+//   - Quest 1, mission design, is the opening: its cards play back to back, starting with START_CARD.
+//   - Each later quest starts 2 to 4 cards after the previous one ends (STORY_START_GAP).
+//   - Once a quest is running, 1 to 3 other cards play between its steps (STORY_STEP_GAP).
+//   - Quest 3 has two versions and only one can happen in a run: the disaster the base did not prepare for.
+//     Building the Defense Grid in quest 2 brings the oxygen-tank explosion; building Life Support brings the meteor shower.
+//   - Playing the last card of quest 5 (the landing pad is built) wins the game.
+// Story cards never come up at random, even if decks.json marks them "main".
+// Cards with "_visit_" in their id (the "come back and see it" cards after a quest) are not story steps:
+// they play like side quest cards, so they never hold up the next quest.
+const STORY = [
+    { name: "Mission design", prefixes: ["intromsq1_"], start: "intromsq1_001", ends: ["intromsq1_005"] },
+    { name: "Colony upgrade", prefixes: ["upgrademsq2_"], start: "upgrademsq2_001_start",
+      ends: ["upgrademsq2_004_lifesupport", "upgrademsq2_004_security"] },
+    { name: "Crisis", prefixes: ["explosionmsq3_", "meteorshowermsq3_"],
+      start: () => played.has("upgrademsq2_004_lifesupport") ? "meteorshowermsq3_001_start" : "explosionmsq3_001_start",
+      ends: ["explosionmsq3_004", "meteorshowermsq3_004"] },
+    { name: "Cavern expansion", prefixes: ["upgrademsq4_"], start: "upgrademsq4_001_start",
+      ends: ["upgrademsq4_004_power", "upgrademsq4_004_food"] },
+    { name: "Landing pad", prefixes: ["finalemsq5_"], start: "finalemsq5_001_start", ends: ["finalemsq5_004_win"] }
+];
+const START_CARD = STORY[0].start;
+const STORY_START_GAP = [2, 4];   // cards between one main quest ending and the next one starting
+const STORY_STEP_GAP = [1, 3];    // cards between two steps of a running main quest
+const SIDE_GAP = [1, 2];          // cards before a waiting side quest card plays
+const RECENT_LIMIT = 8;           // a main deck card that comes back never repeats one of the last 8 cards shown
 
 let cards = {};               // every card from decks.json, keyed by its id
-let questQueue = [];          // ids of unlocked quest cards waiting their turn, in order
-let mainCardsUntilQuest = 0;  // main cards still to play before the next quest card
+let storyIndex = 0;           // which main quest is running or up next (index into STORY)
+let storyNext = null;         // id of the next main story card, waiting for its turn; null when none is waiting
+let cardsUntilStory = 0;      // other cards still to play before storyNext
+let sideQueue = [];           // ids of unlocked side quest cards waiting their turn, in order
+let cardsUntilSide = 0;       // other cards still to play before the first side quest card in the queue
+let won = false;              // true once the last main quest is done
 let played = new Set();       // ids already shown this game, so no card repeats
 let currentId = null;         // id of the card on screen, or null when none is left
 let ready = false;            // true once decks.json has loaded
@@ -75,50 +102,116 @@ function conditionsMet(data) {
     });
 }
 
-// 1 or 2: how many main cards to play before the next quest card.
-function randomGap() {
-    return 1 + Math.floor(Math.random() * 2);
+// A whole number from range[0] to range[1], both included.
+function randomBetween([low, high]) {
+    return low + Math.floor(Math.random() * (high - low + 1));
 }
 
-// Pick the next card. Main cards come up at random. A waiting quest card plays
-// once 1 or 2 main cards have gone by. No card is shown twice in one game.
-// Leaves currentId as null when there is nothing left to play.
-function drawCard() {
-    questQueue = questQueue.filter((id) => !played.has(id));   // drop anything already shown
-    const mainPool = Object.keys(cards).filter((id) =>
-        cards[id].deck === "main" && !played.has(id) && !questQueue.includes(id) && conditionsMet(cards[id]));
-    const questWaiting = questQueue.length > 0;
+// Which main quest a card belongs to (an index into STORY), or -1 for any other card.
+// "_visit_" cards are not story steps (see STORY).
+function storyIndexOf(id) {
+    if (!id || id.includes("_visit_")) return -1;
+    return STORY.findIndex((quest) => quest.prefixes.some((prefix) => id.startsWith(prefix)));
+}
 
-    if (questWaiting && (mainCardsUntilQuest <= 0 || mainPool.length === 0)) {
-        currentId = questQueue.shift();
-        if (questQueue.length > 0) mainCardsUntilQuest = randomGap();
-    } else if (mainPool.length > 0) {
+// Get the next main quest ready to start, after `gap` other cards. Quest 3 picks its version here.
+function queueStoryStart(gap) {
+    const quest = STORY[storyIndex];
+    const id = typeof quest.start === "function" ? quest.start() : quest.start;
+    if (!cards[id]) {
+        console.warn(`decks.json: main quest "${quest.name}" starts with "${id}", but no card has that id`);
+        return;
+    }
+    storyNext = id;
+    cardsUntilStory = gap;
+}
+
+// Pick the next card. In order of priority:
+//   1. the next main story card, once its gap of other cards has gone by;
+//   2. the first waiting side quest card, once its gap has gone by;
+//   3. a random main deck card not yet seen this game (never a story card, and only if its conditions are met);
+//   4. once all of those are used up, a main deck card seen earlier (see reusePool below).
+// If none of those can be drawn, a waiting story or side card plays early instead.
+// Story and side quest cards are never shown twice in one game. Leaves currentId as null when there is nothing left to play.
+function drawCard() {
+    sideQueue = sideQueue.filter((id) => !played.has(id));   // drop anything already shown
+    const mainPool = Object.keys(cards).filter((id) =>
+        cards[id].deck === "main" && storyIndexOf(id) === -1 && !played.has(id) && !sideQueue.includes(id) && conditionsMet(cards[id]));
+    // Once every main deck card has been seen, they can come back (a full run needs more cards than the deck has),
+    // except cards that unlock something and the last RECENT_LIMIT cards shown. Story and side cards never repeat.
+    const recent = [...played].slice(-RECENT_LIMIT);
+    const reusePool = mainPool.length > 0 ? [] : Object.keys(cards).filter((id) =>
+        cards[id].deck === "main" && storyIndexOf(id) === -1 && played.has(id) && !recent.includes(id) &&
+        !cards[id].left.unlockCard && !cards[id].right.unlockCard && conditionsMet(cards[id]));
+    const storyDue = storyNext !== null && cardsUntilStory <= 0;
+    const sideDue = sideQueue.length > 0 && cardsUntilSide <= 0;
+
+    let kind;
+    if (storyDue) kind = "story";
+    else if (sideDue) kind = "side";
+    else if (mainPool.length > 0) kind = "main";
+    else if (reusePool.length > 0) kind = "reuse";
+    else if (storyNext !== null) kind = "story";
+    else if (sideQueue.length > 0) kind = "side";
+    else kind = null;
+
+    if (kind === "story") {
+        currentId = storyNext;
+        storyNext = null;
+    } else if (kind === "side") {
+        currentId = sideQueue.shift();
+        if (sideQueue.length > 0) cardsUntilSide = randomBetween(SIDE_GAP);
+    } else if (kind === "main") {
         currentId = mainPool[Math.floor(Math.random() * mainPool.length)];
-        if (questWaiting) mainCardsUntilQuest -= 1;
+    } else if (kind === "reuse") {
+        currentId = reusePool[Math.floor(Math.random() * reusePool.length)];
+        played.delete(currentId);   // re-added below, so it counts as the most recent card
     } else {
         currentId = null;
     }
 
-    if (currentId !== null) played.add(currentId);
+    if (currentId === null) return;
+    played.add(currentId);
+    // Every card that is not the waiting card counts towards that card's gap.
+    if (kind !== "story" && storyNext !== null) cardsUntilStory -= 1;
+    if (kind !== "side" && sideQueue.length > 0) cardsUntilSide -= 1;
 }
 
-// A choice can unlock a quest card by id. It joins the queue and plays after 1 or 2 main cards.
+// Called when the player makes a choice on the current card, before the next card is drawn.
+// Moves the main story along, and queues any side quest card the choice unlocks.
 function unlockFrom(choice) {
     const id = choice.unlockCard;
+    const quest = storyIndexOf(currentId);
+    const isStoryStep = quest !== -1 && quest === storyIndex;
+
+    if (isStoryStep && STORY[quest].ends.includes(currentId)) {
+        // This main quest is over: get the next one ready, or win after the last one.
+        storyIndex += 1;
+        if (storyIndex >= STORY.length) won = true;
+        else queueStoryStart(randomBetween(STORY_START_GAP));
+    }
+
     if (!id) return;
     if (!cards[id]) {
         console.warn(`decks.json: "${currentId}" unlocks "${id}", but no card has that id yet`);
         return;
     }
-    if (played.has(id) || questQueue.includes(id)) return;  // quest cards never repeat
-    // Still in the opening chain: play the next opening card straight away.
-    if (currentId && currentId.startsWith(OPENING_PREFIX) && id.startsWith(OPENING_PREFIX)) {
-        questQueue.unshift(id);
-        mainCardsUntilQuest = 0;
+    if (played.has(id) || sideQueue.includes(id) || id === storyNext) return;   // cards never repeat
+
+    if (storyIndexOf(id) !== -1) {
+        // A story card. Only the next step of the running quest is queued here; quest starts are queued above
+        // when the previous quest ends, so an unlock pointing at another quest (like the end of quest 3 pointing
+        // at quest 4's start) is ignored. That also keeps two main quests from ever running at once.
+        if (isStoryStep && storyIndexOf(id) === quest && storyNext === null) {
+            storyNext = id;
+            cardsUntilStory = quest === 0 ? 0 : randomBetween(STORY_STEP_GAP);   // the opening plays back to back
+        }
         return;
     }
-    if (questQueue.length === 0) mainCardsUntilQuest = randomGap();
-    questQueue.push(id);
+
+    // A side quest card (or a "_visit_" card).
+    if (sideQueue.length === 0) cardsUntilSide = randomBetween(SIDE_GAP);
+    sideQueue.push(id);
 }
 
 // Show a card's picture, or an empty card when it has none. path comes from "img" in decks.json.
@@ -212,6 +305,12 @@ function renderGameOver() {
     renderEnding(message, GAME_OVER_IMG, true);
 }
 
+// The last main quest is done: the landing pad is built and the player wins.
+function renderWin() {
+    renderEnding("Mission complete! The landing pad is built and Earth's cargo lander is down safely. " +
+        "Supplies are flowing and the outpost is here to stay. You win!", cards[STORY[STORY.length - 1].ends[0]]?.img || null);
+}
+
 // Draw and show the next card, or end the game if no card is left to play.
 function showNextCard() {
     drawCard();
@@ -234,8 +333,12 @@ window.addEventListener("resize", placeMoon);
 
 function startGame() {
     gameOver = false;
-    questQueue = [];
-    mainCardsUntilQuest = 0;
+    won = false;
+    storyIndex = 0;
+    storyNext = null;
+    cardsUntilStory = 0;
+    sideQueue = [];
+    cardsUntilSide = 0;
     played = new Set();
     currentId = null;
     resetMeters();
@@ -304,6 +407,9 @@ function showSwipe(direction) {
         } else if (isGameOver()) {
             gameOver = true;
             renderGameOver();
+        } else if (won) {
+            gameOver = true;
+            renderWin();
         } else {
             showNextCard();
         }
