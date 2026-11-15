@@ -1,12 +1,10 @@
 const card = document.querySelector(".panel");
-const toast = document.querySelector(".swipe-toast");
 const decisionHints = {
     left: document.querySelector('.arrow[data-direction="left"]'),
     right: document.querySelector('.arrow[data-direction="right"]')
 };
 let startX = 0;
 let activePointerId = null;
-let toastTimer;
 let resetTimer;
 const swipeDuration = 460;
 
@@ -203,13 +201,10 @@ function showSwipe(direction) {
     const restarting = gameOver;
 
     // Apply the choice to the meters straight away.
-    if (restarting) {
-        toast.textContent = "New game";
-    } else {
+    if (!restarting) {
         const chosen = currentCard();
         applyChoice(chosen, direction);
         unlockFrom(chosen[direction]);
-        toast.textContent = chosen[direction].desc;
     }
 
     setDecisionHint(direction);
@@ -217,9 +212,6 @@ function showSwipe(direction) {
     card.classList.add("is-exiting");
     card.dataset.swipeDirection = direction;
     card.style.transform = `translateX(${x}px) scale(0.94) rotate(${direction === "left" ? -12 : 12}deg)`;
-    toast.classList.add("is-visible");
-    window.clearTimeout(toastTimer);
-    toastTimer = window.setTimeout(() => toast.classList.remove("is-visible"), 2400);
     window.clearTimeout(resetTimer);
 
     resetTimer = window.setTimeout(() => {

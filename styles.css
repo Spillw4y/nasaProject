@@ -38,8 +38,6 @@ body {
             .panel.is-exiting { pointer-events: none; box-shadow: 0 26px 64px rgb(19 34 52 / 24%); }
             .panel[data-swipe-direction="left"] { border-color: #9b4545; }
             .panel[data-swipe-direction="right"] { border-color: #326e5a; }
-            .swipe-toast { position: fixed; left: 50%; bottom: 28px; z-index: 1; max-width: calc(100vw - 32px); padding: 16px 22px; border-top: 3px solid #c5a45e; color: #fff; background: #1c2a3a; border-radius: 4px; box-shadow: 0 12px 32px rgb(19 34 52 / 28%); font-size: 0.95rem; font-weight: 600; letter-spacing: 0.03em; text-align: center; opacity: 0; transform: translate(-50%, 12px); transition: opacity 220ms ease, transform 220ms ease; pointer-events: none; }
-            .swipe-toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
             .arrow { position: relative; display: flex; flex-direction: column; align-items: center; color: #c9d2dc; }
             .arrow-label { position: absolute; bottom: calc(100% + 24px); left: 50%; z-index: 1; color: #263648; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; visibility: hidden; opacity: 0; transform: translateX(-50%); transition: opacity 160ms ease; }
             .arrow.is-active { z-index: 2; }
