@@ -2,8 +2,8 @@
   "cards": {
     "intromsq1_001": {
       "deck": "quest",
-      "img": "images/flightSurgeon(life).jpg",
-      "desc": "MISSION DESIGN [1/5] — Launch Vehicle: Our mass budget is tight! Do we book NASA's Space Launch System (SLS) for crew comfort, or a heavy cargo rocket for extra armor?",
+      "img": "images/spacestation.png",
+      "desc": "Our mass budget is tight! Do we book NASA's Space Launch System (SLS) for crew comfort, or a heavy cargo rocket for extra armor?",
       "right": {
         "desc": "Launch on SLS Block 1B with full crew quarters.",
         "effects": { "power": -5, "food": 15, "shield": -10, "life": 15 },
@@ -18,7 +18,7 @@
     "intromsq1_002": {
       "deck": "quest",
       "img": "images/spacestation.png",
-      "desc": "MISSION DESIGN [2/5] — Lunar Orbit: We can dock at the Lunar Gateway station in a wide halo orbit for resupplies, or dive straight into Low Lunar Orbit to save fuel.",
+      "desc": "We can dock at the Lunar Gateway station in a wide halo orbit for resupplies, or dive straight into Low Lunar Orbit to save fuel.",
       "right": {
         "desc": "Dock at Gateway for extra food and comms.",
         "effects": { "power": -10, "food": 15, "shield": 5, "life": 5 },
@@ -32,8 +32,8 @@
     },
     "intromsq1_003": {
       "deck": "quest",
-      "img": "images/safetyOfficer(shielding).png",
-      "desc": "MISSION DESIGN [3/5] — Landing Site: Touch down on Shackleton Crater's sunny South Pole rim for constant solar power, or inside a basalt lava tube for natural shielding?",
+      "img": "images/spacestation.png",
+      "desc": "Touch down on Shackleton Crater's sunny South Pole rim for constant solar power, or inside a basalt lava tube for natural shielding?",
       "right": {
         "desc": "Land on Shackleton's sunny South Pole ridge.",
         "effects": { "power": 15, "food": 0, "shield": -15, "life": 5 },
@@ -47,8 +47,8 @@
     },
     "intromsq1_004": {
       "deck": "quest",
-      "img": "images/chiefEngineer(power).jpg",
-      "desc": "MISSION DESIGN [4/5] — Base Systems: Our lander only has room for one heavy module! Pack a Kilopower nuclear reactor, or an expanded Veggie hydroponic farm?",
+      "img": "images/spacestation.png",
+      "desc": "Our lander only has room for one heavy module! Pack a Kilopower nuclear reactor, or an expanded Veggie hydroponic farm?",
       "right": {
         "desc": "Pack the Kilopower nuclear fission core.",
         "effects": { "power": 20, "food": -10, "shield": -5, "life": -5 },
@@ -62,8 +62,8 @@
     },
     "intromsq1_005": {
       "deck": "quest",
-      "img": "images/rover.jpg",
-      "desc": "MISSION DESIGN [5/5] — Science Payload: Touchdown confirmed! For our final payload bay, do we activate the NASA Rover homing beacon, or the deep-space SETI dish?",
+      "img": "images/spacestation.png",
+      "desc": "Touchdown confirmed! For our final payload bay, do we activate the NASA Rover homing beacon, or the deep-space SETI dish?",
       "right": {
         "desc": "Ping NASA's lost VIPER rover nearby!",
         "effects": { "power": -5, "food": 0, "shield": 5, "life": 10 },
@@ -78,7 +78,7 @@
     "upgrademsq2_001_start": {
       "deck": "main",
       "img": "images/spacestation.png",
-      "desc": "COLONY UPGRADE [START] — Lunar Gateway just dropped a heavy orbital upgrade module! Do we build the Anti-Meteor Defense Grid, or the Bio-Dome & Oxygen Control Core?",
+      "desc": "Lunar Gateway just dropped a heavy orbital upgrade module! Do we build the Anti-Meteor Defense Grid, or the Bio-Dome & Oxygen Control Core?",
       "right": {
         "desc": "Construct the Anti-Meteor Laser Turret & Shield Grid.",
         "effects": { "power": 5, "food": 0, "shield": 20, "life": 5 },
@@ -93,7 +93,7 @@
     "upgrademsq2_002_security": {
       "deck": "quest",
       "img": "images/spacestation.png",
-      "desc": "SECURITY UPGRADE [1/3] — Point-Defense Turrets: We're mounting automated Whipple shields and laser turrets on the roof to vaporize incoming micrometeorites!",
+      "desc": "We're mounting automated Whipple shields and laser turrets on the roof to vaporize incoming micrometeorites!",
       "right": {
         "desc": "Link the turrets to orbital tracking radar for max accuracy.",
         "effects": { "power": 5, "food": 0, "shield": 20, "life": 10 },
@@ -108,7 +108,7 @@
     "upgrademsq2_002_lifesupport": {
       "deck": "quest",
       "img": "images/spacestation.png",
-      "desc": "LIFE SUPPORT [1/3] — Cryo-Oxygen Tanks: We're replacing our old air valves with triple-redundant Kevlar oxygen tanks and automated pressure regulators!",
+      "desc": "We're replacing our old air valves with triple-redundant Kevlar oxygen tanks and automated pressure regulators!",
       "right": {
         "desc": "Enrich the cabin air mix for peak crew health and focus.",
         "effects": { "power": 5, "food": 5, "shield": 5, "life": 20 },
@@ -123,7 +123,7 @@
     "upgrademsq2_003_security": {
       "deck": "quest",
       "img": "images/spacestation.png",
-      "desc": "SECURITY UPGRADE [2/3] — Magnetosphere Projector: The anti-meteor turrets are online! Now we're wiring a superconducting magnetic dome to deflect cosmic radiation.",
+      "desc": "The anti-meteor turrets are online! Now we're wiring a superconducting magnetic dome to deflect cosmic radiation.",
       "right": {
         "desc": "Tune the magnetic field to double as a radiation bunker.",
         "effects": { "power": 0, "food": 5, "shield": 25, "life": 10 },
@@ -138,7 +138,7 @@
     "upgrademsq2_003_lifesupport": {
       "deck": "quest",
       "img": "images/spacestation.png",
-      "desc": "LIFE SUPPORT [2/3] — Eden Bio-Dome: With the oxygen tanks secured, we're inflating a sunlit hydroponic Bio-Dome filled with air-scrubbing orchard trees!",
+      "desc": "With the oxygen tanks secured, we're inflating a sunlit hydroponic Bio-Dome filled with air-scrubbing orchard trees!",
       "right": {
         "desc": "Plant high-calorie dwarf fruit trees and berry vines.",
         "effects": { "power": 0, "food": 25, "shield": 0, "life": 15 },
@@ -153,7 +153,7 @@
     "upgrademsq2_004_security": {
       "deck": "quest",
       "img": "images/spacestation.png",
-      "desc": "SECURITY UPGRADE [3/3] — Aegis Defense Network Complete! A meteor storm approaches, and our automated laser turrets blast the space rocks into harmless metallic dust!",
+      "desc": "Aegis Defense Network Complete! A meteor storm approaches, and our automated laser turrets blast the space rocks into harmless metallic dust!",
       "right": {
         "desc": "Scoop up the vaporized meteor iron to reinforce the hull!",
         "effects": { "power": 5, "food": 0, "shield": 15, "life": 5 },
@@ -168,7 +168,7 @@
     "upgrademsq2_004_lifesupport": {
       "deck": "quest",
       "img": "images/spacestation.png",
-      "desc": "LIFE SUPPORT [3/3] — Oasis Core Complete! The Bio-Dome and smart oxygen tanks are running in a 100% closed loop—fresh breeze and ripe harvests fill the base!",
+      "desc": "Oasis Core Complete! The Bio-Dome and smart oxygen tanks are running in a 100% closed loop—fresh breeze and ripe harvests fill the base!",
       "right": {
         "desc": "Feast on fresh Bio-Dome produce and pure mountain air!",
         "effects": { "power": 0, "food": 15, "shield": 0, "life": 10 },
@@ -212,8 +212,8 @@
     },
     "explosionmsq3_001_start": {
       "deck": "quest",
-      "img": "images/flightSurgeon(life).jpg",
-      "desc": "EXPLOSION CRISIS [START] — BANG! Because we skipped the Life Support upgrade, an aging Apollo-style cryo-oxygen tank just shorted out and blew open Habitat B!",
+      "img": "images/spacestation.png",
+      "desc": "BANG! Because we skipped the Life Support upgrade, an aging Apollo-style cryo-oxygen tank just shorted out and blew open Habitat B!",
       "right": {
         "desc": "Slam the blast doors and vent the burning bay!",
         "effects": { "power": -5, "food": -5, "shield": 5, "life": -5 },
@@ -227,8 +227,8 @@
     },
     "explosionmsq3_002": {
       "deck": "quest",
-      "img": "images/bioLead(food).png",
-      "desc": "EXPLOSION CRISIS [1/3] — Toxic smoke is flooding the air ducts! Like Apollo 13, CO2 is spiking fast and our round lithium-hydroxide scrubbers don't fit the backup slots!",
+      "img": "images/spacestation.png",
+      "desc": "Toxic smoke is flooding the air ducts! Like Apollo 13, CO2 is spiking fast and our round lithium-hydroxide scrubbers don't fit the backup slots!",
       "right": {
         "desc": "Duct-tape spacesuit hoses to jury-rig a filter!",
         "effects": { "power": -5, "food": -5, "shield": 0, "life": 5 },
@@ -242,8 +242,8 @@
     },
     "explosionmsq3_003": {
       "deck": "quest",
-      "img": "images/chiefEngineer(power).jpg",
-      "desc": "EXPLOSION CRISIS [2/3] — Shrapnel from the oxygen blast punctured our thermal cooling loop! Ammonia coolant is boiling into cabin vapor and overheating the mainframes.",
+      "img": "images/spacestation.png",
+      "desc": "Shrapnel from the oxygen blast punctured our thermal cooling loop! Ammonia coolant is boiling into cabin vapor and overheating the mainframes.",
       "right": {
         "desc": "Cut secondary power grids and freeze the leak!",
         "effects": { "power": -5, "food": 0, "shield": -5, "life": 5 },
@@ -257,23 +257,23 @@
     },
     "explosionmsq3_004": {
       "deck": "quest",
-      "img": "images/flightSurgeon(life).jpg",
-      "desc": "EXPLOSION CRISIS [3/3] — The fire is out and air pressure is holding! Using NASA epoxy patch kits, the crew bolts an armored bulkhead over the ruptured wall.",
+      "img": "images/spacestation.png",
+      "desc": "The fire is out and air pressure is holding! Using NASA epoxy patch kits, the crew bolts an armored bulkhead over the ruptured wall.",
       "right": {
         "desc": "Crack open emergency oxygen reserves for the crew!",
         "effects": { "power": 0, "food": 5, "shield": 5, "life": 15 },
-        "unlockCard": "upgrademsq4_001_start"
+        "unlockCard": null
       },
       "left": {
         "desc": "Salvage the wrecked tank into hull armor and wire!",
         "effects": { "power": 15, "food": 0, "shield": 10, "life": 0 },
-        "unlockCard": "upgrademsq4_001_start"
+        "unlockCard": null
       }
     },
     "meteorshowermsq3_001_start": {
       "deck": "quest",
-      "img": "images/safetyOfficer(shielding).png",
-      "desc": "METEOR CRISIS [START] — SIREN ALERT! Because we skipped the Defense Grid, a hypervelocity Taurid meteoroid swarm is slamming into the unshielded base at 65,000 mph!",
+      "img": "images/spacestation.png",
+      "desc": "SIREN ALERT! Because we skipped the Defense Grid, a hypervelocity Taurid meteoroid swarm is slamming into the unshielded base at 65,000 mph!",
       "right": {
         "desc": "Drop internal blast shutters and evacuate the rim!",
         "effects": { "power": -5, "food": 0, "shield": -10, "life": 5 },
@@ -287,8 +287,8 @@
     },
     "meteorshowermsq3_002": {
       "deck": "quest",
-      "img": "images/chiefEngineer(power).jpg",
-      "desc": "METEOR CRISIS [1/3] — A marble-sized meteoroid just punched through Solar Array Alpha with the force of dynamite! Live high-voltage cables are arcing across the hull.",
+      "img": "images/spacestation.png",
+      "desc": "A marble-sized meteoroid just punched through Solar Array Alpha with the force of dynamite! Live high-voltage cables are arcing across the hull.",
       "right": {
         "desc": "Fire explosive bolts to sever the shorted solar wing!",
         "effects": { "power": -10, "food": 0, "shield": 5, "life": 0 },
@@ -302,8 +302,8 @@
     },
     "meteorshowermsq3_003": {
       "deck": "quest",
-      "img": "images/bioLead(food).png",
-      "desc": "METEOR CRISIS [2/3] — Micrometeorites shredded the outer Kevlar bladder of the Bio-Dome! Warm air is whistling into the vacuum and our crops are flash-freezing!",
+      "img": "images/spacestation.png",
+      "desc": "Micrometeorites shredded the outer Kevlar bladder of the Bio-Dome! Warm air is whistling into the vacuum and our crops are flash-freezing!",
       "right": {
         "desc": "Inject rapid-curing NASA polymer foam into the holes!",
         "effects": { "power": -5, "food": -5, "shield": 10, "life": -5 },
@@ -317,158 +317,23 @@
     },
     "meteorshowermsq3_004": {
       "deck": "quest",
-      "img": "images/safetyOfficer(shielding).png",
-      "desc": "METEOR CRISIS [3/3] — The Taurid swarm finally passes! The lunar dust settles around a fresh crater field packed with dense nickel-iron meteorite fragments.",
+      "img": "images/spacestation.png",
+      "desc": "The Taurid swarm finally passes! The lunar dust settles around a fresh crater field packed with dense nickel-iron meteorite fragments.",
       "right": {
         "desc": "Pile lunar regolith sandbags over the battered domes!",
         "effects": { "power": 0, "food": 0, "shield": 20, "life": 5 },
-        "unlockCard": "upgrademsq4_001_start"
+        "unlockCard": null
       },
       "left": {
         "desc": "Smelt the meteor iron to repair the grid and habitats!",
         "effects": { "power": 15, "food": 5, "shield": 5, "life": 0 },
-        "unlockCard": "upgrademsq4_001_start"
-      }
-    },
-    "upgrademsq4_001_start": {
-      "deck": "quest",
-      "img": "images/spacestation.png",
-      "desc": "CAVERN EXPANSION [START] — Silver lining! The shockwaves from our recent crisis cracked the crater floor, opening a massive subterranean lava tube! How should we remodel the new cavern?",
-      "right": {
-        "desc": "Build the Subterranean Helium-3 Fusion Core.",
-        "effects": { "power": 30, "food": 0, "shield": 10, "life": 10 },
-        "unlockCard": "upgrademsq4_002_power"
-      },
-      "left": {
-        "desc": "Construct the Deep-Crater Agricultural Mega-Vault.",
-        "effects": { "power": 0, "food": 30, "shield": 10, "life": 10 },
-        "unlockCard": "upgrademsq4_002_food"
-      }
-    },
-    "upgrademsq4_002_power": {
-      "deck": "quest",
-      "img": "images/chiefEngineer(power).jpg",
-      "desc": "POWER UPGRADE [1/3] — Fusion Tokamak: While repairing the blast zone, engineers anchor a magnetic-confinement fusion reactor into the exposed bedrock!",
-      "right": {
-        "desc": "Ignite the Helium-3 plasma injector for maximum megawatts!",
-        "effects": { "power": 30, "food": 0, "shield": 10, "life": 10 },
-        "unlockCard": "upgrademsq4_003_power"
-      },
-      "left": {
-        "desc": "Route reactor waste-heat to warm the crew quarters and farms.",
-        "effects": { "power": 25, "food": 15, "shield": 5, "life": 15 },
-        "unlockCard": "upgrademsq4_003_power"
-      }
-    },
-    "upgrademsq4_002_food": {
-      "deck": "quest",
-      "img": "images/bioLead(food).png",
-      "desc": "FOOD UPGRADE [1/3] — Subterranean Meltwater Lake: The blast exposed an ancient vein of pure lunar water-ice! We're melting it into an underground reservoir.",
-      "right": {
-        "desc": "Flood the vertical aeroponic towers with mineral-rich water!",
-        "effects": { "power": 5, "food": 30, "shield": 5, "life": 15 },
-        "unlockCard": "upgrademsq4_003_food"
-      },
-      "left": {
-        "desc": "Stock the warm cavern lake with high-protein aquaculture tilapia!",
-        "effects": { "power": 0, "food": 35, "shield": 10, "life": 10 },
-        "unlockCard": "upgrademsq4_003_food"
-      }
-    },
-    "upgrademsq4_003_power": {
-      "deck": "quest",
-      "img": "images/chiefEngineer(power).jpg",
-      "desc": "POWER UPGRADE [2/3] — Superconducting Mag-Grid: We're replacing the damaged surface cables with zero-resistance superconducting conduits cooled by the freezing cavern walls!",
-      "right": {
-        "desc": "Overcharge the colony's main capacitor banks!",
-        "effects": { "power": 35, "food": 5, "shield": 15, "life": 5 },
-        "unlockCard": "upgrademsq4_004_power"
-      },
-      "left": {
-        "desc": "Channel surplus gigawatts into the orbital defense shields and heaters.",
-        "effects": { "power": 25, "food": 10, "shield": 20, "life": 10 },
-        "unlockCard": "upgrademsq4_004_power"
-      }
-    },
-    "upgrademsq4_003_food": {
-      "deck": "quest",
-      "img": "images/bioLead(food).png",
-      "desc": "FOOD UPGRADE [2/3] — Rotary Gravity-Farms: Inside the wide lava tube, we're spinning up centrifuge crop rings that simulate Earth gravity for giant yields!",
-      "right": {
-        "desc": "Cultivate dense dwarf-wheat, soybeans, and sweet potatoes!",
-        "effects": { "power": 5, "food": 35, "shield": 5, "life": 15 },
-        "unlockCard": "upgrademsq4_004_food"
-      },
-      "left": {
-        "desc": "Ferment spare crop biomass into methane fuel for the generators!",
-        "effects": { "power": 20, "food": 25, "shield": 5, "life": 10 },
-        "unlockCard": "upgrademsq4_004_food"
-      }
-    },
-    "upgrademsq4_004_power": {
-      "deck": "quest",
-      "img": "images/chiefEngineer(power).jpg",
-      "desc": "POWER UPGRADE [3/3] — Helios-3 Core Complete! What started as disaster repairs is now a subterranean miniature sun, flooding the colony with limitless clean energy!",
-      "right": {
-        "desc": "Run all colony systems at 150% capacity!",
-        "effects": { "power": 35, "food": 10, "shield": 15, "life": 15 },
-        "unlockCard": "upgrademsq4_visit_power"
-      },
-      "left": {
-        "desc": "Beam excess microwave power to orbital storage banks!",
-        "effects": { "power": 40, "food": 5, "shield": 10, "life": 10 },
-        "unlockCard": "upgrademsq4_visit_power"
-      }
-    },
-    "upgrademsq4_004_food": {
-      "deck": "quest",
-      "img": "images/bioLead(food).png",
-      "desc": "FOOD UPGRADE [3/3] — Demeter Vault Complete! The scarred crater is now a thriving underground biosphere overflowing with golden grain, fresh fish, and fruit!",
-      "right": {
-        "desc": "Host a massive five-course harvest banquet for the crew!",
-        "effects": { "power": 5, "food": 35, "shield": 10, "life": 25 },
-        "unlockCard": "upgrademsq4_visit_food"
-      },
-      "left": {
-        "desc": "Freeze-dry ten tons of surplus rations in the deep cavern!",
-        "effects": { "power": 15, "food": 40, "shield": 10, "life": 10 },
-        "unlockCard": "upgrademsq4_visit_food"
-      }
-    },
-    "upgrademsq4_visit_power": {
-      "deck": "quest",
-      "img": "images/chiefEngineer(power).jpg",
-      "desc": "Thrum-thrum! Deep beneath the repaired hull, the Helium-3 Fusion Core is purring like a cosmic engine, overflowing our superconducting grid with megawatts!",
-      "right": {
-        "desc": "Dump surplus fusion energy into the main batteries and shields!",
-        "effects": { "power": 30, "food": 5, "shield": 20, "life": 10 },
-        "unlockCard": "upgrademsq4_visit_power"
-      },
-      "left": {
-        "desc": "Power up the high-intensity grow lamps and crew spas!",
-        "effects": { "power": 25, "food": 20, "shield": 5, "life": 15 },
-        "unlockCard": "upgrademsq4_visit_power"
-      }
-    },
-    "upgrademsq4_visit_food": {
-      "deck": "quest",
-      "img": "images/bioLead(food).png",
-      "desc": " Dinner bell! The subterranean Demeter Vault just rotated another bumper crop of wheat, berries, and fresh tilapia up the cargo elevator!",
-      "right": {
-        "desc": "Pack the pantries to the ceiling and treat the crew!",
-        "effects": { "power": 5, "food": 30, "shield": 5, "life": 20 },
-        "unlockCard": "upgrademsq4_visit_food"
-      },
-      "left": {
-        "desc": "Convert surplus bio-oil into high-grade fuel cell energy!",
-        "effects": { "power": 25, "food": 20, "shield": 10, "life": 10 },
-        "unlockCard": "upgrademsq4_visit_food"
+        "unlockCard": null
       }
     },
     "roversidequest_001_start": {
       "deck": "main",
       "img": "images/rover.jpg",
-      "desc": "ROVER QUEST [START] — NASA's lost VIPER rover rolls up to our airlock, flashing its headlights! Its link to Earth is dead, and its ice-scanner is pinging nearby.",
+      "desc": "NASA's lost VIPER rover rolls up to our airlock, flashing its headlights! Its link to Earth is dead, and its ice-scanner is pinging nearby.",
       "right": {
         "desc": "Drain our grid to send it ice mining.",
         "effects": { "power": -15, "food": 0, "shield": 0, "life": 5 },
@@ -483,7 +348,7 @@
     "roversidequest_002_ice": {
       "deck": "quest",
       "img": "images/rover.jpg",
-      "desc": "ROVER QUEST [1/3] — VIPER's wheels are sinking into fluffy 'fairy-castle' moon dust inside a dark crater! Spinning the tires will bury its belly pan.",
+      "desc": "VIPER's wheels are sinking into fluffy 'fairy-castle' moon dust inside a dark crater! Spinning the tires will bury its belly pan.",
       "right": {
         "desc": "Use NASA's 'Inchworm' wheel-lifting crawl.",
         "effects": { "power": -15, "food": 0, "shield": 0, "life": 5 },
@@ -498,7 +363,7 @@
     "roversidequest_002_scout": {
       "deck": "quest",
       "img": "images/rover.jpg",
-      "desc": "ROVER QUEST [1/3] — The rover clipped a rock and ripped off its back fender! Static-charged moon dust is coating its heat mirrors and cooking its circuits.",
+      "desc": "The rover clipped a rock and ripped off its back fender! Static-charged moon dust is coating its heat mirrors and cooking its circuits.",
       "right": {
         "desc": "Tape laminated colony maps over the wheel.",
         "effects": { "power": -5, "food": -5, "shield": 10, "life": 5 },
@@ -513,7 +378,7 @@
     "roversidequest_003_ice": {
       "deck": "quest",
       "img": "images/rover.jpg",
-      "desc": "ROVER QUEST [2/3] — At -235°C in the dark crater, VIPER's drill hits rock-hard ice! The drill is straining, and the battery heaters only have 4 hours left.",
+      "desc": "At -235°C in the dark crater, VIPER's drill hits rock-hard ice! The drill is straining, and the battery heaters only have 4 hours left.",
       "right": {
         "desc": "Peck slowly using NASA's 'bite-and-brush' drill rule.",
         "effects": { "power": -20, "food": 0, "shield": 10, "life": 0 },
@@ -528,7 +393,7 @@
     "roversidequest_003_scout": {
       "deck": "quest",
       "img": "images/rover.jpg",
-      "desc": "ROVER QUEST [2/3] — Siren alert! NASA satellites spotted a huge Solar Flare heading our way. Radiation on the exposed ridge will fry the rover's computer!",
+      "desc": "Siren alert! NASA satellites spotted a huge Solar Flare heading our way. Radiation on the exposed ridge will fry the rover's computer!",
       "right": {
         "desc": "Park behind a boulder in NASA 'Safe Mode.'",
         "effects": { "power": -15, "food": -5, "shield": 15, "life": 0 },
@@ -543,7 +408,7 @@
     "roversidequest_004_ice": {
       "deck": "quest",
       "img": "images/rover.jpg",
-      "desc": "ROVER QUEST [3/3] — Jackpot! VIPER dug up 5% pure water-ice and ammonia! It drops off the load at base before heading out on permanent deep-crater patrol.",
+      "desc": "Jackpot! VIPER dug up 5% pure water-ice and ammonia! It drops off the load at base before heading out on permanent deep-crater patrol.",
       "right": {
         "desc": "Melt the ice and ammonia for our farms!",
         "effects": { "power": -10, "food": 25, "shield": 0, "life": 15 },
@@ -558,7 +423,7 @@
     "roversidequest_004_scout": {
       "deck": "quest",
       "img": "images/rover.jpg",
-      "desc": "ROVER QUEST [3/3] — VIPER found a 'Peak of Eternal Light' with 92% year-round sunshine and titanium ore! It sets up a ridge outpost to run solo patrols.",
+      "desc": "VIPER found a 'Peak of Eternal Light' with 92% year-round sunshine and titanium ore! It sets up a ridge outpost to run solo patrols.",
       "right": {
         "desc": "Link its new solar tower to our power grid!",
         "effects": { "power": 25, "food": 0, "shield": 10, "life": 10 },
@@ -602,8 +467,8 @@
     },
     "aliensidequest_001_dip": {
       "deck": "quest",
-      "img": "images/safetyOfficer(shielding).png",
-      "desc": "ALIEN CONTACT [1/2] — An alien delegation approaches the perimeter, broadcasting a peaceful mathematical sequence.",
+      "img": "None",
+      "desc": "An alien delegation approaches the perimeter, broadcasting a peaceful mathematical sequence.",
       "right": {
         "desc": "Welcome them with open arms.",
         "effects": { "power": -10, "food": -10, "shield": 0, "life": -5 },
@@ -617,8 +482,8 @@
     },
     "aliensidequest_001_com": {
       "deck": "quest",
-      "img": "images/safetyOfficer(shielding).png",
-      "desc": "ALIEN CONTACT [1/2] — Alien vessels lock weapons onto our primary dome! Our refusal to share resources has provoked an attack.",
+      "img": "None",
+      "desc": "Alien vessels lock weapons onto our primary dome! Our refusal to share resources has provoked an attack.",
       "right": {
         "desc": "Return fire with everything we have!",
         "effects": { "power": -15, "food": 0, "shield": -35, "life": -15 },
@@ -632,8 +497,8 @@
     },
     "aliensidequest_002_dip": {
       "deck": "quest",
-      "img": "images/spacestation.png",
-      "desc": "ALIEN CONTACT [2/2] — The alien envoys share either crystalline zero-point energy matrices or bio-seeds in exchange for our peaceful hospitality!",
+      "img": "None",
+      "desc": "The alien envoys share either crystalline zero-point energy matrices or bio-seeds in exchange for our peaceful hospitality!",
       "right": {
         "desc": "Plug their zero-point matrix into our main grid!",
         "effects": { "power": 25, "food": 10, "shield": 15, "life": 10 },
@@ -647,8 +512,8 @@
     },
     "aliensidequest_002_com": {
       "deck": "quest",
-      "img": "images/safetyOfficer(shielding).png",
-      "desc": "ALIEN CONTACT [2/2] — The alien scout ship crashes into a nearby crater after our laser barrage! Its exotic alloy hull is still smoking.",
+      "img": "None",
+      "desc": "The alien scout ship crashes into a nearby crater after our laser barrage! Its exotic alloy hull is still smoking.",
       "right": {
         "desc": "Salvage the alien armor plating for our domes!",
         "effects": { "power": -10, "food": 0, "shield": 30, "life": 5 },
@@ -662,8 +527,8 @@
     },
     "aliensidequest_003_war": {
       "deck": "quest",
-      "img": null,
-      "desc": "ALIEN CONTACT [CONCLUSION] — Smoke drifts off of the colony and the evading alien fleet as shots are exchanged, the sounds of explosions loud in the air. The crew hears them ramping back up to attack again. ",
+      "img": "None",
+      "desc": "Smoke drifts off of the colony and the evading alien fleet as shots are exchanged, the sounds of explosions loud in the air. The crew hears them ramping back up to attack again.",
       "right": {
         "desc": "Ask for a truce...",
         "effects": { "power": -5, "food": 0, "shield": 10, "life": 20 },
@@ -677,15 +542,15 @@
     },
     "aliensidequest_003_peace": {
       "deck": "quest",
-      "img": null,
-      "desc": "ALIEN CONTACT [CONCLUSION] — The aliens' ship prepares for lift off, and the alien leader asks for a gift to show our friendship. Which gift should the colony give?",
+      "img": "None",
+      "desc": "The aliens' ship prepares for lift off, and the alien leader asks for a gift to show our friendship. Which gift should the colony give?",
       "right": {
         "desc": "Give them a flashdrive with all of Nickelbacks albums on it!",
         "effects": { "power": 0, "food": 5, "shield": 10, "life": 25 },
         "unlockCard": null
       },
       "left": {
-        "desc": "Ask them for a gitft instead.",
+        "desc": "Ask them for a gift instead.",
         "effects": { "power": 15, "food": 5, "shield": 5, "life": 10 },
         "unlockCard": null
       }
@@ -1022,6 +887,5 @@
         "unlockCard": null
       }
     }
-
   }
 }
