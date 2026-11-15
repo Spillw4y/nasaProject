@@ -24,9 +24,9 @@ const choiceText = {
 };
 // Every game opens with this card. The cards it unlocks whose ids start with OPENING_PREFIX play
 // straight after it, one after another with no random events in between, until that chain ends.
-// After that, cards unlock and play with the usual 1 to 3 random events between them.
-const START_CARD = "design_001";
-const OPENING_PREFIX = "design_";
+// After that, cards unlock and play with the usual 1 or 2 random events between them.
+const START_CARD = "intromsq1_001";
+const OPENING_PREFIX = "intromsq1_";
 
 let cards = {};               // every card from decks.json, keyed by its id
 let questQueue = [];          // ids of unlocked quest cards waiting their turn, in order
@@ -38,20 +38,22 @@ let gameOver = false;
 
 // The base on the Moon in the background grows as the player progresses. Making either choice on
 // one of these cards builds that piece, and it stays until the next game. Each name matches the
-// data-part of a .base-part in index.html. To add a piece: draw it, add it to index.html and styles.css, list it here.
+// data-part of a .base-part or .base-addon in index.html. To add a piece: draw it, add it to index.html and styles.css, list it here.
 const BASE_PARTS = {
-    design_005: "outpost",   // the mission design phase is over: the outpost lands
-    main_003: "rover"        // VIPER rolls up to the airlock, which starts the rover quest
+    intromsq1_005: "outpost",                   // the mission design phase is over: the outpost lands
+    roversidequest_001_start: "rover",          // VIPER rolls up to the airlock, which starts the rover quest
+    upgrademsq2_004_lifesupport: "lifesupport", // colony upgrade, life support branch done: oxygen tanks and the Bio-Dome
+    upgrademsq2_004_security: "security"        // colony upgrade, security branch done: laser turrets and the magnetic shield
 };
 
 function buildBasePart(cardId) {
     const part = BASE_PARTS[cardId];
-    const el = part && document.querySelector(`.base-part[data-part="${part}"]`);
+    const el = part && document.querySelector(`.base-layer [data-part="${part}"]`);
     if (el) el.classList.add("is-built");
 }
 
 function clearBase() {
-    document.querySelectorAll(".base-part.is-built").forEach((el) => el.classList.remove("is-built"));
+    document.querySelectorAll(".base-layer .is-built").forEach((el) => el.classList.remove("is-built"));
 }
 
 function currentCard() {
@@ -72,13 +74,13 @@ function conditionsMet(data) {
     });
 }
 
-// 1, 2 or 3: how many main cards to play before the next quest card.
+// 1 or 2: how many main cards to play before the next quest card.
 function randomGap() {
-    return 1 + Math.floor(Math.random() * 3);
+    return 1 + Math.floor(Math.random() * 2);
 }
 
 // Pick the next card. Main cards come up at random. A waiting quest card plays
-// once 1 to 3 main cards have gone by. No card is shown twice in one game.
+// once 1 or 2 main cards have gone by. No card is shown twice in one game.
 // Leaves currentId as null when there is nothing left to play.
 function drawCard() {
     questQueue = questQueue.filter((id) => !played.has(id));   // drop anything already shown
@@ -99,7 +101,7 @@ function drawCard() {
     if (currentId !== null) played.add(currentId);
 }
 
-// A choice can unlock a quest card by id. It joins the queue and plays after 1 to 3 main cards.
+// A choice can unlock a quest card by id. It joins the queue and plays after 1 or 2 main cards.
 function unlockFrom(choice) {
     const id = choice.unlockCard;
     if (!id) return;

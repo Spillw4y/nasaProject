@@ -6,12 +6,12 @@
       "desc": "MISSION DESIGN [1/5] — Launch Vehicle: Our mass budget is tight! Do we book NASA's Space Launch System (SLS) for crew comfort, or a heavy cargo rocket for extra armor?",
       "right": {
         "desc": "Launch on SLS Block 1B with full crew quarters.",
-        "effects": { "power": -5, "food": 15, "shield": -10, "life": 15 },
+        "effects": { "power": -5, "food": 15, "shield": -5, "life": 15 },
         "unlockCard": "intromsq1_002"
       },
       "left": {
         "desc": "Cram the crew into a heavy cargo lander.",
-        "effects": { "power": 10, "food": -10, "shield": 15, "life": -10 },
+        "effects": { "power": 10, "food": -5, "shield": 15, "life": -5 },
         "unlockCard": "intromsq1_002"
       }
     },
@@ -21,12 +21,12 @@
       "desc": "MISSION DESIGN [2/5] — Lunar Orbit: We can dock at the Lunar Gateway station in a wide halo orbit for resupplies, or dive straight into Low Lunar Orbit to save fuel.",
       "right": {
         "desc": "Dock at Gateway for extra food and comms.",
-        "effects": { "power": -10, "food": 15, "shield": 5, "life": 5 },
+        "effects": { "power": -5, "food": 15, "shield": 5, "life": 5 },
         "unlockCard": "intromsq1_003"
       },
       "left": {
         "desc": "Burn straight for Low Lunar Orbit to save power.",
-        "effects": { "power": 15, "food": -5, "shield": -10, "life": -5 },
+        "effects": { "power": 15, "food": -5, "shield": -5, "life": -5 },
         "unlockCard": "intromsq1_003"
       }
     },
@@ -36,12 +36,12 @@
       "desc": "MISSION DESIGN [3/5] — Landing Site: Touch down on Shackleton Crater's sunny South Pole rim for constant solar power, or inside a basalt lava tube for natural shielding?",
       "right": {
         "desc": "Land on Shackleton's sunny South Pole ridge.",
-        "effects": { "power": 15, "food": 0, "shield": -15, "life": 5 },
+        "effects": { "power": 15, "food": 0, "shield": -10, "life": 5 },
         "unlockCard": "intromsq1_004"
       },
       "left": {
         "desc": "Land inside the armored Mare Lava Tube pit.",
-        "effects": { "power": -15, "food": 0, "shield": 20, "life": -5 },
+        "effects": { "power": -10, "food": 0, "shield": 20, "life": -5 },
         "unlockCard": "intromsq1_004"
       }
     },
@@ -51,12 +51,12 @@
       "desc": "MISSION DESIGN [4/5] — Base Systems: Our lander only has room for one heavy module! Pack a Kilopower nuclear reactor, or an expanded Veggie hydroponic farm?",
       "right": {
         "desc": "Pack the Kilopower nuclear fission core.",
-        "effects": { "power": 20, "food": -10, "shield": -5, "life": -5 },
+        "effects": { "power": 20, "food": -5, "shield": -5, "life": -5 },
         "unlockCard": "intromsq1_005"
       },
       "left": {
         "desc": "Pack the expanded Veggie hydroponic greenhouse.",
-        "effects": { "power": -15, "food": 20, "shield": 0, "life": 10 },
+        "effects": { "power": -10, "food": 20, "shield": 0, "life": 10 },
         "unlockCard": "intromsq1_005"
       }
     },
@@ -71,7 +71,7 @@
       },
       "left": {
         "desc": "Fire up the deep-space SETI radio dish!",
-        "effects": { "power": -10, "food": 0, "shield": 10, "life": 5 },
+        "effects": { "power": -5, "food": 0, "shield": 10, "life": 5 },
         "unlockCard": "aliensidequest_001_dip"
       }
     },
@@ -216,12 +216,12 @@
       "desc": "ROVER QUEST [START] — NASA's lost VIPER rover rolls up to our airlock, flashing its headlights! Its link to Earth is dead, and its ice-scanner is pinging nearby.",
       "right": {
         "desc": "Drain our grid to send it ice mining.",
-        "effects": { "power": -15, "food": 0, "shield": 0, "life": 5 },
+        "effects": { "power": -10, "food": 0, "shield": 0, "life": 5 },
         "unlockCard": "roversidequest_002_ice"
       },
       "left": {
         "desc": "Send it to the sunny ridge as a scout.",
-        "effects": { "power": 10, "food": -10, "shield": 5, "life": 0 },
+        "effects": { "power": 10, "food": -5, "shield": 5, "life": 0 },
         "unlockCard": "roversidequest_002_scout"
       }
     },
@@ -231,12 +231,12 @@
       "desc": "ROVER QUEST [1/3] — VIPER's wheels are sinking into fluffy 'fairy-castle' moon dust inside a dark crater! Spinning the tires will bury its belly pan.",
       "right": {
         "desc": "Use NASA's 'Inchworm' wheel-lifting crawl.",
-        "effects": { "power": -15, "food": 0, "shield": 0, "life": 5 },
+        "effects": { "power": -10, "food": 0, "shield": 0, "life": 5 },
         "unlockCard": "roversidequest_003_ice"
       },
       "left": {
         "desc": "Floor the throttle and yank it out with winches!",
-        "effects": { "power": -15, "food": 0, "shield": -25, "life": -5 },
+        "effects": { "power": -10, "food": 0, "shield": -15, "life": -5 },
         "unlockCard": "roversidequest_003_scout"
       }
     },
@@ -251,7 +251,7 @@
       },
       "left": {
         "desc": "Drive it into a freezing crater to cool down.",
-        "effects": { "power": -15, "food": 0, "shield": -20, "life": -5 },
+        "effects": { "power": -10, "food": 0, "shield": -10, "life": -5 },
         "unlockCard": "roversidequest_003_ice"
       }
     },
@@ -261,12 +261,12 @@
       "desc": "ROVER QUEST [2/3] — At -235°C in the dark crater, VIPER's drill hits rock-hard ice! The drill is straining, and the battery heaters only have 4 hours left.",
       "right": {
         "desc": "Peck slowly using NASA's 'bite-and-brush' drill rule.",
-        "effects": { "power": -20, "food": 0, "shield": 10, "life": 0 },
+        "effects": { "power": -10, "food": 0, "shield": 10, "life": 0 },
         "unlockCard": "roversidequest_004_ice"
       },
       "left": {
         "desc": "Max the drill torque and ignore the battery alarm!",
-        "effects": { "power": -30, "food": 0, "shield": -20, "life": -15 },
+        "effects": { "power": -20, "food": 0, "shield": -10, "life": -10 },
         "unlockCard": null
       }
     },
@@ -276,12 +276,12 @@
       "desc": "ROVER QUEST [2/3] — Siren alert! NASA satellites spotted a huge Solar Flare heading our way. Radiation on the exposed ridge will fry the rover's computer!",
       "right": {
         "desc": "Park behind a boulder in NASA 'Safe Mode.'",
-        "effects": { "power": -15, "food": -5, "shield": 15, "life": 0 },
+        "effects": { "power": -10, "food": -5, "shield": 15, "life": 0 },
         "unlockCard": "roversidequest_004_scout"
       },
       "left": {
         "desc": "Keep driving through the radiation storm!",
-        "effects": { "power": -25, "food": 0, "shield": -25, "life": -15 },
+        "effects": { "power": -15, "food": 0, "shield": -15, "life": -10 },
         "unlockCard": null
       }
     },
@@ -291,7 +291,7 @@
       "desc": "ROVER QUEST [3/3] — Jackpot! VIPER dug up 5% pure water-ice and ammonia! It drops off the load at base before heading out on permanent deep-crater patrol.",
       "right": {
         "desc": "Melt the ice and ammonia for our farms!",
-        "effects": { "power": -10, "food": 25, "shield": 0, "life": 15 },
+        "effects": { "power": -5, "food": 25, "shield": 0, "life": 15 },
         "unlockCard": "roversidequest_visit_ice"
       },
       "left": {
@@ -351,12 +351,12 @@
       "desc": "ALIEN CONTACT [1/2] — An alien delegation approaches the perimeter, broadcasting a peaceful mathematical sequence.",
       "right": {
         "desc": "Welcome them with open arms.",
-        "effects": { "power": -10, "food": -10, "shield": 0, "life": -5 },
+        "effects": { "power": -5, "food": -5, "shield": 0, "life": -5 },
         "unlockCard": "aliensidequest_002_dip"
       },
       "left": {
         "desc": "Lock down the base and aim weapons.",
-        "effects": { "power": -5, "food": 0, "shield": 10, "life": -10 },
+        "effects": { "power": -5, "food": 0, "shield": 10, "life": -5 },
         "unlockCard": "aliensidequest_001_com"
       }
     },
@@ -366,12 +366,12 @@
       "desc": "ALIEN CONTACT [1/2] — Alien vessels lock weapons onto our primary dome! Our refusal to share resources has provoked an attack.",
       "right": {
         "desc": "Return fire with everything we have!",
-        "effects": { "power": -15, "food": 0, "shield": -35, "life": -15 },
+        "effects": { "power": -10, "food": 0, "shield": -20, "life": -10 },
         "unlockCard": "aliensidequest_002_com"
       },
       "left": {
         "desc": "Beg for mercy and pay tribute.",
-        "effects": { "power": -30, "food": -30, "shield": 0, "life": -25 },
+        "effects": { "power": -20, "food": -20, "shield": 0, "life": -15 },
         "unlockCard": "aliensidequest_002_dip"
       }
     },
@@ -396,12 +396,12 @@
       "desc": "ALIEN CONTACT [2/2] — The alien scout ship crashes into a nearby crater after our laser barrage! Its exotic alloy hull is still smoking.",
       "right": {
         "desc": "Salvage the alien armor plating for our domes!",
-        "effects": { "power": -10, "food": 0, "shield": 30, "life": 5 },
+        "effects": { "power": -5, "food": 0, "shield": 30, "life": 5 },
         "unlockCard": null
       },
       "left": {
         "desc": "Siphon the ship's antimatter fuel cells!",
-        "effects": { "power": 30, "food": 0, "shield": -10, "life": 5 },
+        "effects": { "power": 30, "food": 0, "shield": -5, "life": 5 },
         "unlockCard": null
       }
     },
@@ -412,12 +412,12 @@
       "conditions": { "maxFood": 25 },
       "right": {
         "desc": "Divert power to the greenhouses.",
-        "effects": { "power": -15, "food": 20, "shield": 0, "life": -5 },
+        "effects": { "power": -10, "food": 20, "shield": 0, "life": -5 },
         "unlockCard": null
       },
       "left": {
         "desc": "Starve the crew on half-rations.",
-        "effects": { "power": 0, "food": 5, "shield": 0, "life": -25 },
+        "effects": { "power": 0, "food": 5, "shield": 0, "life": -15 },
         "unlockCard": null
       }
     },
@@ -428,12 +428,12 @@
       "conditions": { "maxPower": 25 },
       "right": {
         "desc": "Shut down life support and shields.",
-        "effects": { "power": 20, "food": 0, "shield": -15, "life": -15 },
+        "effects": { "power": 20, "food": 0, "shield": -10, "life": -10 },
         "unlockCard": null
       },
       "left": {
         "desc": "Let the grid brown out.",
-        "effects": { "power": -15, "food": -10, "shield": 5, "life": -10 },
+        "effects": { "power": -10, "food": -5, "shield": 5, "life": -5 },
         "unlockCard": null
       }
     },
@@ -443,12 +443,12 @@
       "desc": "A shallow magnitude 4.5 moonquake is shaking the ground! The habitat domes are groaning as the fault line shifts underneath us.",
       "right": {
         "desc": "Max out the magnetic shock absorbers.",
-        "effects": { "power": -20, "food": 0, "shield": 10, "life": 0 },
+        "effects": { "power": -10, "food": 0, "shield": 10, "life": 0 },
         "unlockCard": null
       },
       "left": {
         "desc": "Do nothing and hope the domes hold.",
-        "effects": { "power": 0, "food": -10, "shield": -30, "life": -15 },
+        "effects": { "power": 0, "food": -5, "shield": -20, "life": -10 },
         "unlockCard": null
       }
     },
@@ -458,12 +458,12 @@
       "desc": "Our NASA 'Veggie' garden pods are drowning! In low gravity, water forms bubbles around the lettuce roots and suffocates them.",
       "right": {
         "desc": "Blast the roots with high-power air fans.",
-        "effects": { "power": -15, "food": 15, "shield": 0, "life": 0 },
+        "effects": { "power": -10, "food": 15, "shield": 0, "life": 0 },
         "unlockCard": null
       },
       "left": {
         "desc": "Feed the rotting greens to the crew.",
-        "effects": { "power": 0, "food": -20, "shield": 0, "life": -25 },
+        "effects": { "power": 0, "food": -10, "shield": 0, "life": -15 },
         "unlockCard": null
       }
     },
@@ -473,12 +473,12 @@
       "desc": "Glass-sharp moon dust is sticking to our spacesuits! It's chewing up the airlock seals and giving the crew 'Apollo hay fever.'",
       "right": {
         "desc": "Zap the suits with electric dust shields.",
-        "effects": { "power": -20, "food": 0, "shield": 10, "life": 5 },
+        "effects": { "power": -10, "food": 0, "shield": 10, "life": 5 },
         "unlockCard": null
       },
       "left": {
         "desc": "Track the toxic dust inside anyway.",
-        "effects": { "power": 0, "food": -10, "shield": -20, "life": -25 },
+        "effects": { "power": 0, "food": -5, "shield": -10, "life": -15 },
         "unlockCard": null
       }
     },
@@ -488,12 +488,12 @@
       "desc": "Our Kilopower nuclear reactor is running hot! We can push the uranium core harder for energy, or cool it down to protect the base.",
       "right": {
         "desc": "Yank the control rod and disable alarms!",
-        "effects": { "power": 25, "food": 0, "shield": -25, "life": -30 },
+        "effects": { "power": 25, "food": 0, "shield": -15, "life": -20 },
         "unlockCard": null
       },
       "left": {
         "desc": "Scram the reactor and bury it in dirt.",
-        "effects": { "power": -25, "food": 0, "shield": 15, "life": 5 },
+        "effects": { "power": -15, "food": 0, "shield": 15, "life": 5 },
         "unlockCard": null
       }
     },
@@ -503,12 +503,12 @@
       "desc": "A lunar satellite spotted a collapsed lava tube cave two kilometers away! Its thick stone roof offers natural radiation shielding.",
       "right": {
         "desc": "Winch a rover down to mine volcanic rock.",
-        "effects": { "power": -15, "food": -10, "shield": 20, "life": 0 },
+        "effects": { "power": -10, "food": -5, "shield": 20, "life": 0 },
         "unlockCard": null
       },
       "left": {
         "desc": "Send astronauts on foot without ropes.",
-        "effects": { "power": 0, "food": -5, "shield": -10, "life": -30 },
+        "effects": { "power": 0, "food": -5, "shield": -5, "life": -20 },
         "unlockCard": null
       }
     },
@@ -518,12 +518,12 @@
       "desc": "The life-support water recycler is clogged! Low gravity makes the crew lose bone calcium, and that mineral sludge is jamming our urine filters.",
       "right": {
         "desc": "Boil the filters clean with spare power.",
-        "effects": { "power": -20, "food": 5, "shield": 0, "life": 10 },
+        "effects": { "power": -10, "food": 5, "shield": 0, "life": 10 },
         "unlockCard": null
       },
       "left": {
         "desc": "Drink the unfiltered urine to save power.",
-        "effects": { "power": 5, "food": -15, "shield": 0, "life": -30 },
+        "effects": { "power": 5, "food": -10, "shield": 0, "life": -20 },
         "unlockCard": null
       }
     },
@@ -533,12 +533,12 @@
       "desc": "Wait—is that Surveyor 3?! A scout found a 1960s NASA probe sitting in a crater, still wrapped in shiny foil and titanium struts.",
       "right": {
         "desc": "Strip its camera and titanium like Apollo 12.",
-        "effects": { "power": 5, "food": 0, "shield": 15, "life": -10 },
+        "effects": { "power": 5, "food": 0, "shield": 15, "life": -5 },
         "unlockCard": null
       },
       "left": {
         "desc": "Melt the historic probe down for scrap.",
-        "effects": { "power": -10, "food": 0, "shield": 5, "life": -25 },
+        "effects": { "power": -5, "food": 0, "shield": 5, "life": -15 },
         "unlockCard": null
       }
     },
@@ -548,12 +548,12 @@
       "desc": "The Geminid meteor shower is pelting the Moon! With no atmosphere to burn them up, tiny space pebbles are hitting faster than bullets.",
       "right": {
         "desc": "Drop blast shutters and power the shields.",
-        "effects": { "power": -20, "food": -5, "shield": 15, "life": 0 },
+        "effects": { "power": -10, "food": -5, "shield": 15, "life": 0 },
         "unlockCard": null
       },
       "left": {
         "desc": "Leave the glass domes and solar panels exposed.",
-        "effects": { "power": 10, "food": -15, "shield": -35, "life": -20 },
+        "effects": { "power": 10, "food": -10, "shield": -20, "life": -10 },
         "unlockCard": null
       }
     },
@@ -563,12 +563,12 @@
       "desc": "One of our cube-shaped NASA Astrobee robots went haywire in the cafeteria! Its fans are blowing floating crumbs everywhere while it sings 'Daisy Bell.'",
       "right": {
         "desc": "Wipe its memory and force it on leak patrol.",
-        "effects": { "power": -10, "food": 0, "shield": 10, "life": -5 },
+        "effects": { "power": -5, "food": 0, "shield": 10, "life": -5 },
         "unlockCard": null
       },
       "left": {
         "desc": "Smash it with a wrench.",
-        "effects": { "power": 0, "food": -10, "shield": -15, "life": -15 },
+        "effects": { "power": 0, "food": -5, "shield": -10, "life": -10 },
         "unlockCard": null
       }
     },
@@ -578,12 +578,12 @@
       "desc": "NASA's Lunar Gateway space station is passing right overhead! They can drop us a supply pod if we guide it down to the landing pad.",
       "right": {
         "desc": "Burn laser power to guide it down safely.",
-        "effects": { "power": -20, "food": 20, "shield": 0, "life": 5 },
+        "effects": { "power": -10, "food": 20, "shield": 0, "life": 5 },
         "unlockCard": null
       },
       "left": {
         "desc": "Turn off the beacon and let it crash near base.",
-        "effects": { "power": 0, "food": 5, "shield": -25, "life": -15 },
+        "effects": { "power": 0, "food": 5, "shield": -15, "life": -10 },
         "unlockCard": null
       }
     },
@@ -593,12 +593,12 @@
       "desc": "Living in one-sixth gravity is weakening the crew's bones and making their vision blurry! Doctors warn that health is slipping fast.",
       "right": {
         "desc": "Force 2-hour daily vacuum workouts.",
-        "effects": { "power": -15, "food": -15, "shield": 0, "life": 15 },
+        "effects": { "power": -10, "food": -10, "shield": 0, "life": 15 },
         "unlockCard": null
       },
       "left": {
         "desc": "Ignore the doctors and work them harder.",
-        "effects": { "power": 5, "food": 5, "shield": 5, "life": -30 },
+        "effects": { "power": 5, "food": 5, "shield": 5, "life": -20 },
         "unlockCard": null
       }
     },
@@ -608,12 +608,12 @@
       "desc": "Our moon-dirt smelter is glowing at 1,600°C! Baking lunar soil separates out pure oxygen gas and leaves behind molten iron.",
       "right": {
         "desc": "Bottle the oxygen for the crew.",
-        "effects": { "power": -15, "food": 0, "shield": 0, "life": 15 },
+        "effects": { "power": -10, "food": 0, "shield": 0, "life": 15 },
         "unlockCard": null
       },
       "left": {
         "desc": "Dump uncooled molten iron straight onto the hull.",
-        "effects": { "power": 0, "food": 0, "shield": -25, "life": -15 },
+        "effects": { "power": 0, "food": 0, "shield": -15, "life": -10 },
         "unlockCard": null
       }
     },
@@ -623,12 +623,12 @@
       "desc": "NASA's deep-space laser dish just locked onto our receiver! We have ultra-fast internet from Earth for the next 20 minutes.",
       "right": {
         "desc": "Download solar-storm shield patches.",
-        "effects": { "power": -10, "food": 0, "shield": 15, "life": -5 },
+        "effects": { "power": -5, "food": 0, "shield": 15, "life": -5 },
         "unlockCard": null
       },
       "left": {
         "desc": "Pirate unverified code to overclock the grid.",
-        "effects": { "power": -25, "food": 0, "shield": -20, "life": 0 },
+        "effects": { "power": -15, "food": 0, "shield": -10, "life": 0 },
         "unlockCard": null
       }
     },
@@ -638,12 +638,12 @@
       "desc": "Weird pink space-slime is growing inside our cooling pipes! Tough bacteria survived radiation and are blocking water flow to the computers.",
       "right": {
         "desc": "Boil the pipes and compost the dead slime.",
-        "effects": { "power": -20, "food": 15, "shield": 0, "life": 0 },
+        "effects": { "power": -10, "food": 15, "shield": 0, "life": 0 },
         "unlockCard": null
       },
       "left": {
         "desc": "Flush the cooling water into space.",
-        "effects": { "power": -15, "food": -20, "shield": -10, "life": -15 },
+        "effects": { "power": -10, "food": -10, "shield": -5, "life": -10 },
         "unlockCard": null
       }
     },
@@ -653,12 +653,12 @@
       "desc": "Our Valkyrie humanoid robot froze up while fixing the outer antenna! It's stuck hanging onto the tower as deadly shadow creeps in.",
       "right": {
         "desc": "Send a rover team into the cold to rescue it.",
-        "effects": { "power": -15, "food": -10, "shield": 15, "life": -10 },
+        "effects": { "power": -10, "food": -5, "shield": 15, "life": -5 },
         "unlockCard": null
       },
       "left": {
         "desc": "Leave it to freeze and shatter on the tower.",
-        "effects": { "power": 0, "food": 0, "shield": -25, "life": -10 },
+        "effects": { "power": 0, "food": 0, "shield": -15, "life": -5 },
         "unlockCard": null
       }
     },
@@ -668,12 +668,12 @@
       "desc": "Our miners scooped up moon dirt packed with Helium-3 from solar wind! The engineers want to test it in our unshielded fusion prototype.",
       "right": {
         "desc": "Dump raw Helium-3 into the unshielded core!",
-        "effects": { "power": 20, "food": 0, "shield": -30, "life": -20 },
+        "effects": { "power": 20, "food": 0, "shield": -20, "life": -10 },
         "unlockCard": null
       },
       "left": {
         "desc": "Play it safe: sift the dirt for crop nitrogen.",
-        "effects": { "power": -15, "food": 15, "shield": 0, "life": 5 },
+        "effects": { "power": -10, "food": 15, "shield": 0, "life": 5 },
         "unlockCard": null
       }
     },
@@ -688,7 +688,7 @@
       },
       "left": {
         "desc": "Pry the mirror up and blind Earth's lasers.",
-        "effects": { "power": 5, "food": 0, "shield": -15, "life": -20 },
+        "effects": { "power": 5, "food": 0, "shield": -10, "life": -10 },
         "unlockCard": null
       }
     },
@@ -698,12 +698,12 @@
       "desc": "The crew in Habitat B has 'space cabin fever,' and the sewage tank is full! NASA research shows human waste is great at blocking cosmic rays.",
       "right": {
         "desc": "Line the bedroom walls with bagged sewage.",
-        "effects": { "power": -5, "food": 0, "shield": 20, "life": -20 },
+        "effects": { "power": -5, "food": 0, "shield": 20, "life": -10 },
         "unlockCard": null
       },
       "left": {
         "desc": "Vent the raw sewage right outside the airlock.",
-        "effects": { "power": 0, "food": -15, "shield": -15, "life": -20 },
+        "effects": { "power": 0, "food": -10, "shield": -10, "life": -10 },
         "unlockCard": null
       }
     },
@@ -713,12 +713,12 @@
       "desc": "We dug up a pocket of 'Orange Soil'—tiny volcanic glass beads from 3.6 billion years ago, just like Apollo 17 found!",
       "right": {
         "desc": "Bake the beads at 900°C to extract water.",
-        "effects": { "power": -15, "food": 15, "shield": 0, "life": 10 },
+        "effects": { "power": -10, "food": 15, "shield": 0, "life": 10 },
         "unlockCard": null
       },
       "left": {
         "desc": "Melt the glass into 3D-printed dome armor.",
-        "effects": { "power": -15, "food": 0, "shield": 20, "life": -5 },
+        "effects": { "power": -10, "food": 0, "shield": 20, "life": -5 },
         "unlockCard": null
       }
     },
@@ -728,12 +728,12 @@
       "desc": "The two-week lunar night is at its coldest! It's -248°C outside, and the habitat's outer cooling pipes are about to freeze solid and burst.",
       "right": {
         "desc": "Kill the greenhouse heat to thaw the pipes.",
-        "effects": { "power": -10, "food": -25, "shield": 15, "life": 0 },
+        "effects": { "power": -5, "food": -15, "shield": 15, "life": 0 },
         "unlockCard": null
       },
       "left": {
         "desc": "Let the outer pipes freeze and burst!",
-        "effects": { "power": 5, "food": -10, "shield": -30, "life": -20 },
+        "effects": { "power": 5, "food": -5, "shield": -20, "life": -10 },
         "unlockCard": null
       }
     }

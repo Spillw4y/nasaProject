@@ -99,13 +99,21 @@ body {
             .base-part { position: absolute; transform: translate(-50%, -91%) rotate(var(--tilt)); transform-origin: 50% 91%; }
             .base-part[data-part="outpost"] { left: 76%; top: 28.2%; width: 13%; --tilt: 32.5deg; }
             .base-part[data-part="rover"] { left: 22.4%; top: 29.8%; width: 6.5%; --tilt: -34.8deg; }
-            .base-part img { display: block; width: 100%; height: auto; filter: brightness(0.9); opacity: 0; transform: scale(0); transform-origin: 50% 91%; }
-            .base-part.is-built img { animation: base-pop 760ms cubic-bezier(.2, 1.5, .4, 1) forwards; }
-            .base-part[data-part="rover"].is-built img { animation: base-drive 1500ms cubic-bezier(.25, .8, .35, 1) forwards; }
+            .base-part > .base-img { display: block; width: 100%; height: auto; filter: brightness(0.9); opacity: 0; transform: scale(0); transform-origin: 50% 91%; }
+            .base-part.is-built > .base-img { animation: base-pop 760ms cubic-bezier(.2, 1.5, .4, 1) forwards; }
+            .base-part[data-part="rover"].is-built > .base-img { animation: base-drive 1500ms cubic-bezier(.25, .8, .35, 1) forwards; }
             /* A puff of moon dust where the piece lands. */
             .base-part::after { content: ""; position: absolute; left: 50%; top: 91%; width: 130%; height: 26%; border-radius: 50%; background: radial-gradient(closest-side, rgb(214 212 206 / 70%), rgb(214 212 206 / 0%)); opacity: 0; transform: translate(-50%, -50%) scale(0.3); pointer-events: none; }
             .base-part.is-built::after { animation: base-dust 1100ms ease-out 120ms; }
+            /* Outpost upgrades (base-lifesupport.svg, base-security.svg). Each is drawn in the outpost's own coordinates on a
+               larger frame: x from -30 to 400 and y from 0 to 190, where the outpost is 0 to 300 by 0 to 170. So it sits
+               10% left of the outpost and is 143.333% as wide, which lays it exactly over the outpost, tilt and all.
+               Each grows from where it meets the ground: the Bio-Dome on the right, the shield from the middle of the base. */
+            .base-addon { position: absolute; left: -10%; top: 0; width: 143.333%; height: auto; filter: brightness(0.9); opacity: 0; transform: scale(0); pointer-events: none; }
+            .base-addon[data-part="lifesupport"] { transform-origin: 87% 88.4%; }
+            .base-addon[data-part="security"] { transform-origin: 41.86% 88.4%; }
+            .base-addon.is-built { animation: base-pop 900ms cubic-bezier(.2, 1.4, .4, 1) forwards; }
             @keyframes base-pop { 0% { opacity: 0; transform: scale(0, 0.2); } 35% { opacity: 1; } 100% { opacity: 1; transform: scale(1); } }
             @keyframes base-drive { 0% { opacity: 0; transform: translateX(160%); } 15% { opacity: 1; } 70% { transform: translateX(-4%); } 82% { transform: translateX(0) translateY(-3%); } 100% { opacity: 1; transform: none; } }
             @keyframes base-dust { 0% { opacity: 0.9; transform: translate(-50%, -50%) scale(0.3); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.4); } }
-            @media (prefers-reduced-motion: reduce) { .base-part.is-built img { animation: none; opacity: 1; transform: none; } .base-part.is-built::after { animation: none; } }
+            @media (prefers-reduced-motion: reduce) { .base-part.is-built > .base-img, .base-addon.is-built { animation: none; opacity: 1; transform: none; } .base-part.is-built::after { animation: none; } }

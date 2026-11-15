@@ -9,8 +9,13 @@
 <body>
     <!-- The base on the Moon, behind the game. Pieces appear as the player progresses: see BASE_PARTS in script.js. -->
     <div class="base-layer" aria-hidden="true">
-        <div class="base-part" data-part="outpost"><img src="images/base-outpost.svg" alt="" draggable="false"></div>
-        <div class="base-part" data-part="rover"><img src="images/base-rover.svg" alt="" draggable="false"></div>
+        <div class="base-part" data-part="outpost">
+            <img class="base-img" src="images/base-outpost.svg" alt="" draggable="false">
+            <!-- Outpost upgrades from the colony upgrade quest. Only one is built per game, depending on the branch. -->
+            <img class="base-addon" data-part="lifesupport" src="images/base-lifesupport.svg" alt="" draggable="false">
+            <img class="base-addon" data-part="security" src="images/base-security.svg" alt="" draggable="false">
+        </div>
+        <div class="base-part" data-part="rover"><img class="base-img" src="images/base-rover.svg" alt="" draggable="false"></div>
     </div>
     <div class="app-shell">
     <header>
