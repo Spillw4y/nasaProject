@@ -25,7 +25,7 @@ body {
                 border-radius: 12px;
                 box-shadow: 0 12px 40px rgb(34 52 72 / 18%);
             }
-            header { height: 124px; flex: 0 0 124px; display: flex; align-items: center; justify-content: space-evenly; gap: 0; padding: 0 24px; background: transparent; border-bottom: 1px solid rgb(255 255 255 / 12%); }
+            header { height: 150px; flex: 0 0 150px; display: flex; align-items: center; justify-content: space-evenly; gap: 0; padding: 0 24px; background: transparent; border-bottom: 1px solid rgb(255 255 255 / 12%); }
             .icon-button { width: 52px; height: 52px; display: grid; place-items: center; padding: 0; color: #263648; }
             .icon-button svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
             main { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(42px, 1fr) minmax(120px, 480px) minmax(42px, 1fr); align-items: center; justify-items: center; gap: 24px; padding: 24px; }
@@ -50,7 +50,9 @@ body {
                bottom. Every symbol sits between 4% and 96% of its tile, so 0 is empty and 100 is full for all four.
                --tone is white at rest. While a choice is previewed, script.js marks each meter it would change,
                and the outline and fill both turn green (going up) or red (going down). */
-            .meter-item { --tone: #fff; display: flex; align-items: center; justify-content: center; }
+            .meter-item { --tone: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+            /* The meter's name, above its icon. It is always white: it does not use --tone, so it stays white while the icon turns green or red. */
+            .meter-label { color: #fff; font-family: system-ui, sans-serif; font-size: clamp(0.7rem, 3.6vw, 0.95rem); font-weight: 700; line-height: 1.2; letter-spacing: 0.08em; text-transform: uppercase; text-shadow: 0 1px 4px rgb(0 0 0 / 80%); }
             .meter-item[data-preview="up"] { --tone: #3ecf8e; }
             .meter-item[data-preview="down"] { --tone: #e5484d; }
             .meter-icon { position: relative; width: min(100px, 21vw); aspect-ratio: 1; }
