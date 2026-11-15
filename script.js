@@ -163,6 +163,15 @@ function showNextCard() {
     }
 }
 
+// Keep the top of the moon in the background photo level with the top of the card, so it sits
+// below the icons and the card text. offsetTop ignores the swipe animation, so this is safe mid-swipe.
+function placeMoon() {
+    let top = 0;
+    for (let el = card; el; el = el.offsetParent) top += el.offsetTop;
+    document.body.style.setProperty("--moon-top", `${top}px`);
+}
+window.addEventListener("resize", placeMoon);
+
 function startGame() {
     gameOver = false;
     questQueue = [];
@@ -178,6 +187,7 @@ function startGame() {
         console.warn(`decks.json: no card has the start id "${START_CARD}", so the game starts with a random card`);
         showNextCard();
     }
+    placeMoon();
 }
 
 // Colour the meters a choice would change: green if it goes up, red if it goes down.

@@ -77,7 +77,7 @@
     },
     "main_001": {
       "deck": "main",
-      "img": "images/bioLead(food).jpg",
+      "img": "images/bioLead(food).png",
       "desc": "We are low on food!",
       "conditions": { "maxFood": 25 },
       "right": {
@@ -319,7 +319,7 @@
     },
     "main_017": {
       "deck": "main",
-      "img": "images/bioLead(food).jpg",
+      "img": "images/bioLead(food).png",
       "desc": "Weird pink space-slime is growing inside our cooling pipes! Tough bacteria survived radiation and are blocking water flow to the computers.",
       "right": {
         "desc": "Boil the pipes and compost the dead slime.",
@@ -394,7 +394,7 @@
     },
     "main_022": {
       "deck": "main",
-      "img": "images/bioLead(food).jpg",
+      "img": "images/bioLead(food).png",
       "desc": "We dug up a pocket of 'Orange Soil'—tiny volcanic glass beads from 3.6 billion years ago, just like Apollo 17 found!",
       "right": {
         "desc": "Bake the beads at 900°C to extract water.",
