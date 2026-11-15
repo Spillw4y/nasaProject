@@ -18,10 +18,15 @@ async function loadDecks() {
 
 // Draw the current values on the page. Each icon's fill reads its level (0 to 100)
 // from the --level CSS variable, and styles.css turns that into how far up the symbol is filled.
+// A meter below this is running low: its icon pulses red as a warning (styles.css, .meter-item[data-low]).
+const LOW_METER = 25;
+
 function updateMeters() {
   for (const name in meters) {
     const fill = document.getElementById(meterIds[name]);
-    if (fill) fill.style.setProperty("--level", meters[name]);
+    if (!fill) continue;
+    fill.style.setProperty("--level", meters[name]);
+    fill.closest(".meter-item")?.toggleAttribute("data-low", meters[name] < LOW_METER);
   }
 }
 
