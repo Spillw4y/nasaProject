@@ -542,16 +542,16 @@
     },
     "aliensidequest_003_peace": {
       "deck": "quest",
-      "img": "None",
-      "desc": "The aliens' ship prepares for lift off, and the alien leader asks for a gift to show our friendship. Which gift should the colony give?",
+      "img": null,
+      "desc": "ALIEN CONTACT [CONCLUSION] — The aliens' ship prepares for lift off, and the alien leader asks for a gift to show our friendship. Which gift should the colony give?",
       "right": {
-        "desc": "Give them a flashdrive with all of Nickelbacks albums on it!",
-        "effects": { "power": 0, "food": 5, "shield": 10, "life": 25 },
+        "desc": "Give them a flashdrive with all of Nickelbacks albums on it, and they loved it! They reward us with resources.",
+        "effects": { "power": -15, "food": 15, "shield": 10, "life": 25 },
         "unlockCard": null
       },
       "left": {
-        "desc": "Ask them for a gift instead.",
-        "effects": { "power": 15, "food": 5, "shield": 5, "life": 10 },
+        "desc": "Demand a gift from them instead. They hand over special batteries!",
+        "effects": { "power": 20, "food": 0, "shield": 0, "life": 10 },
         "unlockCard": null
       }
     },
