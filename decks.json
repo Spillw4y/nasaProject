@@ -330,6 +330,66 @@
         "unlockCard": null
       }
     },
+    "finalemsq5_001_start": {
+      "deck": "quest",
+      "img": "images/spacestation.png",
+      "desc": "Earth's first 100-ton Super-Heavy Cargo Lander is on final approach! Without a solid landing pad, its rocket exhaust will blast lunar dust at 2,000 m/s and shred our base!",
+      "right": {
+        "desc": "Fire up NASA's microwave pavers to melt the dirt into a basalt pad!",
+        "effects": { "power": -20, "food": 0, "shield": 15, "life": 0 },
+        "unlockCard": "finalemsq5_002"
+      },
+      "left": {
+        "desc": "Send the crew out with polymer spray to glue the loose regolith down!",
+        "effects": { "power": -5, "food": -10, "shield": 10, "life": -10 },
+        "unlockCard": "finalemsq5_002"
+      }
+    },
+    "finalemsq5_002": {
+      "deck": "quest",
+      "img": "images/spacestation.png",
+      "desc": "The pad's center is solid, but we need an angled blast berm around the perimeter to deflect the supersonic exhaust plume away from our solar arrays!",
+      "right": {
+        "desc": "Pile up sintered regolith bricks into a 10-meter blast wall!",
+        "effects": { "power": -15, "food": -5, "shield": 20, "life": 0 },
+        "unlockCard": "finalemsq5_003"
+      },
+      "left": {
+        "desc": "Angle the base's magnetic shields to deflect the charged dust cloud!",
+        "effects": { "power": -25, "food": 0, "shield": 10, "life": 5 },
+        "unlockCard": "finalemsq5_003"
+      }
+    },
+    "finalemsq5_003": {
+      "deck": "quest",
+      "img": "images/spacestation.png",
+      "desc": "The cargo lander is dropping through 5,000 meters! Thick plume dust is blinding its optical cameras—if it misses the pad's center, the engines will dig a crater and tip over!",
+      "right": {
+        "desc": "Overclock our SPLICE Lidar beacon to cut through the dust cloud!",
+        "effects": { "power": -20, "food": 0, "shield": 10, "life": 10 },
+        "unlockCard": "finalemsq5_004_win"
+      },
+      "left": {
+        "desc": "Have our pilot manually guide it down by radar from the airlock!",
+        "effects": { "power": -5, "food": 0, "shield": -10, "life": 5 },
+        "unlockCard": "finalemsq5_004_win"
+      }
+    },
+    "finalemsq5_004_win": {
+      "deck": "quest",
+      "img": "images/spacestation.png",
+      "desc": "Touchdown confirmed! The sintered basalt pad holds firm against the fiery exhaust! With a permanent Earth-Moon Spaceport online, unlimited supplies pour into the colony!",
+      "right": {
+        "desc": "Open the cargo bay and celebrate humanity's permanent lunar home!",
+        "effects": { "power": 50, "food": 50, "shield": 50, "life": 50 },
+        "unlockCard": null
+      },
+      "left": {
+        "desc": "Launch fireworks from the airlock—our colony is officially self-sustaining!",
+        "effects": { "power": 50, "food": 50, "shield": 50, "life": 50 },
+        "unlockCard": null
+      }
+    },
     "roversidequest_001_start": {
       "deck": "main",
       "img": "images/rover.jpg",
